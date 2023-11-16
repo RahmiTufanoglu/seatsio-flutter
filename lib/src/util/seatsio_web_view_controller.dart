@@ -63,8 +63,6 @@ class SeatsioWebViewController {
     final htmlString =
         seatsioHTML.replaceFirst("%region%", chartConfig.region ?? "eu").replaceFirst("%configAsJs%", chartConfigJson);
 
-    debugPrint("[Seatsio]-> _generateHtmlContent: $htmlString");
-
     // Encode HTML string with utf8
     final url = Uri.dataFromString(
       htmlString,
