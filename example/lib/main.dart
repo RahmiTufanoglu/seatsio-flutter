@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
 
@@ -42,6 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _chartConfig = SeatingChartConfig.init().rebuild((b) => b
       ..workspaceKey = YourWorkspaceKey
       ..eventKey = YourEventKey
+      ..pricing = ListBuilder<PricingForCategory>([
+        PricingForCategory(
+          (b) => b
+            ..category = "expensive"
+            ..price = 100,
+        ),
+      ])
       ..enableHoldSucceededCallback = true
       ..enableHoldFailedCallback = true
       ..enableHoldTokenExpiredCallback = true
@@ -60,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           SizedBox(
             height: 400,
-            child: _SeatsioView(
+            child: SeatsioWebView(
               onWebViewCreated: (controller) {
                 print("[Seatsio]->[example]-> onWebViewCreated");
                 _seatsioController = controller;
@@ -120,42 +128,5 @@ class _MyHomePageState extends State<MyHomePage> {
   void _loadSeatsio() {
     final newChartConfig = _chartConfig.rebuild((b) => b..showLegend = false);
     _seatsioController?.reload(newChartConfig);
-  }
-}
-
-class _SeatsioView extends StatelessWidget {
-  const _SeatsioView({
-    required this.onWebViewCreated,
-    required this.onChartRendered,
-    required this.onChartRenderingFailed,
-    required this.onObjectSelected,
-    required this.onObjectDeselected,
-    required this.onHoldSucceeded,
-    required this.onHoldTokenExpired,
-    required this.onSessionInitialized,
-  });
-
-  final void Function(SeatsioWebViewController controller) onWebViewCreated;
-  final void Function(SeatingChart seatingChart) onChartRendered;
-  final void Function() onChartRenderingFailed;
-  final void Function(SeatsioObject object, SeatsioTicketType? type) onObjectSelected;
-  final void Function(SeatsioObject object, SeatsioTicketType? type) onObjectDeselected;
-  final void Function(List<SeatsioObject> objects, List<SeatsioTicketType?>? type) onHoldSucceeded;
-  final VoidCallback onHoldTokenExpired;
-  final void Function(HoldToken holdToken) onSessionInitialized;
-
-  @override
-  Widget build(BuildContext context) {
-    return SeatsioWebView(
-      enableDebug: true,
-      onWebViewCreated: onWebViewCreated,
-      onChartRendered: onChartRendered,
-      onChartRenderingFailed: onChartRenderingFailed,
-      onObjectSelected: onObjectSelected,
-      onObjectDeselected: onObjectDeselected,
-      onHoldSucceeded: onHoldSucceeded,
-      onHoldTokenExpired: onHoldTokenExpired,
-      onSessionInitialized: onSessionInitialized,
-    );
   }
 }
