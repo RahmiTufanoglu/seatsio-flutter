@@ -20,7 +20,10 @@ class SeatingChart {
   }
 
   void deselectObject(List<String> objects) {
-    // inject javascript to SeatsioWebView
+    final objectsJson = jsonEncode(objects);
+    final jsString = "deselectObjects('$objectsJson');";
+
+    seatsioController.evaluateJavascript(jsString);
   }
 
   void changeConfig(SeatingConfigChange configChange) {

@@ -20,6 +20,10 @@ final String seatsioHTML = """
             callback(data)
         }
 
+        function deselectObjects(data) {
+            chart.deselectObjects(JSON.parse(data))
+        }
+
         // [end]
 
         // Register channel to post message to Flutter.
