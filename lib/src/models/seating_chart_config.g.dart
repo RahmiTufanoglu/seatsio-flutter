@@ -311,6 +311,13 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.colorScheme;
+    if (value != null) {
+      result
+        ..add('colorScheme')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.loading;
     if (value != null) {
       result
@@ -571,6 +578,10 @@ class _$SeatingChartConfigSerializer
           break;
         case 'mode':
           result.mode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'colorScheme':
+          result.colorScheme = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'loading':
@@ -1087,8 +1098,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final BuiltList<PricingForCategory>? pricing;
   @override
-  final Function(num price)? priceFormatter;
-  @override
   final int? numberOfPlacesToSelect;
   @override
   final bool? objectWithoutPricingSelectable;
@@ -1140,6 +1149,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   final BuiltMap<String, String>? objectCategories;
   @override
   final String? mode;
+  @override
+  final String? colorScheme;
   @override
   final String? loading;
   @override
@@ -1214,7 +1225,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.region,
       this.language,
       this.pricing,
-      this.priceFormatter,
       this.numberOfPlacesToSelect,
       this.objectWithoutPricingSelectable,
       this.objectWithoutCategorySelectable,
@@ -1241,6 +1251,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.categories,
       this.objectCategories,
       this.mode,
+      this.colorScheme,
       this.loading,
       required this.showLoadingAnimation,
       this.ticketListings,
@@ -1327,7 +1338,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    final dynamic _$dynamicOther = other;
     return other is SeatingChartConfig &&
         workspaceKey == other.workspaceKey &&
         eventKey == other.eventKey &&
@@ -1335,7 +1345,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         region == other.region &&
         language == other.language &&
         pricing == other.pricing &&
-        priceFormatter == _$dynamicOther.priceFormatter &&
         numberOfPlacesToSelect == other.numberOfPlacesToSelect &&
         objectWithoutPricingSelectable ==
             other.objectWithoutPricingSelectable &&
@@ -1364,6 +1373,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         categories == other.categories &&
         objectCategories == other.objectCategories &&
         mode == other.mode &&
+        colorScheme == other.colorScheme &&
         loading == other.loading &&
         showLoadingAnimation == other.showLoadingAnimation &&
         ticketListings == other.ticketListings &&
@@ -1416,7 +1426,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, region.hashCode);
     _$hash = $jc(_$hash, language.hashCode);
     _$hash = $jc(_$hash, pricing.hashCode);
-    _$hash = $jc(_$hash, priceFormatter.hashCode);
     _$hash = $jc(_$hash, numberOfPlacesToSelect.hashCode);
     _$hash = $jc(_$hash, objectWithoutPricingSelectable.hashCode);
     _$hash = $jc(_$hash, objectWithoutCategorySelectable.hashCode);
@@ -1443,6 +1452,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, categories.hashCode);
     _$hash = $jc(_$hash, objectCategories.hashCode);
     _$hash = $jc(_$hash, mode.hashCode);
+    _$hash = $jc(_$hash, colorScheme.hashCode);
     _$hash = $jc(_$hash, loading.hashCode);
     _$hash = $jc(_$hash, showLoadingAnimation.hashCode);
     _$hash = $jc(_$hash, ticketListings.hashCode);
@@ -1487,7 +1497,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('region', region)
           ..add('language', language)
           ..add('pricing', pricing)
-          ..add('priceFormatter', priceFormatter)
           ..add('numberOfPlacesToSelect', numberOfPlacesToSelect)
           ..add(
               'objectWithoutPricingSelectable', objectWithoutPricingSelectable)
@@ -1516,6 +1525,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('categories', categories)
           ..add('objectCategories', objectCategories)
           ..add('mode', mode)
+          ..add('colorScheme', colorScheme)
           ..add('loading', loading)
           ..add('showLoadingAnimation', showLoadingAnimation)
           ..add('ticketListings', ticketListings)
@@ -1590,11 +1600,6 @@ class SeatingChartConfigBuilder
       _$this._pricing ??= new ListBuilder<PricingForCategory>();
   set pricing(ListBuilder<PricingForCategory>? pricing) =>
       _$this._pricing = pricing;
-
-  Function(num price)? _priceFormatter;
-  Function(num price)? get priceFormatter => _$this._priceFormatter;
-  set priceFormatter(Function(num price)? priceFormatter) =>
-      _$this._priceFormatter = priceFormatter;
 
   int? _numberOfPlacesToSelect;
   int? get numberOfPlacesToSelect => _$this._numberOfPlacesToSelect;
@@ -1733,6 +1738,10 @@ class SeatingChartConfigBuilder
   String? _mode;
   String? get mode => _$this._mode;
   set mode(String? mode) => _$this._mode = mode;
+
+  String? _colorScheme;
+  String? get colorScheme => _$this._colorScheme;
+  set colorScheme(String? colorScheme) => _$this._colorScheme = colorScheme;
 
   String? _loading;
   String? get loading => _$this._loading;
@@ -1918,7 +1927,6 @@ class SeatingChartConfigBuilder
       _region = $v.region;
       _language = $v.language;
       _pricing = $v.pricing?.toBuilder();
-      _priceFormatter = $v.priceFormatter;
       _numberOfPlacesToSelect = $v.numberOfPlacesToSelect;
       _objectWithoutPricingSelectable = $v.objectWithoutPricingSelectable;
       _objectWithoutCategorySelectable = $v.objectWithoutCategorySelectable;
@@ -1945,6 +1953,7 @@ class SeatingChartConfigBuilder
       _categories = $v.categories?.toBuilder();
       _objectCategories = $v.objectCategories?.toBuilder();
       _mode = $v.mode;
+      _colorScheme = $v.colorScheme;
       _loading = $v.loading;
       _showLoadingAnimation = $v.showLoadingAnimation;
       _ticketListings = $v.ticketListings;
@@ -2013,7 +2022,6 @@ class SeatingChartConfigBuilder
               region: region,
               language: language,
               pricing: _pricing?.build(),
-              priceFormatter: priceFormatter,
               numberOfPlacesToSelect: numberOfPlacesToSelect,
               objectWithoutPricingSelectable: objectWithoutPricingSelectable,
               objectWithoutCategorySelectable: objectWithoutCategorySelectable,
@@ -2040,6 +2048,7 @@ class SeatingChartConfigBuilder
               categories: _categories?.build(),
               objectCategories: _objectCategories?.build(),
               mode: mode,
+              colorScheme: colorScheme,
               loading: loading,
               showLoadingAnimation: BuiltValueNullFieldError.checkNotNull(
                   showLoadingAnimation, r'SeatingChartConfig', 'showLoadingAnimation'),

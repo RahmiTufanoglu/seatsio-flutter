@@ -73,9 +73,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Detail: https://docs.seats.io/docs/renderer/config-pricing/
   BuiltList<PricingForCategory>? get pricing;
 
-  @BuiltValueField(wireName: 'priceFormatter', serialize: false)
-  Function(num price)? get priceFormatter;
-
   /// Activates one-click selection mode.
   /// If you pass in numberOfPlacesToSelect: 3,
   /// the ticket buyer only needs to click once to select 3 places.
@@ -175,6 +172,11 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// To use spotlight mode, you should set [session] to 'none' and set [holdToken] to null.
   /// https://docs.seats.io/docs/renderer/config-mode
   String? get mode;
+
+  /// Sets the color scheme for the Designer canvas (background).
+  /// The color picker will provide the corresponding color palettes
+  /// for better contrast against light or dark backgrounds.
+  String? get colorScheme;
 
   /// This parameter allows you to override the default seats.io spinner
   /// that is shown while the floor plan is being loaded.
@@ -286,6 +288,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "holdToken": holdToken ?? "",
       "session": session ?? "none",
       "mode": mode,
+      "colorScheme": colorScheme,
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
       "showMinimap": showMinimap ?? true,
@@ -293,7 +296,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
-      "priceFormatter": priceFormatter,
     };
 
     if (pricing != null) {
@@ -369,7 +371,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 }
 
 abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBuilder> {
-  SelectedObject._();
+  const SelectedObject._();
 
   factory SelectedObject([updates(SelectedObjectBuilder b)]) = _$SelectedObject;
 
