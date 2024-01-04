@@ -163,13 +163,6 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.themeColor;
-    if (value != null) {
-      result
-        ..add('themeColor')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.messages;
     if (value != null) {
       result
@@ -484,10 +477,6 @@ class _$SeatingChartConfigSerializer
           break;
         case 'themePreset':
           result.themePreset = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'themeColor':
-          result.themeColor = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'messages':
@@ -1110,8 +1099,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final String? themePreset;
   @override
-  final String? themeColor;
-  @override
   final BuiltMap<String, String>? messages;
   @override
   final String? priceLevelsTooltipMessage;
@@ -1231,7 +1218,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.selectedObjects,
       this.objectTooltip,
       this.themePreset,
-      this.themeColor,
       this.messages,
       this.priceLevelsTooltipMessage,
       this.maxSelectedObjects,
@@ -1353,7 +1339,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         selectedObjects == other.selectedObjects &&
         objectTooltip == other.objectTooltip &&
         themePreset == other.themePreset &&
-        themeColor == other.themeColor &&
         messages == other.messages &&
         priceLevelsTooltipMessage == other.priceLevelsTooltipMessage &&
         maxSelectedObjects == other.maxSelectedObjects &&
@@ -1432,7 +1417,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, selectedObjects.hashCode);
     _$hash = $jc(_$hash, objectTooltip.hashCode);
     _$hash = $jc(_$hash, themePreset.hashCode);
-    _$hash = $jc(_$hash, themeColor.hashCode);
     _$hash = $jc(_$hash, messages.hashCode);
     _$hash = $jc(_$hash, priceLevelsTooltipMessage.hashCode);
     _$hash = $jc(_$hash, maxSelectedObjects.hashCode);
@@ -1505,7 +1489,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('selectedObjects', selectedObjects)
           ..add('objectTooltip', objectTooltip)
           ..add('themePreset', themePreset)
-          ..add('themeColor', themeColor)
           ..add('messages', messages)
           ..add('priceLevelsTooltipMessage', priceLevelsTooltipMessage)
           ..add('maxSelectedObjects', maxSelectedObjects)
@@ -1633,10 +1616,6 @@ class SeatingChartConfigBuilder
   String? _themePreset;
   String? get themePreset => _$this._themePreset;
   set themePreset(String? themePreset) => _$this._themePreset = themePreset;
-
-  String? _themeColor;
-  String? get themeColor => _$this._themeColor;
-  set themeColor(String? themeColor) => _$this._themeColor = themeColor;
 
   MapBuilder<String, String>? _messages;
   MapBuilder<String, String> get messages =>
@@ -1933,7 +1912,6 @@ class SeatingChartConfigBuilder
       _selectedObjects = $v.selectedObjects?.toBuilder();
       _objectTooltip = $v.objectTooltip?.toBuilder();
       _themePreset = $v.themePreset;
-      _themeColor = $v.themeColor;
       _messages = $v.messages?.toBuilder();
       _priceLevelsTooltipMessage = $v.priceLevelsTooltipMessage;
       _maxSelectedObjects = $v.maxSelectedObjects;
@@ -2028,7 +2006,6 @@ class SeatingChartConfigBuilder
               selectedObjects: _selectedObjects?.build(),
               objectTooltip: _objectTooltip?.build(),
               themePreset: themePreset,
-              themeColor: themeColor,
               messages: _messages?.build(),
               priceLevelsTooltipMessage: priceLevelsTooltipMessage,
               maxSelectedObjects: maxSelectedObjects,

@@ -102,10 +102,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Possible values: 'balance', 'bubblegum', 'flathead', 'bezels', 'leaf'
   String? get themePreset;
 
-  /// https://docs.seats.io/docs/renderer/colorscheme/
-  /// Possible values: 'light', 'dark',
-  String? get themeColor;
-
   BuiltMap<String, String>? get messages;
 
   String? get priceLevelsTooltipMessage;
