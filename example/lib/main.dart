@@ -40,22 +40,36 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    _chartConfig = SeatingChartConfig.init().rebuild((b) => b
-      ..workspaceKey = YourWorkspaceKey
-      ..eventKey = YourEventKey
-      ..pricing = ListBuilder<PricingForCategory>([
-        PricingForCategory(
-          (b) => b
-            ..category = "expensive"
-            ..price = 100,
-        ),
-      ])
-      ..enableHoldSucceededCallback = true
-      ..enableHoldFailedCallback = true
-      ..enableHoldTokenExpiredCallback = true
-      ..enableSessionInitializedCallback = true
-      ..enableObjectClickedCallback = false // Set this to false if you want to have the objectToolTip to be shown
-      ..session = "continue");
+    _chartConfig = SeatingChartConfig.init().rebuild(
+      (b) => b
+        ..workspaceKey = YourWorkspaceKey
+        ..eventKey = YourEventKey
+        ..colorScheme = 'dark'
+        ..pricing = ListBuilder<PricingForCategory>([
+          PricingForCategory(
+            (b) => b
+              ..category = "expensive"
+              ..price = 100,
+          ),
+        ])
+        ..objectTooltip = () {
+          return ObjectTooltipBuilder()
+            ..showActionHint = true
+            ..showAvailability = false
+            ..showCategory = true
+            ..showLabel = true
+            ..showPricing = true
+            ..showUnavailableNotice = true
+            ..stylizedLabel = true
+            ..confirmSelectionOnMobile = true;
+        }()
+        ..enableHoldSucceededCallback = true
+        ..enableHoldFailedCallback = true
+        ..enableHoldTokenExpiredCallback = true
+        ..enableSessionInitializedCallback = true
+        ..enableObjectClickedCallback = false // Set this to false if you want to have the objectToolTip to be shown
+        ..session = "continue",
+    );
   }
 
   @override
@@ -99,7 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 100,
             child: ListView.builder(
               itemCount: selectedObjectLabels.length,
-              itemBuilder: (_, index) => Text(selectedObjectLabels[index]),
+              itemBuilder: (_, index) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(selectedObjectLabels[index]),
+                  IconButton(
+                    onPressed: () {
+                      final chart = SeatingChart(_seatsioController!);
+                      chart.deselectObject([selectedObjectLabels[index]]);
+                    },
+                    icon: Icon(Icons.delete_forever),
+                  ),
+                ],
+              ),
             ),
           )
         ],
