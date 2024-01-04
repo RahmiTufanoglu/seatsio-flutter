@@ -53,7 +53,7 @@ abstract class PricingForCategory
 
 abstract class TicketTypePricing
     implements Built<TicketTypePricing, TicketTypePricingBuilder> {
-  TicketTypePricing._();
+  const TicketTypePricing._();
 
   factory TicketTypePricing([updates(TicketTypePricingBuilder b)]) =
       _$TicketTypePricing;
