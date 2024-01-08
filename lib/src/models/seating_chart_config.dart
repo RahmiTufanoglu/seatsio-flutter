@@ -101,7 +101,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Sets the preset of styles to use for the seating chart user interface.
   /// Possible values: 'balance', 'bubblegum', 'flathead', 'bezels', 'leaf'
   /// Defaults to 'balance'
-  String?  get stylePreset;
+  String? get stylePreset;
 
   BuiltMap<String, String>? get messages;
 
@@ -286,10 +286,21 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "session": session ?? "none",
       "mode": mode,
       "colorScheme": colorScheme,
-      "stylePreset": stylePreset,
+      "colors": {
+        // "colorSelected": "#E5FF00",
+        "selectedObjectColor": "#E5FF00",
+        "availableObjectColor": "#BBBBBB",
+        // "availableObjectColor": '#BBBBBB',
+        // "colorTitle": '#BBBBBB',
+      },
+      "canvasColorScheme": "dark",
+      "stylePreset": stylePreset ?? 'balance',
+      "style": {
+        "font": 'Roboto',
+      },
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
-      "showMinimap": showMinimap ?? true,
+      "showMinimap": showMinimap ?? false,
       "inputDevice": inputDevice ?? 'auto',
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
