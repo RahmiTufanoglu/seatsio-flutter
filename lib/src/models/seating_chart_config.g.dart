@@ -156,10 +156,10 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(ObjectTooltip)));
     }
-    value = object.themePreset;
+    value = object.stylePreset;
     if (value != null) {
       result
-        ..add('themePreset')
+        ..add('stylePreset')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -475,8 +475,8 @@ class _$SeatingChartConfigSerializer
           result.objectTooltip.replace(serializers.deserialize(value,
               specifiedType: const FullType(ObjectTooltip))! as ObjectTooltip);
           break;
-        case 'themePreset':
-          result.themePreset = serializers.deserialize(value,
+        case 'stylePreset':
+          result.stylePreset = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'messages':
@@ -1097,7 +1097,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final ObjectTooltip? objectTooltip;
   @override
-  final String? themePreset;
+  final String? stylePreset;
   @override
   final BuiltMap<String, String>? messages;
   @override
@@ -1217,7 +1217,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.objectWithoutCategorySelectable,
       this.selectedObjects,
       this.objectTooltip,
-      this.themePreset,
+      this.stylePreset,
       this.messages,
       this.priceLevelsTooltipMessage,
       this.maxSelectedObjects,
@@ -1338,7 +1338,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
             other.objectWithoutCategorySelectable &&
         selectedObjects == other.selectedObjects &&
         objectTooltip == other.objectTooltip &&
-        themePreset == other.themePreset &&
+        stylePreset == other.stylePreset &&
         messages == other.messages &&
         priceLevelsTooltipMessage == other.priceLevelsTooltipMessage &&
         maxSelectedObjects == other.maxSelectedObjects &&
@@ -1416,7 +1416,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, objectWithoutCategorySelectable.hashCode);
     _$hash = $jc(_$hash, selectedObjects.hashCode);
     _$hash = $jc(_$hash, objectTooltip.hashCode);
-    _$hash = $jc(_$hash, themePreset.hashCode);
+    _$hash = $jc(_$hash, stylePreset.hashCode);
     _$hash = $jc(_$hash, messages.hashCode);
     _$hash = $jc(_$hash, priceLevelsTooltipMessage.hashCode);
     _$hash = $jc(_$hash, maxSelectedObjects.hashCode);
@@ -1488,7 +1488,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
               objectWithoutCategorySelectable)
           ..add('selectedObjects', selectedObjects)
           ..add('objectTooltip', objectTooltip)
-          ..add('themePreset', themePreset)
+          ..add('stylePreset', stylePreset)
           ..add('messages', messages)
           ..add('priceLevelsTooltipMessage', priceLevelsTooltipMessage)
           ..add('maxSelectedObjects', maxSelectedObjects)
@@ -1613,9 +1613,9 @@ class SeatingChartConfigBuilder
   set objectTooltip(ObjectTooltipBuilder? objectTooltip) =>
       _$this._objectTooltip = objectTooltip;
 
-  String? _themePreset;
-  String? get themePreset => _$this._themePreset;
-  set themePreset(String? themePreset) => _$this._themePreset = themePreset;
+  String? _stylePreset;
+  String? get stylePreset => _$this._stylePreset;
+  set stylePreset(String? stylePreset) => _$this._stylePreset = stylePreset;
 
   MapBuilder<String, String>? _messages;
   MapBuilder<String, String> get messages =>
@@ -1911,7 +1911,7 @@ class SeatingChartConfigBuilder
       _objectWithoutCategorySelectable = $v.objectWithoutCategorySelectable;
       _selectedObjects = $v.selectedObjects?.toBuilder();
       _objectTooltip = $v.objectTooltip?.toBuilder();
-      _themePreset = $v.themePreset;
+      _stylePreset = $v.stylePreset;
       _messages = $v.messages?.toBuilder();
       _priceLevelsTooltipMessage = $v.priceLevelsTooltipMessage;
       _maxSelectedObjects = $v.maxSelectedObjects;
@@ -2005,7 +2005,7 @@ class SeatingChartConfigBuilder
               objectWithoutCategorySelectable: objectWithoutCategorySelectable,
               selectedObjects: _selectedObjects?.build(),
               objectTooltip: _objectTooltip?.build(),
-              themePreset: themePreset,
+              stylePreset: stylePreset,
               messages: _messages?.build(),
               priceLevelsTooltipMessage: priceLevelsTooltipMessage,
               maxSelectedObjects: maxSelectedObjects,

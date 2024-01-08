@@ -98,9 +98,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Detail: https://docs.seats.io/docs/renderer/config-objecttooltip/
   ObjectTooltip? get objectTooltip;
 
-  /// https://docs.seats.io/docs/renderer/stylepreset/
+  /// Sets the preset of styles to use for the seating chart user interface.
   /// Possible values: 'balance', 'bubblegum', 'flathead', 'bezels', 'leaf'
-  String? get themePreset;
+  /// Defaults to 'balance'
+  String?  get stylePreset;
 
   BuiltMap<String, String>? get messages;
 
@@ -285,6 +286,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "session": session ?? "none",
       "mode": mode,
       "colorScheme": colorScheme,
+      "stylePreset": stylePreset,
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
       "showMinimap": showMinimap ?? true,
