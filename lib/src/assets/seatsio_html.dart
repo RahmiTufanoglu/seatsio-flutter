@@ -5,7 +5,7 @@ final String seatsioHTML = """
     <script src="https://cdn-%region%.seatsio.net/chart.js" type="text/javascript"></script>
   </head>
     <body style="margin: 0; padding: 0; background-color: transparent;">
-      <div id="chart" style="width: 100%; height: 100%; background: transparent;"></div>
+      <div id="chart" style="width: 100%; height: 100%; background: #212129;"></div>
       <script>
         let chart = new seatsio.SeatingChart(%configAsJs%).render()
 
