@@ -215,6 +215,14 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   bool? get showFullScreenButton;
 
+  /// When you zoom in on a seating chart, a button to reset the zoom level
+  /// appears on the bottom left. On desktop, this is the only way to zoom
+  /// out again. But on mobile, users can use pinch-to-zoom, and so in that
+  /// case this button is just a handy shortcut.
+  ///
+  /// Defaults to true.
+  bool? get showZoomOutButtonOnMobile;
+
   BuiltList<String>? get channels;
 
   bool get enableChartRenderedCallback;
@@ -293,6 +301,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       },
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
+      "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ??  true,
       "showMinimap": showMinimap ?? false,
       "inputDevice": inputDevice ?? 'auto',
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,

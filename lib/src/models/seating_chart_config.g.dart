@@ -408,6 +408,13 @@ class _$SeatingChartConfigSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.showZoomOutButtonOnMobile;
+    if (value != null) {
+      result
+        ..add('showZoomOutButtonOnMobile')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.channels;
     if (value != null) {
       result
@@ -634,6 +641,10 @@ class _$SeatingChartConfigSerializer
           break;
         case 'showFullScreenButton':
           result.showFullScreenButton = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'showZoomOutButtonOnMobile':
+          result.showZoomOutButtonOnMobile = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
         case 'channels':
@@ -1171,6 +1182,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final bool? showFullScreenButton;
   @override
+  final bool? showZoomOutButtonOnMobile;
+  @override
   final BuiltList<String>? channels;
   @override
   final bool enableChartRenderedCallback;
@@ -1256,6 +1269,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.sectionColor,
       this.extraConfig,
       this.showFullScreenButton,
+      this.showZoomOutButtonOnMobile,
       this.channels,
       required this.enableChartRenderedCallback,
       required this.enableChartRenderingFailedCallback,
@@ -1375,6 +1389,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         sectionColor == other.sectionColor &&
         extraConfig == other.extraConfig &&
         showFullScreenButton == other.showFullScreenButton &&
+        showZoomOutButtonOnMobile == other.showZoomOutButtonOnMobile &&
         channels == other.channels &&
         enableChartRenderedCallback == other.enableChartRenderedCallback &&
         enableChartRenderingFailedCallback ==
@@ -1453,6 +1468,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, sectionColor.hashCode);
     _$hash = $jc(_$hash, extraConfig.hashCode);
     _$hash = $jc(_$hash, showFullScreenButton.hashCode);
+    _$hash = $jc(_$hash, showZoomOutButtonOnMobile.hashCode);
     _$hash = $jc(_$hash, channels.hashCode);
     _$hash = $jc(_$hash, enableChartRenderedCallback.hashCode);
     _$hash = $jc(_$hash, enableChartRenderingFailedCallback.hashCode);
@@ -1525,6 +1541,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('sectionColor', sectionColor)
           ..add('extraConfig', extraConfig)
           ..add('showFullScreenButton', showFullScreenButton)
+          ..add('showZoomOutButtonOnMobile', showZoomOutButtonOnMobile)
           ..add('channels', channels)
           ..add('enableChartRenderedCallback', enableChartRenderedCallback)
           ..add('enableChartRenderingFailedCallback',
@@ -1788,6 +1805,11 @@ class SeatingChartConfigBuilder
   set showFullScreenButton(bool? showFullScreenButton) =>
       _$this._showFullScreenButton = showFullScreenButton;
 
+  bool? _showZoomOutButtonOnMobile;
+  bool? get showZoomOutButtonOnMobile => _$this._showZoomOutButtonOnMobile;
+  set showZoomOutButtonOnMobile(bool? showZoomOutButtonOnMobile) =>
+      _$this._showZoomOutButtonOnMobile = showZoomOutButtonOnMobile;
+
   ListBuilder<String>? _channels;
   ListBuilder<String> get channels =>
       _$this._channels ??= new ListBuilder<String>();
@@ -1948,6 +1970,7 @@ class SeatingChartConfigBuilder
       _sectionColor = $v.sectionColor;
       _extraConfig = $v.extraConfig?.toBuilder();
       _showFullScreenButton = $v.showFullScreenButton;
+      _showZoomOutButtonOnMobile = $v.showZoomOutButtonOnMobile;
       _channels = $v.channels?.toBuilder();
       _enableChartRenderedCallback = $v.enableChartRenderedCallback;
       _enableChartRenderingFailedCallback =
@@ -2042,6 +2065,7 @@ class SeatingChartConfigBuilder
               sectionColor: sectionColor,
               extraConfig: _extraConfig?.build(),
               showFullScreenButton: showFullScreenButton,
+              showZoomOutButtonOnMobile: showZoomOutButtonOnMobile,
               channels: _channels?.build(),
               enableChartRenderedCallback: BuiltValueNullFieldError.checkNotNull(
                   enableChartRenderedCallback, r'SeatingChartConfig', 'enableChartRenderedCallback'),
