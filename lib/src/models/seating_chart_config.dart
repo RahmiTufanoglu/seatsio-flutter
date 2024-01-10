@@ -37,7 +37,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// You can find it on your workspace settings page.
   /// This parameter used to be called [publicKey]
   @BuiltValueField(wireName: 'publicKey')
-  String get workspaceKey;
+  String? get workspaceKey;
 
   /// The key of the event for which you want to render the seating chart.
   /// Either [events] or [event] must be passed in, but not both.
@@ -278,7 +278,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Convert chart config info to a map
   Map<String, Object?> toMap() {
     final configMap = {
-      "workspaceKey": workspaceKey,
+      "workspaceKey": workspaceKey ?? '',
       "event": eventKey,
       "region": region ?? "eu",
       "language": language ?? "en",

@@ -33,9 +33,6 @@ class _$SeatingChartConfigSerializer
       Serializers serializers, SeatingChartConfig object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'publicKey',
-      serializers.serialize(object.workspaceKey,
-          specifiedType: const FullType(String)),
       'event',
       serializers.serialize(object.eventKey,
           specifiedType: const FullType(String)),
@@ -92,6 +89,13 @@ class _$SeatingChartConfigSerializer
           specifiedType: const FullType(bool)),
     ];
     Object? value;
+    value = object.workspaceKey;
+    if (value != null) {
+      result
+        ..add('publicKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.chart;
     if (value != null) {
       result
@@ -429,7 +433,7 @@ class _$SeatingChartConfigSerializer
       switch (key) {
         case 'publicKey':
           result.workspaceKey = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'event':
           result.eventKey = serializers.deserialize(value,
@@ -1075,7 +1079,7 @@ class _$TicketListingSerializer implements StructuredSerializer<TicketListing> {
 
 class _$SeatingChartConfig extends SeatingChartConfig {
   @override
-  final String workspaceKey;
+  final String? workspaceKey;
   @override
   final String eventKey;
   @override
@@ -1206,7 +1210,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       (new SeatingChartConfigBuilder()..update(updates))._build();
 
   _$SeatingChartConfig._(
-      {required this.workspaceKey,
+      {this.workspaceKey,
       required this.eventKey,
       this.chart,
       this.region,
@@ -1270,8 +1274,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       required this.enableReleaseHoldFailedCallback,
       required this.enableSelectedObjectBookedCallback})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        workspaceKey, r'SeatingChartConfig', 'workspaceKey');
     BuiltValueNullFieldError.checkNotNull(
         eventKey, r'SeatingChartConfig', 'eventKey');
     BuiltValueNullFieldError.checkNotNull(
@@ -1992,8 +1994,7 @@ class SeatingChartConfigBuilder
     try {
       _$result = _$v ??
           new _$SeatingChartConfig._(
-              workspaceKey: BuiltValueNullFieldError.checkNotNull(
-                  workspaceKey, r'SeatingChartConfig', 'workspaceKey'),
+              workspaceKey: workspaceKey,
               eventKey: BuiltValueNullFieldError.checkNotNull(
                   eventKey, r'SeatingChartConfig', 'eventKey'),
               chart: chart,
@@ -2044,16 +2045,16 @@ class SeatingChartConfigBuilder
               channels: _channels?.build(),
               enableChartRenderedCallback: BuiltValueNullFieldError.checkNotNull(
                   enableChartRenderedCallback, r'SeatingChartConfig', 'enableChartRenderedCallback'),
-              enableChartRenderingFailedCallback:
-                  BuiltValueNullFieldError.checkNotNull(
-                      enableChartRenderingFailedCallback,
-                      r'SeatingChartConfig',
-                      'enableChartRenderingFailedCallback'),
+              enableChartRenderingFailedCallback: BuiltValueNullFieldError.checkNotNull(
+                  enableChartRenderingFailedCallback,
+                  r'SeatingChartConfig',
+                  'enableChartRenderingFailedCallback'),
               enableObjectClickedCallback: BuiltValueNullFieldError.checkNotNull(
                   enableObjectClickedCallback, r'SeatingChartConfig', 'enableObjectClickedCallback'),
-              enableObjectSelectedCallback:
-                  BuiltValueNullFieldError.checkNotNull(enableObjectSelectedCallback, r'SeatingChartConfig', 'enableObjectSelectedCallback'),
-              enableObjectDeselectedCallback: BuiltValueNullFieldError.checkNotNull(enableObjectDeselectedCallback, r'SeatingChartConfig', 'enableObjectDeselectedCallback'),
+              enableObjectSelectedCallback: BuiltValueNullFieldError.checkNotNull(
+                  enableObjectSelectedCallback, r'SeatingChartConfig', 'enableObjectSelectedCallback'),
+              enableObjectDeselectedCallback:
+                  BuiltValueNullFieldError.checkNotNull(enableObjectDeselectedCallback, r'SeatingChartConfig', 'enableObjectDeselectedCallback'),
               enableSelectionValidCallback: BuiltValueNullFieldError.checkNotNull(enableSelectionValidCallback, r'SeatingChartConfig', 'enableSelectionValidCallback'),
               enableSelectionInvalidCallback: BuiltValueNullFieldError.checkNotNull(enableSelectionInvalidCallback, r'SeatingChartConfig', 'enableSelectionInvalidCallback'),
               enableBestAvailableSelectedCallback: BuiltValueNullFieldError.checkNotNull(enableBestAvailableSelectedCallback, r'SeatingChartConfig', 'enableBestAvailableSelectedCallback'),
