@@ -286,13 +286,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "session": session ?? "none",
       "mode": mode,
       "colorScheme": colorScheme,
-      "colors": {
-        // "colorSelected": "#E5FF00",
-        "selectedObjectColor": "#E5FF00",
-        "availableObjectColor": "#BBBBBB",
-        // "availableObjectColor": '#BBBBBB',
-        // "colorTitle": '#BBBBBB',
-      },
       "canvasColorScheme": "dark",
       "stylePreset": stylePreset ?? 'balance',
       "style": {
