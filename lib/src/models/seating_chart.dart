@@ -23,7 +23,11 @@ class SeatingChart {
     final objectsJson = jsonEncode(objects);
     final jsString = "deselectObjects('$objectsJson');";
 
-    seatsioController.evaluateJavascript(jsString);
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      debugPrint("[Seatsio]-> deselectObject error: $error");
+    }
   }
 
   void changeConfig(SeatingConfigChange configChange) {
@@ -33,7 +37,12 @@ class SeatingChart {
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
     debugPrint("[Seatsio]-> changeConfig jsString: $jsString");
-    seatsioController.evaluateJavascript(jsString);
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      debugPrint("[Seatsio]-> changeConfig error: $error");
+    }
   }
 
   void listCategories(CategoryListCallback callback) {
@@ -41,7 +50,12 @@ class SeatingChart {
     // get category from bridge callback
 
     final jsString = "listCategories(null, postMessageToFlutter);";
-    seatsioController.evaluateJavascript(jsString);
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      debugPrint("[Seatsio]-> listCategories error: $error");
+    }
 
     callback([]);
   }
@@ -51,7 +65,12 @@ class SeatingChart {
     // get category from bridge callback
 
     final jsString = "listCategories(null, postMessageToFlutter);";
-    seatsioController.evaluateJavascript(jsString);
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      debugPrint("[Seatsio]-> listCategories error: $error");
+    }
   }
 
   @override
