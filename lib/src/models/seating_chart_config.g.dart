@@ -393,6 +393,14 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.colors;
+    if (value != null) {
+      result
+        ..add('colors')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                Map, const [const FullType(String), const FullType(dynamic)])));
+    }
     value = object.extraConfig;
     if (value != null) {
       result
@@ -633,6 +641,13 @@ class _$SeatingChartConfigSerializer
         case 'sectionColor':
           result.sectionColor = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'colors':
+          result.colors = serializers.deserialize(value,
+              specifiedType: const FullType(Map, const [
+                const FullType(String),
+                const FullType(dynamic)
+              ])) as Map<String, dynamic>?;
           break;
         case 'extraConfig':
           result.extraConfig.replace(serializers.deserialize(value,
@@ -1178,6 +1193,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final String? sectionColor;
   @override
+  final Map<String, dynamic>? colors;
+  @override
   final BuiltMap<String, String>? extraConfig;
   @override
   final bool? showFullScreenButton;
@@ -1267,6 +1284,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.isObjectSelectable,
       this.objectColor,
       this.sectionColor,
+      this.colors,
       this.extraConfig,
       this.showFullScreenButton,
       this.showZoomOutButtonOnMobile,
@@ -1387,6 +1405,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         isObjectSelectable == other.isObjectSelectable &&
         objectColor == other.objectColor &&
         sectionColor == other.sectionColor &&
+        colors == other.colors &&
         extraConfig == other.extraConfig &&
         showFullScreenButton == other.showFullScreenButton &&
         showZoomOutButtonOnMobile == other.showZoomOutButtonOnMobile &&
@@ -1466,6 +1485,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, isObjectSelectable.hashCode);
     _$hash = $jc(_$hash, objectColor.hashCode);
     _$hash = $jc(_$hash, sectionColor.hashCode);
+    _$hash = $jc(_$hash, colors.hashCode);
     _$hash = $jc(_$hash, extraConfig.hashCode);
     _$hash = $jc(_$hash, showFullScreenButton.hashCode);
     _$hash = $jc(_$hash, showZoomOutButtonOnMobile.hashCode);
@@ -1539,6 +1559,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('isObjectSelectable', isObjectSelectable)
           ..add('objectColor', objectColor)
           ..add('sectionColor', sectionColor)
+          ..add('colors', colors)
           ..add('extraConfig', extraConfig)
           ..add('showFullScreenButton', showFullScreenButton)
           ..add('showZoomOutButtonOnMobile', showZoomOutButtonOnMobile)
@@ -1794,6 +1815,10 @@ class SeatingChartConfigBuilder
   String? get sectionColor => _$this._sectionColor;
   set sectionColor(String? sectionColor) => _$this._sectionColor = sectionColor;
 
+  Map<String, dynamic>? _colors;
+  Map<String, dynamic>? get colors => _$this._colors;
+  set colors(Map<String, dynamic>? colors) => _$this._colors = colors;
+
   MapBuilder<String, String>? _extraConfig;
   MapBuilder<String, String> get extraConfig =>
       _$this._extraConfig ??= new MapBuilder<String, String>();
@@ -1968,6 +1993,7 @@ class SeatingChartConfigBuilder
       _isObjectSelectable = $v.isObjectSelectable;
       _objectColor = $v.objectColor;
       _sectionColor = $v.sectionColor;
+      _colors = $v.colors;
       _extraConfig = $v.extraConfig?.toBuilder();
       _showFullScreenButton = $v.showFullScreenButton;
       _showZoomOutButtonOnMobile = $v.showZoomOutButtonOnMobile;
@@ -2063,6 +2089,7 @@ class SeatingChartConfigBuilder
               isObjectSelectable: isObjectSelectable,
               objectColor: objectColor,
               sectionColor: sectionColor,
+              colors: colors,
               extraConfig: _extraConfig?.build(),
               showFullScreenButton: showFullScreenButton,
               showZoomOutButtonOnMobile: showZoomOutButtonOnMobile,

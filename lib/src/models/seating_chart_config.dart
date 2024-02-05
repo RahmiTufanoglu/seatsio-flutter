@@ -210,6 +210,8 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   String? get sectionColor;
 
+  Map<String, dynamic>? get colors;
+
   /// https://docs.seats.io/docs/renderer/config-extraconfig
   BuiltMap<String, String>? get extraConfig;
 
@@ -294,17 +296,18 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "session": session ?? "none",
       "mode": mode,
       "colorScheme": colorScheme,
+      "colors": colors,
       "canvasColorScheme": "dark",
       "stylePreset": stylePreset ?? 'balance',
       "style": {
         "font": 'Roboto',
       },
+      "inputDevice": inputDevice ?? 'auto',
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
-      "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ??  true,
       "showMinimap": showMinimap ?? false,
-      "inputDevice": inputDevice ?? 'auto',
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,
+      "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
     };

@@ -23,12 +23,26 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
+class MyPricing {
+  final String name;
+  final double grossPrice;
+
+  const MyPricing(this.name, this.grossPrice);
+}
+
+const myPricingList = [
+  MyPricing('cheap', 12.5),
+  MyPricing('expensive', 45.9),
+  MyPricing('ultra expensive', 100.2),
+];
 
 class _MyHomePageState extends State<MyHomePage> {
   SeatsioWebViewController? _seatsioController;
@@ -44,14 +58,23 @@ class _MyHomePageState extends State<MyHomePage> {
       (b) => b
         ..workspaceKey = YourWorkspaceKey
         ..eventKey = YourEventKey
+        ..language = 'de'
+        ..region = 'eu'
         ..colorScheme = 'dark'
-        ..pricing = ListBuilder<PricingForCategory>([
-          PricingForCategory(
-            (b) => b
-              ..category = "expensive"
-              ..price = 100,
+        ..stylePreset = 'bubblegum'
+        ..colors = {
+          "colorSelected": "#E5FF00",
+          "colorTitle": "#E5FF00",
+        }
+        ..pricing = ListBuilder<PricingForCategory>(
+          myPricingList.map(
+            (tickets) => PricingForCategory(
+              (builder) => builder
+                ..category = tickets.name
+                ..price = tickets.grossPrice,
+            )..toBuilder(),
           ),
-        ])
+        )
         ..objectTooltip = () {
           return ObjectTooltipBuilder()
             ..showActionHint = true
@@ -65,9 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
         }()
         ..enableHoldSucceededCallback = true
         ..enableHoldFailedCallback = true
-        ..enableHoldTokenExpiredCallback = true
         ..enableSessionInitializedCallback = true
-        ..enableObjectClickedCallback = false // Set this to false if you want to have the objectToolTip to be shown
+        ..enableObjectClickedCallback = false
+        ..enableObjectSelectedCallback = true
+        ..enableObjectDeselectedCallback = true
+        ..showFullScreenButton = false
+        ..showLegend = false
+        ..showMinimap = false
+        ..inputDevice = 'touch'
         ..session = "continue",
     );
   }
@@ -79,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: <Widget>[
+        children: [
           SizedBox(
             height: 400,
             child: SeatsioWebView(
@@ -138,16 +166,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _selectSeat(SeatsioObject object) {
-    setState(() {
-      selectedObjectLabels.add(object.label);
-    });
+    setState(() => selectedObjectLabels.add(object.label));
   }
 
   void _deselectSeat(SeatsioObject object) {
     if (selectedObjectLabels.contains(object.label)) {
-      setState(() {
-        selectedObjectLabels.remove(object.label);
-      });
+      setState(() => selectedObjectLabels.remove(object.label));
     }
   }
 
