@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:seatsio/src/util/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../models/seating_chart_config.dart';
 import '../util/seatsio_js_bridge.dart';
@@ -27,7 +28,7 @@ class SeatsioWebViewController {
       _webViewController.setBackgroundColor(Colors.transparent);
       _webViewController.loadRequest(Uri.parse(url));
     } else {
-      debugPrint("[Seatsio]-> Not found seatsio chart config info.");
+      kDebugPrint("[Seatsio]-> Not found seatsio chart config info.");
     }
   }
 
@@ -39,7 +40,7 @@ class SeatsioWebViewController {
       final url = _generateHtmlContent(newChartInfo);
       _webViewController.loadRequest(Uri.parse(url));
     } else {
-      debugPrint("[Seatsio]-> Not found seatsio chart config info.");
+      kDebugPrint("[Seatsio]-> Not found seatsio chart config info.");
     }
   }
 

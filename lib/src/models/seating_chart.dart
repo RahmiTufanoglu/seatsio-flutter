@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'package:seatsio/src/util/constants.dart';
 import '../util/seatsio_web_view_controller.dart';
 import 'seating_config_change.dart';
 import 'seatsio_category.dart';
@@ -26,7 +26,7 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      debugPrint("[Seatsio]-> deselectObject error: $error");
+      kDebugPrint("[Seatsio]-> deselectObject error: $error");
     }
   }
 
@@ -36,12 +36,12 @@ class SeatingChart {
     configJson = configJson.replaceAll("'", "\\\'");
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
-    debugPrint("[Seatsio]-> changeConfig jsString: $jsString");
+    kDebugPrint("[Seatsio]-> changeConfig jsString: $jsString");
 
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      debugPrint("[Seatsio]-> changeConfig error: $error");
+      kDebugPrint("[Seatsio]-> changeConfig error: $error");
     }
   }
 
@@ -54,7 +54,7 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      debugPrint("[Seatsio]-> listCategories error: $error");
+      kDebugPrint("[Seatsio]-> listCategories error: $error");
     }
 
     callback([]);
@@ -69,7 +69,7 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      debugPrint("[Seatsio]-> listCategories error: $error");
+      kDebugPrint("[Seatsio]-> listCategories error: $error");
     }
   }
 
