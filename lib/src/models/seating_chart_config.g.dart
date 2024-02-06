@@ -398,8 +398,7 @@ class _$SeatingChartConfigSerializer
       result
         ..add('colors')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                Map, const [const FullType(String), const FullType(dynamic)])));
+            specifiedType: const FullType(SeatsioConfigColors)));
     }
     value = object.extraConfig;
     if (value != null) {
@@ -644,10 +643,8 @@ class _$SeatingChartConfigSerializer
           break;
         case 'colors':
           result.colors = serializers.deserialize(value,
-              specifiedType: const FullType(Map, const [
-                const FullType(String),
-                const FullType(dynamic)
-              ])) as Map<String, dynamic>?;
+                  specifiedType: const FullType(SeatsioConfigColors))
+              as SeatsioConfigColors?;
           break;
         case 'extraConfig':
           result.extraConfig.replace(serializers.deserialize(value,
@@ -1193,7 +1190,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final String? sectionColor;
   @override
-  final Map<String, dynamic>? colors;
+  final SeatsioConfigColors? colors;
   @override
   final BuiltMap<String, String>? extraConfig;
   @override
@@ -1815,9 +1812,9 @@ class SeatingChartConfigBuilder
   String? get sectionColor => _$this._sectionColor;
   set sectionColor(String? sectionColor) => _$this._sectionColor = sectionColor;
 
-  Map<String, dynamic>? _colors;
-  Map<String, dynamic>? get colors => _$this._colors;
-  set colors(Map<String, dynamic>? colors) => _$this._colors = colors;
+  SeatsioConfigColors? _colors;
+  SeatsioConfigColors? get colors => _$this._colors;
+  set colors(SeatsioConfigColors? colors) => _$this._colors = colors;
 
   MapBuilder<String, String>? _extraConfig;
   MapBuilder<String, String> get extraConfig =>

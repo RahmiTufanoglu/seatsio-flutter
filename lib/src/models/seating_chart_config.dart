@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:seatsio/src/models/seatsio_config_colors.dart';
 import 'package:seatsio/src/models/hold_token.dart';
 
 import 'pricing_for_category.dart';
@@ -210,7 +211,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   String? get sectionColor;
 
-  Map<String, dynamic>? get colors;
+  SeatsioConfigColors? get colors;
 
   /// https://docs.seats.io/docs/renderer/config-extraconfig
   BuiltMap<String, String>? get extraConfig;
@@ -296,7 +297,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "session": session ?? "none",
       "mode": mode,
       "colorScheme": colorScheme,
-      "colors": colors,
+      "colors": colors?.toMap() ?? {},
       "canvasColorScheme": "dark",
       "stylePreset": stylePreset ?? 'balance',
       "style": {

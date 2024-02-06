@@ -5,9 +5,7 @@ import 'package:seatsio/seatsio.dart';
 const String YourWorkspaceKey = "";
 const String YourEventKey = "";
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -62,10 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ..region = 'eu'
         ..colorScheme = 'dark'
         ..stylePreset = 'bubblegum'
-        ..colors = {
-          "colorSelected": "#E5FF00",
-          "colorTitle": "#E5FF00",
-        }
+        ..colors = SeatsioConfigColors(
+          colorSelected: '#E5FF00',
+          colorTitle: '#E5FF00',
+        )
         ..pricing = ListBuilder<PricingForCategory>(
           myPricingList.map(
             (tickets) => PricingForCategory(
