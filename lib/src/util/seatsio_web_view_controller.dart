@@ -75,5 +75,16 @@ class SeatsioWebViewController {
     return url.toString();
   }
 
-  Future<void> evaluateJavascript(String javascriptString) => _webViewController.runJavaScript(javascriptString);
+  Future<void> evaluateJavascript(String javascriptString) async {
+    if (javascriptString.trim().isEmpty) {
+      throw ArgumentError('JavaScript string cannot be empty');
+    }
+
+    try {
+      return await _webViewController.runJavaScript(javascriptString);
+    } catch (error) {
+      kDebugPrint('Error executing JavaScript: $error');
+      rethrow;
+    }
+  }
 }
