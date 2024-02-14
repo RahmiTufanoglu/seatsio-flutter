@@ -235,6 +235,13 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.showSeatLabels;
+    if (value != null) {
+      result
+        ..add('showSeatLabels')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.showLegend;
     if (value != null) {
       result
@@ -540,6 +547,10 @@ class _$SeatingChartConfigSerializer
         case 'showSectionContents':
           result.showSectionContents = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'showSeatLabels':
+          result.showSeatLabels = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'showLegend':
           result.showLegend = serializers.deserialize(value,
@@ -1144,6 +1155,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final String? showSectionContents;
   @override
+  final bool? showSeatLabels;
+  @override
   final bool? showLegend;
   @override
   final LegendForCategory? legend;
@@ -1258,6 +1271,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.selectBestAvailable,
       this.alwaysShowSectionContents,
       this.showSectionContents,
+      this.showSeatLabels,
       this.showLegend,
       this.legend,
       this.showMinimap,
@@ -1379,6 +1393,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         selectBestAvailable == other.selectBestAvailable &&
         alwaysShowSectionContents == other.alwaysShowSectionContents &&
         showSectionContents == other.showSectionContents &&
+        showSeatLabels == other.showSeatLabels &&
         showLegend == other.showLegend &&
         legend == other.legend &&
         showMinimap == other.showMinimap &&
@@ -1459,6 +1474,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, selectBestAvailable.hashCode);
     _$hash = $jc(_$hash, alwaysShowSectionContents.hashCode);
     _$hash = $jc(_$hash, showSectionContents.hashCode);
+    _$hash = $jc(_$hash, showSeatLabels.hashCode);
     _$hash = $jc(_$hash, showLegend.hashCode);
     _$hash = $jc(_$hash, legend.hashCode);
     _$hash = $jc(_$hash, showMinimap.hashCode);
@@ -1533,6 +1549,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('selectBestAvailable', selectBestAvailable)
           ..add('alwaysShowSectionContents', alwaysShowSectionContents)
           ..add('showSectionContents', showSectionContents)
+          ..add('showSeatLabels', showSeatLabels)
           ..add('showLegend', showLegend)
           ..add('legend', legend)
           ..add('showMinimap', showMinimap)
@@ -1704,6 +1721,11 @@ class SeatingChartConfigBuilder
   String? get showSectionContents => _$this._showSectionContents;
   set showSectionContents(String? showSectionContents) =>
       _$this._showSectionContents = showSectionContents;
+
+  bool? _showSeatLabels;
+  bool? get showSeatLabels => _$this._showSeatLabels;
+  set showSeatLabels(bool? showSeatLabels) =>
+      _$this._showSeatLabels = showSeatLabels;
 
   bool? _showLegend;
   bool? get showLegend => _$this._showLegend;
@@ -1967,6 +1989,7 @@ class SeatingChartConfigBuilder
       _selectBestAvailable = $v.selectBestAvailable?.toBuilder();
       _alwaysShowSectionContents = $v.alwaysShowSectionContents;
       _showSectionContents = $v.showSectionContents;
+      _showSeatLabels = $v.showSeatLabels;
       _showLegend = $v.showLegend;
       _legend = $v.legend?.toBuilder();
       _showMinimap = $v.showMinimap;
@@ -2062,6 +2085,7 @@ class SeatingChartConfigBuilder
               selectBestAvailable: _selectBestAvailable?.build(),
               alwaysShowSectionContents: alwaysShowSectionContents,
               showSectionContents: showSectionContents,
+              showSeatLabels: showSeatLabels,
               showLegend: showLegend,
               legend: _legend?.build(),
               showMinimap: showMinimap,

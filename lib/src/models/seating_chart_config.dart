@@ -125,6 +125,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   String? get showSectionContents;
 
+  /// Set to true to show seat labels in your chart.
+  /// https://docs.seats.io/docs/renderer/config-showseatlabels/
+  bool? get showSeatLabels;
+
   /// If true, a legend with the category names and colors is rendered at the top of the chart.
   /// https://docs.seats.io/docs/renderer/config-legend
   bool? get showLegend;
@@ -304,6 +308,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
         "font": 'Roboto',
       },
       "inputDevice": inputDevice ?? 'auto',
+      "showSeatLabels": showSeatLabels ?? true,
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
       "showMinimap": showMinimap ?? false,
