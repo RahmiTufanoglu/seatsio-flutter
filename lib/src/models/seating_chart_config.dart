@@ -307,6 +307,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "style": {
         "font": 'Roboto',
       },
+      "priceFormatter": "function(price) { return price + ' €'; }",
       "inputDevice": inputDevice ?? 'auto',
       "showSeatLabels": showSeatLabels ?? true,
       "showLegend": showLegend ?? true,
@@ -410,7 +411,7 @@ abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBui
 }
 
 abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilder> {
-  ObjectTooltip._();
+  const ObjectTooltip._();
 
   factory ObjectTooltip([updates(ObjectTooltipBuilder b)]) = _$ObjectTooltip;
 
@@ -434,7 +435,7 @@ abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilde
 }
 
 abstract class LegendForCategory implements Built<LegendForCategory, LegendForCategoryBuilder> {
-  LegendForCategory._();
+  const LegendForCategory._();
 
   factory LegendForCategory([updates(LegendForCategoryBuilder b)]) = _$LegendForCategory;
 
@@ -446,7 +447,7 @@ abstract class LegendForCategory implements Built<LegendForCategory, LegendForCa
 }
 
 abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilder> {
-  BestAvailable._();
+  const BestAvailable._();
 
   factory BestAvailable([updates(BestAvailableBuilder b)]) = _$BestAvailable;
 
@@ -462,7 +463,7 @@ abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilde
 }
 
 abstract class SelectionValidator implements Built<SelectionValidator, SelectionValidatorBuilder> {
-  SelectionValidator._();
+  const SelectionValidator._();
 
   factory SelectionValidator([updates(SelectionValidatorBuilder b)]) = _$SelectionValidator;
 
@@ -474,7 +475,7 @@ abstract class SelectionValidator implements Built<SelectionValidator, Selection
 }
 
 abstract class TicketListing implements Built<TicketListing, TicketListingBuilder> {
-  TicketListing._();
+  const TicketListing._();
 
   factory TicketListing([updates(TicketListingBuilder b)]) = _$TicketListing;
 
