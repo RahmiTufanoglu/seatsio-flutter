@@ -14,7 +14,7 @@ class SeatsioWebViewController {
     required WebViewController webViewController,
   }) : this._webViewController = webViewController;
 
-  WebViewController _webViewController;
+  final WebViewController _webViewController;
 
   SeatingChartConfig? _chartConfig;
 
@@ -38,7 +38,11 @@ class SeatsioWebViewController {
         ..holdToken = token
         ..session = session);
       final url = _generateHtmlContent(newChartInfo);
-      _webViewController.loadRequest(Uri.parse(url));
+      try {
+        _webViewController.loadRequest(Uri.parse(url));
+      } catch (e) {
+        kDebugPrint("[Seatsio]-> Error while reloading chart: $e");
+      }
     } else {
       kDebugPrint("[Seatsio]-> Not found seatsio chart config info.");
     }
@@ -56,9 +60,7 @@ class SeatsioWebViewController {
     // Append callback string to json string.
     final callbacks = SeatsioJsBridge.buildCallbacksConfiguration(chartConfig);
     chartConfigJson = chartConfigJson.substring(0, chartConfigJson.length - 1);
-    callbacks.forEach((e) {
-      chartConfigJson = "$chartConfigJson, $e";
-    });
+    callbacks.forEach((e) => chartConfigJson = "$chartConfigJson, $e");
     chartConfigJson = "$chartConfigJson}";
 
     // Insert json string of chart config to the seatsio HTML template.
@@ -75,16 +77,5 @@ class SeatsioWebViewController {
     return url.toString();
   }
 
-  Future<void> evaluateJavascript(String javascriptString) async {
-    if (javascriptString.trim().isEmpty) {
-      throw ArgumentError('JavaScript string cannot be empty');
-    }
-
-    try {
-      return await _webViewController.runJavaScript(javascriptString);
-    } catch (error) {
-      kDebugPrint('Error executing JavaScript: $error');
-      rethrow;
-    }
-  }
+  Future<void> evaluateJavascript(String javascriptString) => _webViewController.runJavaScript(javascriptString);
 }
