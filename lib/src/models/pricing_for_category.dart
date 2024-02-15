@@ -47,8 +47,9 @@ abstract class PricingForCategory
   static Serializer<PricingForCategory> get serializer =>
       _$pricingForCategorySerializer;
 
+  // TODO(Rahmi): WIP, make it more flexible
   Map<String, dynamic> toJson() =>
-      <String, dynamic>{'category': categoryKey ?? category, 'price': price};
+      <String, dynamic>{'category': categoryKey ?? category, 'price': '$price €'};
 }
 
 abstract class TicketTypePricing
