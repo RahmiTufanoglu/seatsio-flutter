@@ -311,7 +311,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showSeatLabels": showSeatLabels ?? true,
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
-      "showMinimap": showMinimap ?? false,
+      "showMinimap": showMinimap ?? true,
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,
       "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
