@@ -307,7 +307,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "style": {
         "font": 'Roboto',
       },
-      "priceFormatter": "function(price) { return price + ' €'; }",
       "inputDevice": inputDevice ?? 'auto',
       "showSeatLabels": showSeatLabels ?? true,
       "showLegend": showLegend ?? true,
