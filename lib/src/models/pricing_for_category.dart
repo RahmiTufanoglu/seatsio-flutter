@@ -51,7 +51,7 @@ abstract class PricingForCategory
 
   // TODO(Rahmi): WIP, make it more flexible
   Map<String, dynamic> toJson() =>
-      <String, dynamic>{'category': categoryKey ?? category, 'price': '$price €'};
+      <String, dynamic>{'category': categoryKey ?? category, 'price': price};
 }
 
 abstract class TicketTypePricing
