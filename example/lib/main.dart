@@ -31,13 +31,13 @@ class MyHomePage extends StatefulWidget {
 
 class MyPricing {
   final String name;
-  final String grossPrice;
+  final double grossPrice;
 
   const MyPricing(this.name, this.grossPrice);
 }
 
 const myPricingList = [
-  MyPricing('Standard', '12.0'),
+  MyPricing('Standard', 12.0),
 ];
 
 class _MyHomePageState extends State<MyHomePage> {

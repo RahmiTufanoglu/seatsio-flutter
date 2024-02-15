@@ -19,9 +19,7 @@ abstract class PricingForCategory
   @JsonKey()
   String? get category;
 
-  // TODO(Rahmi): WIP (Hack only for € symbol)
-  //num? get price;
-  String? get price;
+  double? get price;
 
   BuiltList<TicketTypePricing>? get ticketTypes;
 
