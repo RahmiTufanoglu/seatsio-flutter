@@ -19,7 +19,7 @@ abstract class PricingForCategory
   @JsonKey()
   String? get category;
 
-  double? get price;
+  num? get price;
 
   BuiltList<TicketTypePricing>? get ticketTypes;
 
