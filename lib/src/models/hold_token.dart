@@ -1,17 +1,17 @@
 class HoldToken {
   const HoldToken({
-    required this.holdToken,
+    required this.token,
     required this.expiresAt,
     required this.expiresInSeconds,
   });
 
-  final String? holdToken;
+  final String? token;
   final DateTime? expiresAt;
   final int? expiresInSeconds;
 
   factory HoldToken.fromJson(Map<String, dynamic> json) {
     return HoldToken(
-      holdToken: json['token'] as String?,
+      token: json['token'] as String?,
       expiresAt: json['expiresAt'] == null ? null : DateTime.parse(json['expiresAt'] as String),
       expiresInSeconds: json['expiresInSeconds'] as int?,
     );
@@ -19,7 +19,7 @@ class HoldToken {
 
   Map<String, dynamic> toMap() {
     return {
-      'holdToken': holdToken,
+      'token': token,
       'expiresAt': expiresAt?.toIso8601String(),
       'expiresInSeconds': expiresInSeconds,
     };
@@ -31,7 +31,7 @@ class HoldToken {
     int? expiresInSeconds,
   }) {
     return HoldToken(
-      holdToken: token ?? this.holdToken,
+      token: token ?? this.token,
       expiresAt: expiresAt ?? this.expiresAt,
       expiresInSeconds: expiresInSeconds ?? this.expiresInSeconds,
     );
@@ -39,6 +39,6 @@ class HoldToken {
 
   @override
   String toString() {
-    return 'HoldToken(holdToken: $holdToken, expiresAt: $expiresAt, expiresInSeconds: $expiresInSeconds)';
+    return 'HoldToken(token: $token, expiresAt: $expiresAt, expiresInSeconds: $expiresInSeconds)';
   }
 }
