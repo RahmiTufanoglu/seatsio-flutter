@@ -19,7 +19,7 @@ abstract class PricingForCategory
   @JsonKey()
   String? get category;
 
-  num? get price;
+  String? get price;
 
   BuiltList<TicketTypePricing>? get ticketTypes;
 
@@ -47,7 +47,6 @@ abstract class PricingForCategory
   static Serializer<PricingForCategory> get serializer =>
       _$pricingForCategorySerializer;
 
-  // TODO(Rahmi): WIP, make it more flexible
   Map<String, dynamic> toJson() =>
       <String, dynamic>{'category': categoryKey ?? category, 'price': price};
 }
