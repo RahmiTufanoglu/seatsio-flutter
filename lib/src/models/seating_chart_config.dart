@@ -384,6 +384,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       }).toList();
     }
 
+    if (channels != null) {
+      configMap["channels"] = channels?.toList();
+    }
+
     return configMap;
   }
 
