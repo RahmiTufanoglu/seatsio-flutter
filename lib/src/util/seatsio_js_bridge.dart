@@ -2,9 +2,8 @@ import '../models/seating_chart_config.dart';
 
 class SeatsioJsBridge {
   /// 将callback转成字符串
-  static List<String> buildCallbacksConfiguration(
-      SeatingChartConfig chartConfig) {
-    final List<String> callbacks = [];
+  static List<String> buildCallbacksConfiguration(SeatingChartConfig chartConfig) {
+    final callbacks = <String>[];
 
     if (chartConfig.enableChartRenderedCallback) {
       callbacks.add(buildCallbackConfigAsJS("onChartRendered"));
@@ -78,6 +77,12 @@ class SeatsioJsBridge {
   }
 
   static String seatsioInjectString(String selectedFeature) {
-    return "(object, dfValue, extraConfig) => {if(extraConfig[object.label] == 'true') {return '$selectedFeature'} else {return dfValue}}";
+    return "(object, dfValue, extraConfig) => {"
+        "if(extraConfig[object.label] == 'true') {"
+        "return '$selectedFeature'"
+        "} else {"
+        "return dfValue"
+        "}"
+        "}";
   }
 }
