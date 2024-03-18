@@ -1,9 +1,10 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
 
-const String YourWorkspaceKey = "";
-const String YourEventKey = "";
+const String yourWorkspaceKey = "";
+const String yourEventKey = "";
 
 void main() => runApp(MyApp());
 
@@ -29,13 +30,6 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class MyPricing {
-  final String name;
-  final double grossPrice;
-
-  const MyPricing(this.name, this.grossPrice);
-}
-
 const myPricingList = [
   MyPricing('Standard', 12.0),
 ];
@@ -51,9 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     _chartConfig = SeatingChartConfig.init().rebuild(
-      (b) => b
-        ..workspaceKey = YourWorkspaceKey
-        ..eventKey = YourEventKey
+      (builder) => builder
+        ..workspaceKey = yourWorkspaceKey
+        ..eventKey = yourEventKey
         ..language = 'de'
         ..region = 'eu'
         ..colorScheme = 'dark'
@@ -67,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             (tickets) => PricingForCategory(
               (builder) => builder
                 ..category = tickets.name
-                ..price = tickets.grossPrice,
+                ..price = tickets.grossPrice.toString(),
             )..toBuilder(),
           ),
         )
@@ -91,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ..showFullScreenButton = false
         ..showLegend = false
         ..showMinimap = false
-        ..inputDevice = 'touch'
+        ..inputDevice = "touch"
         ..session = "continue",
     );
   }
