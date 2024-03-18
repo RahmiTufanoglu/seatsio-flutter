@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:seatsio/src/assets/seatsio_html.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../models/seating_chart_config.dart';
 import '../util/seatsio_js_bridge.dart';
-import '../assets/seatsio_html.dart';
 
 typedef void SeatsioWebViewCreatedCallback(SeatsioWebViewController controller);
 
