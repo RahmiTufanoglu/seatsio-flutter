@@ -193,12 +193,11 @@ class SeatsioLabelBuilder
   _$SeatsioLabel _build() {
     final _$result = _$v ??
         new _$SeatsioLabel._(
-            own: BuiltValueNullFieldError.checkNotNull(
-                own, r'SeatsioLabel', 'own'),
-            parent: BuiltValueNullFieldError.checkNotNull(
-                parent, r'SeatsioLabel', 'parent'),
-            section: section,
-            displayedLabel: displayedLabel);
+          own: own,
+          parent: parent,
+          section: section,
+          displayedLabel: displayedLabel,
+        );
     replace(_$result);
     return _$result;
   }

@@ -1,6 +1,17 @@
 class MyPricing {
+  const MyPricing(
+    this.name,
+    this.grossPrice,
+  );
+
   final String name;
   final double grossPrice;
 
-  const MyPricing(this.name, this.grossPrice);
+  @override
+  String toString() {
+    return 'MyPricing('
+        'name: $name, '
+        'grossPrice: $grossPrice'
+        ')';
+  }
 }

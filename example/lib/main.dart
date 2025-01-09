@@ -1,5 +1,4 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
@@ -42,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late final SeatsioWebViewController? _seatsioController;
   late final SeatingChartConfig _chartConfig;
 
-  final selectedObjectLabels = ['Try to click a seat object'];
+  final selectedObjectLabels = [];
 
   @override
   void initState() {
@@ -100,66 +99,75 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 400,
-            child: SeatsioWebView(
-              onWebViewCreated: (controller) {
-                print("[Seatsio]->[example]-> onWebViewCreated");
-                _seatsioController = controller;
-                _loadSeatsio();
-              },
-              onChartRendered: (_) {
-                print("[Seatsio]->[example]-> onChartRendered");
-              },
-              onChartRenderingFailed: () {
-                print("[Seatsio]->[example]-> onChartRenderingFailed");
-              },
-              onChartRerenderingStarted: () {
-                print("[Seatsio]->[example]-> onChartRerenderingStarted");
-              },
-              onObjectSelected: (object, type) {
-                print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
-                _selectSeat(object);
-              },
-              onObjectDeselected: (object, type) {
-                print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
-                _deselectSeat(object);
-              },
-              onHoldSucceeded: (objects, ticketTypes) {
-                print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
-              },
-              onHoldTokenExpired: () {
-                print("[Seatsio]->[example]-> onHoldTokenExpired");
-              },
-              onSessionInitialized: (holdToken) {
-                print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: SeatsioWebView(
+                onWebViewCreated: (controller) {
+                  print("[Seatsio]->[example]-> onWebViewCreated");
+                  _seatsioController = controller;
+                  _loadSeatsio();
+                },
+                onChartRendered: (_) {
+                  print("[Seatsio]->[example]-> onChartRendered");
+                },
+                onChartRenderingFailed: () {
+                  print("[Seatsio]->[example]-> onChartRenderingFailed");
+                },
+                onChartRerenderingStarted: () {
+                  print("[Seatsio]->[example]-> onChartRerenderingStarted");
+                },
+                onObjectSelected: (object, type) {
+                  print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
+                  _selectSeat(object);
+                },
+                onObjectDeselected: (object, type) {
+                  print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
+                  _deselectSeat(object);
+                },
+                onHoldSucceeded: (objects, ticketTypes) {
+                  print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
+                },
+                onHoldTokenExpired: () {
+                  print("[Seatsio]->[example]-> onHoldTokenExpired");
+                },
+                onSessionInitialized: (holdToken) {
+                  print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              itemCount: selectedObjectLabels.length,
-              itemBuilder: (_, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(selectedObjectLabels[index]),
-                    IconButton(
-                      onPressed: () {
-                        final chart = SeatingChart(_seatsioController!);
-                        chart.deselectObject([selectedObjectLabels[index]]);
-                      },
-                      icon: Icon(Icons.delete_forever),
-                    ),
-                  ],
-                );
-              },
-            ),
-          )
-        ],
+            ColoredBox(
+              color: Colors.black12,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
+                  itemCount: selectedObjectLabels.length,
+                  itemBuilder: (_, index) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(selectedObjectLabels[index]),
+                        if (_seatsioController != null)
+                          IconButton(
+                            onPressed: () {
+                              final chart = SeatingChart(_seatsioController!);
+                              chart.deselectObject([selectedObjectLabels[index]]);
+                            },
+                            icon: Icon(Icons.delete_forever),
+                          ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (_, __) => Divider(),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _loadSeatsio,

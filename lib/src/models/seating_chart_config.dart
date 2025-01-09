@@ -5,7 +5,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/models/seatsio_config_colors.dart';
-import 'package:seatsio/src/models/hold_token.dart';
 
 import 'pricing_for_category.dart';
 import 'seating_chart.dart';
