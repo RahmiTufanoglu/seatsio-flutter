@@ -45,6 +45,9 @@ class _$SeatingChartConfigSerializer
       'enableChartRenderingFailedCallback',
       serializers.serialize(object.enableChartRenderingFailedCallback,
           specifiedType: const FullType(bool)),
+      'enableChartRerenderingStartedCallback',
+      serializers.serialize(object.enableChartRerenderingStartedCallback,
+          specifiedType: const FullType(bool)),
       'enableObjectClickedCallback',
       serializers.serialize(object.enableObjectClickedCallback,
           specifiedType: const FullType(bool)),
@@ -569,6 +572,10 @@ class _$SeatingChartConfigSerializer
           result.inputDevice = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'inputDevice':
+          result.inputDevice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'showActiveSectionTooltipOnMobile':
           result.showActiveSectionTooltip = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -682,6 +689,10 @@ class _$SeatingChartConfigSerializer
           break;
         case 'enableChartRenderingFailedCallback':
           result.enableChartRenderingFailedCallback = serializers
+              .deserialize(value, specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'enableChartRerenderingStartedCallback':
+          result.enableChartRerenderingStartedCallback = serializers
               .deserialize(value, specifiedType: const FullType(bool))! as bool;
           break;
         case 'enableObjectClickedCallback':
@@ -1125,6 +1136,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final BuiltList<PricingForCategory>? pricing;
   @override
+  final Function(num price)? priceFormatter;
+  @override
   final int? numberOfPlacesToSelect;
   @override
   final bool? objectWithoutPricingSelectable;
@@ -1162,6 +1175,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   final LegendForCategory? legend;
   @override
   final bool? showMinimap;
+  @override
+  final String? inputDevice;
   @override
   final String? inputDevice;
   @override
@@ -1217,6 +1232,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final bool enableChartRenderingFailedCallback;
   @override
+  final bool enableChartRerenderingStartedCallback;
+  @override
   final bool enableObjectClickedCallback;
   @override
   final bool enableObjectSelectedCallback;
@@ -1256,6 +1273,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.region,
       this.language,
       this.pricing,
+      this.priceFormatter,
       this.numberOfPlacesToSelect,
       this.objectWithoutPricingSelectable,
       this.objectWithoutCategorySelectable,
@@ -1302,6 +1320,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.channels,
       required this.enableChartRenderedCallback,
       required this.enableChartRenderingFailedCallback,
+      required this.enableChartRerenderingStartedCallback,
       required this.enableObjectClickedCallback,
       required this.enableObjectSelectedCallback,
       required this.enableObjectDeselectedCallback,
@@ -1325,6 +1344,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         r'SeatingChartConfig', 'enableChartRenderedCallback');
     BuiltValueNullFieldError.checkNotNull(enableChartRenderingFailedCallback,
         r'SeatingChartConfig', 'enableChartRenderingFailedCallback');
+    BuiltValueNullFieldError.checkNotNull(enableChartRerenderingStartedCallback,
+        r'SeatingChartConfig', 'enableChartRerenderingStartedCallback');
     BuiltValueNullFieldError.checkNotNull(enableObjectClickedCallback,
         r'SeatingChartConfig', 'enableObjectClickedCallback');
     BuiltValueNullFieldError.checkNotNull(enableObjectSelectedCallback,
@@ -1369,6 +1390,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
     return other is SeatingChartConfig &&
         workspaceKey == other.workspaceKey &&
         eventKey == other.eventKey &&
@@ -1376,6 +1398,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         region == other.region &&
         language == other.language &&
         pricing == other.pricing &&
+        priceFormatter == _$dynamicOther.priceFormatter &&
         numberOfPlacesToSelect == other.numberOfPlacesToSelect &&
         objectWithoutPricingSelectable ==
             other.objectWithoutPricingSelectable &&
@@ -1425,6 +1448,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         enableChartRenderedCallback == other.enableChartRenderedCallback &&
         enableChartRenderingFailedCallback ==
             other.enableChartRenderingFailedCallback &&
+        enableChartRerenderingStartedCallback ==
+            other.enableChartRerenderingStartedCallback &&
         enableObjectClickedCallback == other.enableObjectClickedCallback &&
         enableObjectSelectedCallback == other.enableObjectSelectedCallback &&
         enableObjectDeselectedCallback ==
@@ -1459,6 +1484,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, region.hashCode);
     _$hash = $jc(_$hash, language.hashCode);
     _$hash = $jc(_$hash, pricing.hashCode);
+    _$hash = $jc(_$hash, priceFormatter.hashCode);
     _$hash = $jc(_$hash, numberOfPlacesToSelect.hashCode);
     _$hash = $jc(_$hash, objectWithoutPricingSelectable.hashCode);
     _$hash = $jc(_$hash, objectWithoutCategorySelectable.hashCode);
@@ -1505,6 +1531,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, channels.hashCode);
     _$hash = $jc(_$hash, enableChartRenderedCallback.hashCode);
     _$hash = $jc(_$hash, enableChartRenderingFailedCallback.hashCode);
+    _$hash = $jc(_$hash, enableChartRerenderingStartedCallback.hashCode);
     _$hash = $jc(_$hash, enableObjectClickedCallback.hashCode);
     _$hash = $jc(_$hash, enableObjectSelectedCallback.hashCode);
     _$hash = $jc(_$hash, enableObjectDeselectedCallback.hashCode);
@@ -1532,6 +1559,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('region', region)
           ..add('language', language)
           ..add('pricing', pricing)
+          ..add('priceFormatter', priceFormatter)
           ..add('numberOfPlacesToSelect', numberOfPlacesToSelect)
           ..add(
               'objectWithoutPricingSelectable', objectWithoutPricingSelectable)
@@ -1581,6 +1609,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('enableChartRenderedCallback', enableChartRenderedCallback)
           ..add('enableChartRenderingFailedCallback',
               enableChartRenderingFailedCallback)
+          ..add('enableChartRerenderingStartedCallback',
+              enableChartRerenderingStartedCallback)
           ..add('enableObjectClickedCallback', enableObjectClickedCallback)
           ..add('enableObjectSelectedCallback', enableObjectSelectedCallback)
           ..add(
@@ -1637,6 +1667,11 @@ class SeatingChartConfigBuilder
       _$this._pricing ??= new ListBuilder<PricingForCategory>();
   set pricing(ListBuilder<PricingForCategory>? pricing) =>
       _$this._pricing = pricing;
+
+  Function(num price)? _priceFormatter;
+  Function(num price)? get priceFormatter => _$this._priceFormatter;
+  set priceFormatter(Function(num price)? priceFormatter) =>
+      _$this._priceFormatter = priceFormatter;
 
   int? _numberOfPlacesToSelect;
   int? get numberOfPlacesToSelect => _$this._numberOfPlacesToSelect;
@@ -1872,6 +1907,14 @@ class SeatingChartConfigBuilder
       _$this._enableChartRenderingFailedCallback =
           enableChartRenderingFailedCallback;
 
+  bool? _enableChartRerenderingStartedCallback;
+  bool? get enableChartRerenderingStartedCallback =>
+      _$this._enableChartRerenderingStartedCallback;
+  set enableChartRerenderingStartedCallback(
+          bool? enableChartRerenderingStartedCallback) =>
+      _$this._enableChartRerenderingStartedCallback =
+          enableChartRerenderingStartedCallback;
+
   bool? _enableObjectClickedCallback;
   bool? get enableObjectClickedCallback => _$this._enableObjectClickedCallback;
   set enableObjectClickedCallback(bool? enableObjectClickedCallback) =>
@@ -1974,6 +2017,7 @@ class SeatingChartConfigBuilder
       _region = $v.region;
       _language = $v.language;
       _pricing = $v.pricing?.toBuilder();
+      _priceFormatter = $v.priceFormatter;
       _numberOfPlacesToSelect = $v.numberOfPlacesToSelect;
       _objectWithoutPricingSelectable = $v.objectWithoutPricingSelectable;
       _objectWithoutCategorySelectable = $v.objectWithoutCategorySelectable;
@@ -2021,6 +2065,8 @@ class SeatingChartConfigBuilder
       _enableChartRenderedCallback = $v.enableChartRenderedCallback;
       _enableChartRenderingFailedCallback =
           $v.enableChartRenderingFailedCallback;
+      _enableChartRerenderingStartedCallback =
+          $v.enableChartRerenderingStartedCallback;
       _enableObjectClickedCallback = $v.enableObjectClickedCallback;
       _enableObjectSelectedCallback = $v.enableObjectSelectedCallback;
       _enableObjectDeselectedCallback = $v.enableObjectDeselectedCallback;
@@ -2063,7 +2109,8 @@ class SeatingChartConfigBuilder
     try {
       _$result = _$v ??
           new _$SeatingChartConfig._(
-              workspaceKey: workspaceKey,
+              workspaceKey: BuiltValueNullFieldError.checkNotNull(
+                  workspaceKey, r'SeatingChartConfig', 'workspaceKey'),
               eventKey: BuiltValueNullFieldError.checkNotNull(
                   eventKey, r'SeatingChartConfig', 'eventKey'),
               chart: chart,
@@ -2075,7 +2122,8 @@ class SeatingChartConfigBuilder
               objectWithoutCategorySelectable: objectWithoutCategorySelectable,
               selectedObjects: _selectedObjects?.build(),
               objectTooltip: _objectTooltip?.build(),
-              stylePreset: stylePreset,
+              themePreset: themePreset,
+              themeColor: themeColor,
               messages: _messages?.build(),
               priceLevelsTooltipMessage: priceLevelsTooltipMessage,
               maxSelectedObjects: maxSelectedObjects,
@@ -2085,18 +2133,15 @@ class SeatingChartConfigBuilder
               selectBestAvailable: _selectBestAvailable?.build(),
               alwaysShowSectionContents: alwaysShowSectionContents,
               showSectionContents: showSectionContents,
-              showSeatLabels: showSeatLabels,
               showLegend: showLegend,
               legend: _legend?.build(),
               showMinimap: showMinimap,
-              inputDevice: inputDevice,
               showActiveSectionTooltip: showActiveSectionTooltip,
               showViewFromYourSeat: showViewFromYourSeat,
               selectionValidators: _selectionValidators?.build(),
               categories: _categories?.build(),
               objectCategories: _objectCategories?.build(),
               mode: mode,
-              colorScheme: colorScheme,
               loading: loading,
               showLoadingAnimation: BuiltValueNullFieldError.checkNotNull(
                   showLoadingAnimation, r'SeatingChartConfig', 'showLoadingAnimation'),
@@ -2110,31 +2155,27 @@ class SeatingChartConfigBuilder
               isObjectSelectable: isObjectSelectable,
               objectColor: objectColor,
               sectionColor: sectionColor,
-              colors: colors,
               extraConfig: _extraConfig?.build(),
               showFullScreenButton: showFullScreenButton,
-              showZoomOutButtonOnMobile: showZoomOutButtonOnMobile,
               channels: _channels?.build(),
               enableChartRenderedCallback: BuiltValueNullFieldError.checkNotNull(
                   enableChartRenderedCallback, r'SeatingChartConfig', 'enableChartRenderedCallback'),
-              enableChartRenderingFailedCallback: BuiltValueNullFieldError.checkNotNull(
-                  enableChartRenderingFailedCallback,
-                  r'SeatingChartConfig',
-                  'enableChartRenderingFailedCallback'),
+              enableChartRenderingFailedCallback:
+                  BuiltValueNullFieldError.checkNotNull(
+                      enableChartRenderingFailedCallback,
+                      r'SeatingChartConfig',
+                      'enableChartRenderingFailedCallback'),
               enableObjectClickedCallback: BuiltValueNullFieldError.checkNotNull(
                   enableObjectClickedCallback, r'SeatingChartConfig', 'enableObjectClickedCallback'),
-              enableObjectSelectedCallback: BuiltValueNullFieldError.checkNotNull(
-                  enableObjectSelectedCallback, r'SeatingChartConfig', 'enableObjectSelectedCallback'),
-              enableObjectDeselectedCallback:
-                  BuiltValueNullFieldError.checkNotNull(enableObjectDeselectedCallback, r'SeatingChartConfig', 'enableObjectDeselectedCallback'),
+              enableObjectSelectedCallback:
+                  BuiltValueNullFieldError.checkNotNull(enableObjectSelectedCallback, r'SeatingChartConfig', 'enableObjectSelectedCallback'),
+              enableObjectDeselectedCallback: BuiltValueNullFieldError.checkNotNull(enableObjectDeselectedCallback, r'SeatingChartConfig', 'enableObjectDeselectedCallback'),
               enableSelectionValidCallback: BuiltValueNullFieldError.checkNotNull(enableSelectionValidCallback, r'SeatingChartConfig', 'enableSelectionValidCallback'),
               enableSelectionInvalidCallback: BuiltValueNullFieldError.checkNotNull(enableSelectionInvalidCallback, r'SeatingChartConfig', 'enableSelectionInvalidCallback'),
               enableBestAvailableSelectedCallback: BuiltValueNullFieldError.checkNotNull(enableBestAvailableSelectedCallback, r'SeatingChartConfig', 'enableBestAvailableSelectedCallback'),
               enableBestAvailableSelectionFailedCallback: BuiltValueNullFieldError.checkNotNull(enableBestAvailableSelectionFailedCallback, r'SeatingChartConfig', 'enableBestAvailableSelectionFailedCallback'),
               enableHoldSucceededCallback: BuiltValueNullFieldError.checkNotNull(enableHoldSucceededCallback, r'SeatingChartConfig', 'enableHoldSucceededCallback'),
               enableHoldFailedCallback: BuiltValueNullFieldError.checkNotNull(enableHoldFailedCallback, r'SeatingChartConfig', 'enableHoldFailedCallback'),
-              enableHoldTokenExpiredCallback: BuiltValueNullFieldError.checkNotNull(enableHoldTokenExpiredCallback, r'SeatingChartConfig', 'enableHoldTokenExpiredCallback'),
-              enableSessionInitializedCallback: BuiltValueNullFieldError.checkNotNull(enableSessionInitializedCallback, r'SeatingChartConfig', 'enableSessionInitializedCallback'),
               enableReleaseHoldSucceededCallback: BuiltValueNullFieldError.checkNotNull(enableReleaseHoldSucceededCallback, r'SeatingChartConfig', 'enableReleaseHoldSucceededCallback'),
               enableReleaseHoldFailedCallback: BuiltValueNullFieldError.checkNotNull(enableReleaseHoldFailedCallback, r'SeatingChartConfig', 'enableReleaseHoldFailedCallback'),
               enableSelectedObjectBookedCallback: BuiltValueNullFieldError.checkNotNull(enableSelectedObjectBookedCallback, r'SeatingChartConfig', 'enableSelectedObjectBookedCallback'));
@@ -2275,10 +2316,11 @@ class SelectedObjectBuilder
   _$SelectedObject _build() {
     final _$result = _$v ??
         new _$SelectedObject._(
-            label: BuiltValueNullFieldError.checkNotNull(
-                label, r'SelectedObject', 'label'),
-            ticketType: ticketType,
-            amount: amount);
+          label: BuiltValueNullFieldError.checkNotNull(
+              label, r'SelectedObject', 'label'),
+          ticketType: ticketType,
+          amount: amount,
+        );
     replace(_$result);
     return _$result;
   }
@@ -2460,22 +2502,25 @@ class ObjectTooltipBuilder
   _$ObjectTooltip _build() {
     final _$result = _$v ??
         new _$ObjectTooltip._(
-            showActionHint: BuiltValueNullFieldError.checkNotNull(
-                showActionHint, r'ObjectTooltip', 'showActionHint'),
-            showAvailability: BuiltValueNullFieldError.checkNotNull(
-                showAvailability, r'ObjectTooltip', 'showAvailability'),
-            showCategory: BuiltValueNullFieldError.checkNotNull(
-                showCategory, r'ObjectTooltip', 'showCategory'),
-            showLabel: BuiltValueNullFieldError.checkNotNull(
-                showLabel, r'ObjectTooltip', 'showLabel'),
-            showPricing: BuiltValueNullFieldError.checkNotNull(
-                showPricing, r'ObjectTooltip', 'showPricing'),
-            showUnavailableNotice: BuiltValueNullFieldError.checkNotNull(
-                showUnavailableNotice, r'ObjectTooltip', 'showUnavailableNotice'),
-            stylizedLabel: BuiltValueNullFieldError.checkNotNull(
-                stylizedLabel, r'ObjectTooltip', 'stylizedLabel'),
-            confirmSelectionOnMobile: BuiltValueNullFieldError.checkNotNull(
-                confirmSelectionOnMobile, r'ObjectTooltip', 'confirmSelectionOnMobile'));
+          showActionHint: BuiltValueNullFieldError.checkNotNull(
+              showActionHint, r'ObjectTooltip', 'showActionHint'),
+          showAvailability: BuiltValueNullFieldError.checkNotNull(
+              showAvailability, r'ObjectTooltip', 'showAvailability'),
+          showCategory: BuiltValueNullFieldError.checkNotNull(
+              showCategory, r'ObjectTooltip', 'showCategory'),
+          showLabel: BuiltValueNullFieldError.checkNotNull(
+              showLabel, r'ObjectTooltip', 'showLabel'),
+          showPricing: BuiltValueNullFieldError.checkNotNull(
+              showPricing, r'ObjectTooltip', 'showPricing'),
+          showUnavailableNotice: BuiltValueNullFieldError.checkNotNull(
+              showUnavailableNotice, r'ObjectTooltip', 'showUnavailableNotice'),
+          stylizedLabel: BuiltValueNullFieldError.checkNotNull(
+              stylizedLabel, r'ObjectTooltip', 'stylizedLabel'),
+          confirmSelectionOnMobile: BuiltValueNullFieldError.checkNotNull(
+              confirmSelectionOnMobile,
+              r'ObjectTooltip',
+              'confirmSelectionOnMobile'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2576,12 +2621,13 @@ class LegendForCategoryBuilder
   _$LegendForCategory _build() {
     final _$result = _$v ??
         new _$LegendForCategory._(
-            hideNonSelectableCategories: BuiltValueNullFieldError.checkNotNull(
-                hideNonSelectableCategories,
-                r'LegendForCategory',
-                'hideNonSelectableCategories'),
-            hidePricing: BuiltValueNullFieldError.checkNotNull(
-                hidePricing, r'LegendForCategory', 'hidePricing'));
+          hideNonSelectableCategories: BuiltValueNullFieldError.checkNotNull(
+              hideNonSelectableCategories,
+              r'LegendForCategory',
+              'hideNonSelectableCategories'),
+          hidePricing: BuiltValueNullFieldError.checkNotNull(
+              hidePricing, r'LegendForCategory', 'hidePricing'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2711,12 +2757,13 @@ class BestAvailableBuilder
     try {
       _$result = _$v ??
           new _$BestAvailable._(
-              number: BuiltValueNullFieldError.checkNotNull(
-                  number, r'BestAvailable', 'number'),
-              category: category.build(),
-              ticketTypes: ticketTypes.build(),
-              clearSelection: BuiltValueNullFieldError.checkNotNull(
-                  clearSelection, r'BestAvailable', 'clearSelection'));
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'BestAvailable', 'number'),
+            category: category.build(),
+            ticketTypes: ticketTypes.build(),
+            clearSelection: BuiltValueNullFieldError.checkNotNull(
+                clearSelection, r'BestAvailable', 'clearSelection'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2814,8 +2861,9 @@ class SelectionValidatorBuilder
   _$SelectionValidator _build() {
     final _$result = _$v ??
         new _$SelectionValidator._(
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'SelectionValidator', 'type'));
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'SelectionValidator', 'type'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2923,12 +2971,13 @@ class TicketListingBuilder
   _$TicketListing _build() {
     final _$result = _$v ??
         new _$TicketListing._(
-            section: BuiltValueNullFieldError.checkNotNull(
-                section, r'TicketListing', 'section'),
-            quantity: BuiltValueNullFieldError.checkNotNull(
-                quantity, r'TicketListing', 'quantity'),
-            price: BuiltValueNullFieldError.checkNotNull(
-                price, r'TicketListing', 'price'));
+          section: BuiltValueNullFieldError.checkNotNull(
+              section, r'TicketListing', 'section'),
+          quantity: BuiltValueNullFieldError.checkNotNull(
+              quantity, r'TicketListing', 'quantity'),
+          price: BuiltValueNullFieldError.checkNotNull(
+              price, r'TicketListing', 'price'),
+        );
     replace(_$result);
     return _$result;
   }

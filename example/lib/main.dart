@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
@@ -22,7 +23,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({
+    super.key,
+    required this.title,
+  });
 
   final String title;
 
@@ -35,10 +39,10 @@ const myPricingList = [
 ];
 
 class _MyHomePageState extends State<MyHomePage> {
-  SeatsioWebViewController? _seatsioController;
-  final List<String> selectedObjectLabels = ['Try to click a seat object'];
-
+  late final SeatsioWebViewController? _seatsioController;
   late final SeatingChartConfig _chartConfig;
+
+  final selectedObjectLabels = ['Try to click a seat object'];
 
   @override
   void initState() {
@@ -106,8 +110,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 _seatsioController = controller;
                 _loadSeatsio();
               },
-              onChartRendered: (_) => print("[Seatsio]->[example]-> onChartRendered"),
-              onChartRenderingFailed: () => print("[Seatsio]->[example]-> onChartRenderingFailed"),
+              onChartRendered: (_) {
+                print("[Seatsio]->[example]-> onChartRendered");
+              },
+              onChartRenderingFailed: () {
+                print("[Seatsio]->[example]-> onChartRenderingFailed");
+              },
+              onChartRerenderingStarted: () {
+                print("[Seatsio]->[example]-> onChartRerenderingStarted");
+              },
               onObjectSelected: (object, type) {
                 print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
                 _selectSeat(object);
@@ -131,19 +142,21 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 100,
             child: ListView.builder(
               itemCount: selectedObjectLabels.length,
-              itemBuilder: (_, index) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(selectedObjectLabels[index]),
-                  IconButton(
-                    onPressed: () {
-                      final chart = SeatingChart(_seatsioController!);
-                      chart.deselectObject([selectedObjectLabels[index]]);
-                    },
-                    icon: Icon(Icons.delete_forever),
-                  ),
-                ],
-              ),
+              itemBuilder: (_, index) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(selectedObjectLabels[index]),
+                    IconButton(
+                      onPressed: () {
+                        final chart = SeatingChart(_seatsioController!);
+                        chart.deselectObject([selectedObjectLabels[index]]);
+                      },
+                      icon: Icon(Icons.delete_forever),
+                    ),
+                  ],
+                );
+              },
             ),
           )
         ],
@@ -156,12 +169,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _selectSeat(SeatsioObject object) {
-    setState(() => selectedObjectLabels.add(object.label));
+    setState(() {
+      selectedObjectLabels.add(object.label);
+    });
   }
 
   void _deselectSeat(SeatsioObject object) {
     if (selectedObjectLabels.contains(object.label)) {
-      setState(() => selectedObjectLabels.remove(object.label));
+      setState(() {
+        selectedObjectLabels.remove(object.label);
+      });
     }
   }
 

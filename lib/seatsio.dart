@@ -1,8 +1,7 @@
 library seatsio;
-
-export 'src/models/hold_token.dart';
-export 'src/models/pricing_for_category.dart';
-export 'src/models/seating_chart.dart';
+export 'src/ui/seatsio_web_view.dart';
+export 'src/util/seatsio_js_bridge.dart';
+export 'src/util/seatsio_web_view_controller.dart';
 export 'src/models/seating_chart_config.dart';
 export 'src/models/seating_config_change.dart';
 export 'src/models/seatsio_category.dart';
@@ -14,3 +13,5 @@ export 'src/models/seatsio_ticket_type.dart';
 export 'src/ui/seatsio_web_view.dart';
 export 'src/util/seatsio_js_bridge.dart';
 export 'src/util/seatsio_web_view_controller.dart';
+export 'src/models/seatsio_ticket_type.dart';
+export 'src/models/hold_token.dart';

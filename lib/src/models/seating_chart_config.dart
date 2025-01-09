@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/models/seatsio_config_colors.dart';
 import 'package:seatsio/src/models/hold_token.dart';
 
@@ -73,6 +74,9 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Both are defined using the pricing configuration parameter
   /// Detail: https://docs.seats.io/docs/renderer/config-pricing/
   BuiltList<PricingForCategory>? get pricing;
+
+  @BuiltValueField(wireName: 'priceFormatter', serialize: false)
+  Function(num price)? get priceFormatter;
 
   /// Activates one-click selection mode.
   /// If you pass in numberOfPlacesToSelect: 3,
@@ -236,6 +240,8 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   bool get enableChartRenderingFailedCallback;
 
+  bool get enableChartRerenderingStartedCallback;
+
   bool get enableObjectClickedCallback;
 
   bool get enableObjectSelectedCallback;
@@ -265,28 +271,31 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   bool get enableSelectedObjectBookedCallback;
 
   factory SeatingChartConfig.init() {
-    return SeatingChartConfig((b) => b
-      ..workspaceKey = ""
-      ..eventKey = ""
-      ..region = 'eu'
-      ..language = 'en'
-      ..showLoadingAnimation = true
-      ..enableChartRenderedCallback = true
-      ..enableChartRenderingFailedCallback = true
-      ..enableObjectClickedCallback = true
-      ..enableObjectSelectedCallback = true
-      ..enableObjectDeselectedCallback = true
-      ..enableSelectionValidCallback = false
-      ..enableSelectionInvalidCallback = false
-      ..enableBestAvailableSelectedCallback = false
-      ..enableBestAvailableSelectionFailedCallback = false
-      ..enableHoldSucceededCallback = false
-      ..enableHoldFailedCallback = false
-      ..enableHoldTokenExpiredCallback = true
-      ..enableSessionInitializedCallback = true
-      ..enableReleaseHoldSucceededCallback = false
-      ..enableReleaseHoldFailedCallback = false
-      ..enableSelectedObjectBookedCallback = false);
+    return SeatingChartConfig(
+      (b) => b
+        ..workspaceKey = ""
+        ..eventKey = ""
+        ..region = 'eu'
+        ..language = 'en'
+        ..showLoadingAnimation = true
+        ..enableChartRenderedCallback = true
+        ..enableChartRenderingFailedCallback = true
+        ..enableChartRerenderingStartedCallback = false
+        ..enableObjectClickedCallback = true
+        ..enableObjectSelectedCallback = true
+        ..enableObjectDeselectedCallback = true
+        ..enableSelectionValidCallback = false
+        ..enableSelectionInvalidCallback = false
+        ..enableBestAvailableSelectedCallback = false
+        ..enableBestAvailableSelectionFailedCallback = false
+        ..enableHoldSucceededCallback = false
+        ..enableHoldFailedCallback = false
+        ..enableHoldTokenExpiredCallback = true
+        ..enableSessionInitializedCallback = true
+        ..enableReleaseHoldSucceededCallback = false
+        ..enableReleaseHoldFailedCallback = false
+        ..enableSelectedObjectBookedCallback = false,
+    );
   }
 
   // todo: Miss some key-values
@@ -316,6 +325,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
+      "priceFormatter": priceFormatter,
     };
 
     if (pricing != null) {
@@ -395,7 +405,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 }
 
 abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBuilder> {
-  const SelectedObject._();
+  SelectedObject._();
 
   factory SelectedObject([updates(SelectedObjectBuilder b)]) = _$SelectedObject;
 
@@ -406,15 +416,10 @@ abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBui
   int? get amount;
 
   static Serializer<SelectedObject> get serializer => _$selectedObjectSerializer;
-
-  @override
-  String toString() {
-    return 'SelectedObject(label: $label, ticketType: $ticketType, amount: $amount)';
-  }
 }
 
 abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilder> {
-  const ObjectTooltip._();
+  ObjectTooltip._();
 
   factory ObjectTooltip([updates(ObjectTooltipBuilder b)]) = _$ObjectTooltip;
 
@@ -438,7 +443,7 @@ abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilde
 }
 
 abstract class LegendForCategory implements Built<LegendForCategory, LegendForCategoryBuilder> {
-  const LegendForCategory._();
+  LegendForCategory._();
 
   factory LegendForCategory([updates(LegendForCategoryBuilder b)]) = _$LegendForCategory;
 
@@ -450,7 +455,7 @@ abstract class LegendForCategory implements Built<LegendForCategory, LegendForCa
 }
 
 abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilder> {
-  const BestAvailable._();
+  BestAvailable._();
 
   factory BestAvailable([updates(BestAvailableBuilder b)]) = _$BestAvailable;
 
@@ -466,7 +471,7 @@ abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilde
 }
 
 abstract class SelectionValidator implements Built<SelectionValidator, SelectionValidatorBuilder> {
-  const SelectionValidator._();
+  SelectionValidator._();
 
   factory SelectionValidator([updates(SelectionValidatorBuilder b)]) = _$SelectionValidator;
 
@@ -478,7 +483,7 @@ abstract class SelectionValidator implements Built<SelectionValidator, Selection
 }
 
 abstract class TicketListing implements Built<TicketListing, TicketListingBuilder> {
-  const TicketListing._();
+  TicketListing._();
 
   factory TicketListing([updates(TicketListingBuilder b)]) = _$TicketListing;
 

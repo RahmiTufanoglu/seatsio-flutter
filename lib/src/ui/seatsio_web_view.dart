@@ -22,6 +22,7 @@ class SeatsioWebView extends StatefulWidget {
     SeatsioCategoryListCallback? onCategoryListCallback,
     SeatingChartCallback? onChartRendered,
     VoidCallback? onChartRenderingFailed,
+    VoidCallback? onChartRerenderingStarted,
     SeatsioObjectCallback? onObjectClicked,
     SeatsioObjectTicketTypeCallback? onObjectSelected,
     SeatsioObjectTicketTypeCallback? onObjectDeselected,
@@ -43,6 +44,7 @@ class SeatsioWebView extends StatefulWidget {
         this._onCategoryListCallback = onCategoryListCallback,
         this._onChartRendered = onChartRendered,
         this._onChartRenderingFailed = onChartRenderingFailed,
+        this._onChartRerenderingStarted = onChartRerenderingStarted,
         this._onObjectClicked = onObjectClicked,
         this._onObjectSelected = onObjectSelected,
         this._onObjectDeselected = onObjectDeselected,
@@ -78,6 +80,8 @@ class SeatsioWebView extends StatefulWidget {
   final SeatingChartCallback? _onChartRendered;
 
   final VoidCallback? _onChartRenderingFailed;
+
+  final VoidCallback? _onChartRerenderingStarted;
 
   /// Fired when best available objects are successfully selected. This callback receives two parameters:
   /// [array_of_objects]: the best available objects
@@ -129,6 +133,7 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
         ..addJavaScriptChannel('onObjectDeselected', onMessageReceived: onObjectDeselected)
         ..addJavaScriptChannel('onChartRendered', onMessageReceived: onChartRendered)
         ..addJavaScriptChannel('onChartRenderingFailed', onMessageReceived: onChartRenderingFailed)
+        ..addJavaScriptChannel('onChartRerenderingStarted', onMessageReceived: onChartRerenderingStarted)
         ..addJavaScriptChannel('onSelectionValid', onMessageReceived: onSelectionValid)
         ..addJavaScriptChannel('onSelectionInvalid', onMessageReceived: onSelectionInvalid)
         ..addJavaScriptChannel('onBestAvailableSelectionFailed', onMessageReceived: onBestAvailableSelectionFailed)
@@ -220,6 +225,12 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
     if (widget._onChartRenderingFailed == null) return;
     if (widget._enableDebug) kDebugPrint("[Seatsio]-> onChartRenderingFailed callback message: ${message.message}");
     widget._onChartRenderingFailed?.call();
+  }
+
+  void onChartRerenderingStarted(JavaScriptMessage message) {
+    if (widget._onChartRerenderingStarted == null) return;
+    if (widget._enableDebug) kDebugPrint("[Seatsio]-> onChartRerenderingStarted callback message: ${message.message}");
+    widget._onChartRerenderingStarted?.call();
   }
 
   void onSelectionValid(JavaScriptMessage message) {
