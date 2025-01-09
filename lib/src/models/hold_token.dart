@@ -25,6 +25,18 @@ class HoldToken {
     };
   }
 
+  HoldToken copyWith({
+    String? token,
+    DateTime? expiresAt,
+    int? expiresInSeconds,
+  }) {
+    return HoldToken(
+      token: token ?? this.token,
+      expiresAt: expiresAt ?? this.expiresAt,
+      expiresInSeconds: expiresInSeconds ?? this.expiresInSeconds,
+    );
+  }
+
   @override
   String toString() {
     return 'HoldToken(token: $token, expiresAt: $expiresAt, expiresInSeconds: $expiresInSeconds)';

@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'seatsio_category.dart';
-import 'seatsio_label.dart';
-import 'seatsio_point.dart';
+import 'package:seatsio/seatsio.dart';
 
 part 'seatsio_object.g.dart';
 
-abstract class SeatsioObject
-    implements Built<SeatsioObject, SeatsioObjectBuilder> {
+abstract class SeatsioObject implements Built<SeatsioObject, SeatsioObjectBuilder> {
   const SeatsioObject._();
 
   factory SeatsioObject([updates(SeatsioObjectBuilder b)]) = _$SeatsioObject;
@@ -72,8 +69,7 @@ abstract class SeatsioObject
         ..forSale = data["forSale"]
         ..selectable = data["selectable"]
         ..seats = data['seats'] != null
-            ? List<SeatsioObject>.from(
-                data['seats']?.map((x) => SeatsioObject.fromMap(x)))
+            ? List<SeatsioObject>.from(data['seats']?.map((x) => SeatsioObject.fromMap(x)))
             : null,
     );
   }

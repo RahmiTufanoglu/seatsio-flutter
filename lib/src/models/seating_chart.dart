@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'package:seatsio/src/util/constants.dart';
 import '../util/seatsio_web_view_controller.dart';
 import 'seating_config_change.dart';
 import 'seatsio_category.dart';
@@ -20,7 +20,14 @@ class SeatingChart {
   }
 
   void deselectObject(List<String> objects) {
-    // inject javascript to SeatsioWebView
+    final objectsJson = jsonEncode(objects);
+    final jsString = "deselectObjects('$objectsJson');";
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      kDebugPrint("[Seatsio]-> deselectObject error: $error");
+    }
   }
 
   void changeConfig(SeatingConfigChange configChange) {
@@ -29,8 +36,13 @@ class SeatingChart {
     configJson = configJson.replaceAll("'", "\\\'");
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
-    debugPrint("[Seatsio]-> changeConfig jsString: $jsString");
-    seatsioController.evaluateJavascript(jsString);
+    kDebugPrint("[Seatsio]-> changeConfig jsString: $jsString");
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      kDebugPrint("[Seatsio]-> changeConfig error: $error");
+    }
   }
 
   void listCategories(CategoryListCallback callback) {
@@ -38,7 +50,12 @@ class SeatingChart {
     // get category from bridge callback
 
     final jsString = "listCategories(null, postMessageToFlutter);";
-    seatsioController.evaluateJavascript(jsString);
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      kDebugPrint("[Seatsio]-> listCategories error: $error");
+    }
 
     callback([]);
   }
@@ -48,7 +65,12 @@ class SeatingChart {
     // get category from bridge callback
 
     final jsString = "listCategories(null, postMessageToFlutter);";
-    seatsioController.evaluateJavascript(jsString);
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } catch (error) {
+      kDebugPrint("[Seatsio]-> listCategories error: $error");
+    }
   }
 
   @override
