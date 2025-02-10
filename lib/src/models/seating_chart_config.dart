@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/models/seatsio_config_colors.dart';
 
 import 'pricing_for_category.dart';
@@ -22,7 +21,7 @@ typedef SelectionValidatorTypesCallback = void Function(List<SelectionValidatorT
 typedef SeatsioObjectsBoolCallback = void Function(List<SeatsioObject>, bool);
 typedef SeatsioObjectTicketTypeCallback = void Function(SeatsioObject, SeatsioTicketType?);
 typedef SeatsioObjectsTicketTypesCallback = void Function(List<SeatsioObject>, List<SeatsioTicketType>?);
-typedef SeatsioHoldTokenCallback = void Function(HoldToken holdToken);
+typedef SeatsioHoldTokenCallback = void Function(Map<String, dynamic>);
 
 enum SelectionValidatorType {
   consecutiveSeats,

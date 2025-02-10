@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/util/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -300,8 +299,8 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
   void onSessionInitialized(JavaScriptMessage message) {
     if (widget._onSessionInitialized == null) return;
     if (widget._enableDebug) kDebugPrint("[Seatsio]-> onSessionInitialized callback message: ${message.message}");
-    final holdToken = HoldToken.fromJson(jsonDecode(message.message));
-    widget._onSessionInitialized?.call(holdToken);
+    final holdTokenJson = jsonDecode(message.message) as Map<String, dynamic>;
+    widget._onSessionInitialized?.call(holdTokenJson);
   }
 
   void onReleaseHoldSucceeded(JavaScriptMessage message) {
