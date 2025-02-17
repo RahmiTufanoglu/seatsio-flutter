@@ -20,9 +20,8 @@ final String seatsioHTML = """
             callback(data)
         }
 
-        async function deselectObjects(data) {
-            await chart.deselectObjects(JSON.parse(data))
-            return data;
+        function deselectObjects(data) {
+            chart.deselectObjects(JSON.parse(data))
         }
 
         // [end]
