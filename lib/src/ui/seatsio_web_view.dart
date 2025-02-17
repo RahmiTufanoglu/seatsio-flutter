@@ -194,23 +194,23 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
     }
   }
 
-  void onObjectSelected(JavaScriptMessage message) {
+  Future<void> onObjectSelected(JavaScriptMessage message) async {
     if (widget._onObjectSelected == null) return;
     if (widget._enableDebug) kDebugPrint("[Seatsio]-> onObjectSelected callback message: ${message.message}");
     final object = SeatsioObject.fromJson(message.message);
     if (object != null) {
-      widget._onObjectSelected?.call(object, null);
+      await widget._onObjectSelected?.call(object, null);
     }
   }
 
-  void onObjectDeselected(JavaScriptMessage message) {
+  Future<void> onObjectDeselected(JavaScriptMessage message) async {
     if (widget._onObjectDeselected == null) return;
     if (widget._enableDebug) kDebugPrint("[Seatsio]-> onObjectDeselected callback message: ${message.message}");
     final object = SeatsioObject.fromJson(message.message);
     if (object != null) {
       // todo: Miss ticketType parameter
       // Does not found ticketType from javascript message like iOS SDK.
-      widget._onObjectDeselected?.call(object, null);
+      await widget._onObjectDeselected?.call(object, null);
     }
   }
 

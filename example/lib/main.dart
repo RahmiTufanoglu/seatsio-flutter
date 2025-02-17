@@ -119,11 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChartRerenderingStarted: () {
                   print("[Seatsio]->[example]-> onChartRerenderingStarted");
                 },
-                onObjectSelected: (object, type) {
+                onObjectSelected: (object, type) async {
                   print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
                   _selectSeat(object);
                 },
-                onObjectDeselected: (object, type) {
+                onObjectDeselected: (object, type) async {
                   print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
                   _deselectSeat(object);
                 },

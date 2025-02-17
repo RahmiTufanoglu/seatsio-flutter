@@ -20,7 +20,7 @@ typedef SeatingChartCallback = void Function(SeatingChart);
 typedef SeatsioCategoryListCallback = void Function(BuiltList<SeatsioCategory>?);
 typedef SelectionValidatorTypesCallback = void Function(List<SelectionValidatorType>);
 typedef SeatsioObjectsBoolCallback = void Function(List<SeatsioObject>, bool);
-typedef SeatsioObjectTicketTypeCallback = void Function(SeatsioObject, SeatsioTicketType?);
+typedef SeatsioObjectTicketTypeCallback = Future<void> Function(SeatsioObject, SeatsioTicketType?);
 typedef SeatsioObjectsTicketTypesCallback = void Function(List<SeatsioObject>, List<SeatsioTicketType>?);
 typedef SeatsioHoldTokenCallback = void Function(HoldToken holdToken);
 enum SelectionValidatorType {
