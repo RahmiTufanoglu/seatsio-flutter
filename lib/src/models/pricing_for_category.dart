@@ -7,19 +7,17 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pricing_for_category.g.dart';
 
-abstract class PricingForCategory
-    implements Built<PricingForCategory, PricingForCategoryBuilder> {
+abstract class PricingForCategory implements Built<PricingForCategory, PricingForCategoryBuilder> {
   const PricingForCategory._();
 
-  factory PricingForCategory([updates(PricingForCategoryBuilder b)]) =
-      _$PricingForCategory;
+  factory PricingForCategory([updates(PricingForCategoryBuilder b)]) = _$PricingForCategory;
 
   int? get categoryKey;
 
   @JsonKey()
   String? get category;
 
-  num? get price;
+  String? get price;
 
   BuiltList<TicketTypePricing>? get ticketTypes;
 
@@ -40,23 +38,18 @@ abstract class PricingForCategory
       ..categoryKey = data["categoryKey"]
       ..category = data["category"]
       ..price = data["price"]
-      ..ticketTypes =
-          TicketTypePricing.arrayFromJson(data["ticketTypes"])?.toBuilder());
+      ..ticketTypes = TicketTypePricing.arrayFromJson(data["ticketTypes"])?.toBuilder());
   }
 
-  static Serializer<PricingForCategory> get serializer =>
-      _$pricingForCategorySerializer;
+  static Serializer<PricingForCategory> get serializer => _$pricingForCategorySerializer;
 
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'category': categoryKey ?? category, 'price': price};
+  Map<String, dynamic> toJson() => <String, dynamic>{'category': categoryKey ?? category, 'price': price};
 }
 
-abstract class TicketTypePricing
-    implements Built<TicketTypePricing, TicketTypePricingBuilder> {
-  TicketTypePricing._();
+abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypePricingBuilder> {
+  const TicketTypePricing._();
 
-  factory TicketTypePricing([updates(TicketTypePricingBuilder b)]) =
-      _$TicketTypePricing;
+  factory TicketTypePricing([updates(TicketTypePricingBuilder b)]) = _$TicketTypePricing;
 
   String? get ticketType;
 
@@ -89,6 +82,5 @@ abstract class TicketTypePricing
     return null;
   }
 
-  static Serializer<TicketTypePricing> get serializer =>
-      _$ticketTypePricingSerializer;
+  static Serializer<TicketTypePricing> get serializer => _$ticketTypePricingSerializer;
 }

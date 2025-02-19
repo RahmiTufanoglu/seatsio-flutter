@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:seatsio/src/models/hold_token.dart';
+import 'package:seatsio/src/models/seatsio_config_colors.dart';
 
 import 'pricing_for_category.dart';
 import 'seating_chart.dart';
@@ -19,10 +20,9 @@ typedef SeatingChartCallback = void Function(SeatingChart);
 typedef SeatsioCategoryListCallback = void Function(BuiltList<SeatsioCategory>?);
 typedef SelectionValidatorTypesCallback = void Function(List<SelectionValidatorType>);
 typedef SeatsioObjectsBoolCallback = void Function(List<SeatsioObject>, bool);
-typedef SeatsioObjectTicketTypeCallback = void Function(SeatsioObject, SeatsioTicketType?);
+typedef SeatsioObjectTicketTypeCallback = Future<void> Function(SeatsioObject, SeatsioTicketType?);
 typedef SeatsioObjectsTicketTypesCallback = void Function(List<SeatsioObject>, List<SeatsioTicketType>?);
 typedef SeatsioHoldTokenCallback = void Function(HoldToken holdToken);
-
 enum SelectionValidatorType {
   consecutiveSeats,
   noOrphanSeats,
@@ -37,7 +37,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// You can find it on your workspace settings page.
   /// This parameter used to be called [publicKey]
   @BuiltValueField(wireName: 'publicKey')
-  String get workspaceKey;
+  String? get workspaceKey;
 
   /// The key of the event for which you want to render the seating chart.
   /// Either [events] or [event] must be passed in, but not both.
@@ -101,13 +101,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Detail: https://docs.seats.io/docs/renderer/config-objecttooltip/
   ObjectTooltip? get objectTooltip;
 
-  /// https://docs.seats.io/docs/renderer/stylepreset/
+  /// Sets the preset of styles to use for the seating chart user interface.
   /// Possible values: 'balance', 'bubblegum', 'flathead', 'bezels', 'leaf'
-  String? get themePreset;
-
-  /// https://docs.seats.io/docs/renderer/colorscheme/
-  /// Possible values: 'light', 'dark',
-  String? get themeColor;
+  /// Defaults to 'balance'
+  String? get stylePreset;
 
   BuiltMap<String, String>? get messages;
 
@@ -129,6 +126,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   bool? get alwaysShowSectionContents;
 
   String? get showSectionContents;
+
+  /// Set to true to show seat labels in your chart.
+  /// https://docs.seats.io/docs/renderer/config-showseatlabels/
+  bool? get showSeatLabels;
 
   /// If true, a legend with the category names and colors is rendered at the top of the chart.
   /// https://docs.seats.io/docs/renderer/config-legend
@@ -176,6 +177,11 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// https://docs.seats.io/docs/renderer/config-mode
   String? get mode;
 
+  /// Sets the color scheme for the Designer canvas (background).
+  /// The color picker will provide the corresponding color palettes
+  /// for better contrast against light or dark backgrounds.
+  String? get colorScheme;
+
   /// This parameter allows you to override the default seats.io spinner
   /// that is shown while the floor plan is being loaded.
   ///  The value can contain (valid) html, like so: "<div class='loader'>Loading...</div>"
@@ -211,16 +217,28 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
   String? get sectionColor;
 
+  SeatsioConfigColors? get colors;
+
   /// https://docs.seats.io/docs/renderer/config-extraconfig
   BuiltMap<String, String>? get extraConfig;
 
   bool? get showFullScreenButton;
+
+  /// When you zoom in on a seating chart, a button to reset the zoom level
+  /// appears on the bottom left. On desktop, this is the only way to zoom
+  /// out again. But on mobile, users can use pinch-to-zoom, and so in that
+  /// case this button is just a handy shortcut.
+  ///
+  /// Defaults to true.
+  bool? get showZoomOutButtonOnMobile;
 
   BuiltList<String>? get channels;
 
   bool get enableChartRenderedCallback;
 
   bool get enableChartRenderingFailedCallback;
+
+  bool get enableChartRerenderingStartedCallback;
 
   bool get enableObjectClickedCallback;
 
@@ -251,46 +269,58 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   bool get enableSelectedObjectBookedCallback;
 
   factory SeatingChartConfig.init() {
-    return SeatingChartConfig((b) => b
-      ..workspaceKey = ""
-      ..eventKey = ""
-      ..region = 'eu'
-      ..language = 'en'
-      ..showLoadingAnimation = true
-      ..enableChartRenderedCallback = true
-      ..enableChartRenderingFailedCallback = true
-      ..enableObjectClickedCallback = true
-      ..enableObjectSelectedCallback = true
-      ..enableObjectDeselectedCallback = true
-      ..enableSelectionValidCallback = false
-      ..enableSelectionInvalidCallback = false
-      ..enableBestAvailableSelectedCallback = false
-      ..enableBestAvailableSelectionFailedCallback = false
-      ..enableHoldSucceededCallback = false
-      ..enableHoldFailedCallback = false
-      ..enableHoldTokenExpiredCallback = true
-      ..enableSessionInitializedCallback = true
-      ..enableReleaseHoldSucceededCallback = false
-      ..enableReleaseHoldFailedCallback = false
-      ..enableSelectedObjectBookedCallback = false);
+    return SeatingChartConfig(
+      (b) => b
+        ..workspaceKey = ""
+        ..eventKey = ""
+        ..region = 'eu'
+        ..language = 'en'
+        ..showLoadingAnimation = true
+        ..enableChartRenderedCallback = true
+        ..enableChartRenderingFailedCallback = true
+        ..enableChartRerenderingStartedCallback = false
+        ..enableObjectClickedCallback = true
+        ..enableObjectSelectedCallback = true
+        ..enableObjectDeselectedCallback = true
+        ..enableSelectionValidCallback = false
+        ..enableSelectionInvalidCallback = false
+        ..enableBestAvailableSelectedCallback = false
+        ..enableBestAvailableSelectionFailedCallback = false
+        ..enableHoldSucceededCallback = false
+        ..enableHoldFailedCallback = false
+        ..enableHoldTokenExpiredCallback = true
+        ..enableSessionInitializedCallback = true
+        ..enableReleaseHoldSucceededCallback = false
+        ..enableReleaseHoldFailedCallback = false
+        ..enableSelectedObjectBookedCallback = false,
+    );
   }
 
   // todo: Miss some key-values
   /// Convert chart config info to a map
   Map<String, Object?> toMap() {
     final configMap = {
-      "workspaceKey": workspaceKey,
+      "workspaceKey": workspaceKey ?? '',
       "event": eventKey,
       "region": region ?? "eu",
       "language": language ?? "en",
       "holdToken": holdToken ?? "",
       "session": session ?? "none",
       "mode": mode,
+      "colorScheme": colorScheme,
+      "colors": colors?.toMap() ?? {},
+      "canvasColorScheme": "dark",
+      "stylePreset": stylePreset ?? 'balance',
+      "style": {
+        "font": 'Roboto',
+      },
+      "inputDevice": inputDevice ?? 'auto',
+      "showSeatLabels": showSeatLabels ?? true,
       "showLegend": showLegend ?? true,
       "showFullScreenButton": showFullScreenButton ?? true,
       "showMinimap": showMinimap ?? true,
-      "inputDevice": inputDevice ?? 'auto',
       "showActiveSectionTooltipOnMobile": showActiveSectionTooltip ?? true,
+      "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
       "priceFormatter": priceFormatter,
@@ -362,6 +392,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       }).toList();
     }
 
+    if (channels?.isNotEmpty ?? false) {
+      configMap["channels"] = channels?.toList();
+    }
+
     return configMap;
   }
 
@@ -380,11 +414,6 @@ abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBui
   int? get amount;
 
   static Serializer<SelectedObject> get serializer => _$selectedObjectSerializer;
-
-  @override
-  String toString() {
-    return 'SelectedObject(label: $label, ticketType: $ticketType, amount: $amount)';
-  }
 }
 
 abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilder> {
