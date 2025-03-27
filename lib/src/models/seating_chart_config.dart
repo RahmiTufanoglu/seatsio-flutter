@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
@@ -74,7 +72,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Seats supports two types of pricing: simple pricing and multi-level pricing.
   /// Both are defined using the pricing configuration parameter
   /// Detail: https://docs.seats.io/docs/renderer/config-pricing/
-  BuiltList<PricingForCategory>? get pricing;
+  List<PricingForCategory>? get pricing;
 
   /// The price formatter is a function that allows you to format prices in the chart.
   /// It takes a price as a parameter and should return a string.
@@ -335,7 +333,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
     };
 
     if (pricing != null) {
-      configMap["pricing"] = pricing?.toList();
+      configMap["pricing"] = pricing?.map((e) => e.toJson()).toList();
     }
 
     if (loading != null) {

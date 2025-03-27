@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
@@ -59,15 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
           colorSelected: '#E5FF00',
           colorTitle: '#E5FF00',
         )
-        ..pricing = ListBuilder<PricingForCategory>(
-          myPricingList.map(
-            (tickets) => PricingForCategory(
-              (builder) => builder
-                ..category = tickets.name
-                ..price = tickets.grossPrice,
-            )..toBuilder(),
-          ),
-        )
+        ..pricing = myPricingList
+            .map((tickets) => PricingForCategory(category: tickets.name, price: tickets.grossPrice))
+            .toList()
         ..objectTooltip = () {
           return ObjectTooltipBuilder()
             ..showActionHint = true

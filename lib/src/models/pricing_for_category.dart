@@ -1,88 +1,58 @@
-import 'dart:convert';
+import 'dart:developer';
 
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-import 'package:json_annotation/json_annotation.dart';
+class PricingForCategory {
+  final int? categoryKey;
+  final String? category;
+  final num? price;
 
-part 'pricing_for_category.g.dart';
+  final List<TicketTypePricing>? ticketTypes;
 
-abstract class PricingForCategory implements Built<PricingForCategory, PricingForCategoryBuilder> {
-  const PricingForCategory._();
-
-  factory PricingForCategory([updates(PricingForCategoryBuilder b)]) = _$PricingForCategory;
-
-  int? get categoryKey;
-
-  @JsonKey()
-  String? get category;
-
-  num? get price;
-
-  BuiltList<TicketTypePricing>? get ticketTypes;
-
-  static PricingForCategory? fromJson(String jsonString) {
-    final data = json.decode(jsonString);
-    if (data != null) {
-      return PricingForCategory.fromMap(data);
-    }
-    return null;
-  }
+  PricingForCategory({
+    this.categoryKey,
+    required this.category,
+    this.price,
+    this.ticketTypes,
+  });
 
   static PricingForCategory? fromMap(Map? data) {
-    if (data == null) {
-      return null;
-    }
-    // todo(sjq):当前pricing数据为空，以下代码待验证
-    return PricingForCategory((b) => b
-      ..categoryKey = data["categoryKey"]
-      ..category = data["category"]
-      ..price = data["price"]
-      ..ticketTypes = TicketTypePricing.arrayFromJson(data["ticketTypes"])?.toBuilder());
+    if (data == null) return null;
+
+    return PricingForCategory(
+      categoryKey: data["categoryKey"],
+      category: data["category"],
+      price: data["price"],
+      ticketTypes: (data['ticketTypes'] as List<dynamic>? ?? []).map((e) => TicketTypePricing.fromMap(e)!).toList(),
+    );
   }
 
-  static Serializer<PricingForCategory> get serializer => _$pricingForCategorySerializer;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'category': categoryKey ?? category,
-        if (price != null) 'price': price,
-        if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'category': categoryKey ?? category,
+      if (price != null) 'price': price,
+      if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
-abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypePricingBuilder> {
-  const TicketTypePricing._();
+class TicketTypePricing {
+  final String? ticketType;
+  final num? price;
+  final String? label;
 
-  factory TicketTypePricing([updates(TicketTypePricingBuilder b)]) = _$TicketTypePricing;
-
-  String? get ticketType;
-
-  num? get price;
-
-  String? get label;
+  TicketTypePricing({
+    required this.ticketType,
+    required this.price,
+    required this.label,
+  });
 
   static TicketTypePricing? fromMap(Map<String, dynamic>? data) {
-    if (data != null) {
-      return TicketTypePricing((b) => b
-        ..ticketType = data["ticketType"]
-        ..price = data["price"]
-        ..label = data["label"]);
-    }
-    return null;
-  }
+    if (data == null) return null;
 
-  static BuiltList<TicketTypePricing>? arrayFromJson(List<dynamic>? data) {
-    if (data != null) {
-      final List<TicketTypePricing> objects = [];
-      data.forEach((e) {
-        final object = TicketTypePricing.fromMap(e);
-        if (object != null) {
-          objects.add(object);
-        }
-      });
-      return objects.toBuiltList();
-    }
-    return null;
+    return TicketTypePricing(
+      ticketType: data["ticketType"],
+      price: data["price"],
+      label: data["label"],
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -90,6 +60,4 @@ abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypeP
         'price': price,
         'label': label,
       };
-
-  static Serializer<TicketTypePricing> get serializer => _$ticketTypePricingSerializer;
 }

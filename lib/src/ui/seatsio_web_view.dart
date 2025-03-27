@@ -5,15 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
-import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/util/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import '../models/seating_chart.dart';
-import '../models/seating_chart_config.dart';
-import '../models/seatsio_category.dart';
-import '../models/seatsio_object.dart';
-import '../util/seatsio_web_view_controller.dart';
 
 class SeatsioWebView extends StatefulWidget {
   const SeatsioWebView({

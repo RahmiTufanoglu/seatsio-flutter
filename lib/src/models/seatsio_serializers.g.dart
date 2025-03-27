@@ -10,7 +10,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(BestAvailable.serializer)
       ..add(LegendForCategory.serializer)
       ..add(ObjectTooltip.serializer)
-      ..add(PricingForCategory.serializer)
       ..add(SeatingChartConfig.serializer)
       ..add(SeatsioCategory.serializer)
       ..add(SeatsioLabel.serializer)
@@ -19,10 +18,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(SelectedObject.serializer)
       ..add(SelectionValidator.serializer)
       ..add(TicketListing.serializer)
-      ..add(TicketTypePricing.serializer)
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(PricingForCategory)]),
-          () => new ListBuilder<PricingForCategory>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SelectedObject)]),
           () => new ListBuilder<SelectedObject>())
@@ -55,10 +50,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(TicketTypePricing)]),
-          () => new ListBuilder<TicketTypePricing>()))
+          () => new ListBuilder<String>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

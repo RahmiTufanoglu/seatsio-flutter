@@ -87,9 +87,9 @@ class _$SeatsioCategorySerializer
               specifiedType: const FullType(String)) as String?;
           break;
         case 'pricing':
-          result.pricing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PricingForCategory))!
-              as PricingForCategory);
+          result.pricing = serializers.deserialize(value,
+                  specifiedType: const FullType(PricingForCategory))
+              as PricingForCategory?;
           break;
         case 'accessible':
           result.accessible = serializers.deserialize(value,
@@ -196,10 +196,9 @@ class SeatsioCategoryBuilder
   String? get color => _$this._color;
   set color(String? color) => _$this._color = color;
 
-  PricingForCategoryBuilder? _pricing;
-  PricingForCategoryBuilder get pricing =>
-      _$this._pricing ??= new PricingForCategoryBuilder();
-  set pricing(PricingForCategoryBuilder? pricing) => _$this._pricing = pricing;
+  PricingForCategory? _pricing;
+  PricingForCategory? get pricing => _$this._pricing;
+  set pricing(PricingForCategory? pricing) => _$this._pricing = pricing;
 
   bool? _accessible;
   bool? get accessible => _$this._accessible;
@@ -217,7 +216,7 @@ class SeatsioCategoryBuilder
       _key = $v.key;
       _label = $v.label;
       _color = $v.color;
-      _pricing = $v.pricing?.toBuilder();
+      _pricing = $v.pricing;
       _accessible = $v.accessible;
       _isFiltered = $v.isFiltered;
       _$v = null;
@@ -240,29 +239,16 @@ class SeatsioCategoryBuilder
   SeatsioCategory build() => _build();
 
   _$SeatsioCategory _build() {
-    _$SeatsioCategory _$result;
-    try {
-      _$result = _$v ??
-          new _$SeatsioCategory._(
-            key: BuiltValueNullFieldError.checkNotNull(
-                key, r'SeatsioCategory', 'key'),
-            label: label,
-            color: color,
-            pricing: _pricing?.build(),
-            accessible: accessible,
-            isFiltered: isFiltered,
-          );
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'pricing';
-        _pricing?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'SeatsioCategory', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$SeatsioCategory._(
+          key: BuiltValueNullFieldError.checkNotNull(
+              key, r'SeatsioCategory', 'key'),
+          label: label,
+          color: color,
+          pricing: pricing,
+          accessible: accessible,
+          isFiltered: isFiltered,
+        );
     replace(_$result);
     return _$result;
   }

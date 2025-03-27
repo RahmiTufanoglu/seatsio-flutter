@@ -126,7 +126,7 @@ class _$SeatingChartConfigSerializer
         ..add('pricing')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                BuiltList, const [const FullType(PricingForCategory)])));
+                List, const [const FullType(PricingForCategory)])));
     }
     value = object.numberOfPlacesToSelect;
     if (value != null) {
@@ -476,10 +476,10 @@ class _$SeatingChartConfigSerializer
               specifiedType: const FullType(String)) as String?;
           break;
         case 'pricing':
-          result.pricing.replace(serializers.deserialize(value,
+          result.pricing = serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PricingForCategory)]))!
-              as BuiltList<Object?>);
+                      List, const [const FullType(PricingForCategory)]))
+              as List<PricingForCategory>?;
           break;
         case 'numberOfPlacesToSelect':
           result.numberOfPlacesToSelect = serializers.deserialize(value,
@@ -1006,9 +1006,9 @@ class _$BestAvailableSerializer implements StructuredSerializer<BestAvailable> {
               as BuiltList<Object?>);
           break;
         case 'ticketTypes':
-          result.ticketTypes.replace(serializers.deserialize(value,
+          result.ticketTypes = serializers.deserialize(value,
                   specifiedType: const FullType(TicketTypePricing))!
-              as TicketTypePricing);
+              as TicketTypePricing;
           break;
         case 'clearSelection':
           result.clearSelection = serializers.deserialize(value,
@@ -1130,7 +1130,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final String? language;
   @override
-  final BuiltList<PricingForCategory>? pricing;
+  final List<PricingForCategory>? pricing;
   @override
   final String? priceFormatter;
   @override
@@ -1655,11 +1655,9 @@ class SeatingChartConfigBuilder
   String? get language => _$this._language;
   set language(String? language) => _$this._language = language;
 
-  ListBuilder<PricingForCategory>? _pricing;
-  ListBuilder<PricingForCategory> get pricing =>
-      _$this._pricing ??= new ListBuilder<PricingForCategory>();
-  set pricing(ListBuilder<PricingForCategory>? pricing) =>
-      _$this._pricing = pricing;
+  List<PricingForCategory>? _pricing;
+  List<PricingForCategory>? get pricing => _$this._pricing;
+  set pricing(List<PricingForCategory>? pricing) => _$this._pricing = pricing;
 
   String? _priceFormatter;
   String? get priceFormatter => _$this._priceFormatter;
@@ -2009,7 +2007,7 @@ class SeatingChartConfigBuilder
       _chart = $v.chart;
       _region = $v.region;
       _language = $v.language;
-      _pricing = $v.pricing?.toBuilder();
+      _pricing = $v.pricing;
       _priceFormatter = $v.priceFormatter;
       _numberOfPlacesToSelect = $v.numberOfPlacesToSelect;
       _objectWithoutPricingSelectable = $v.objectWithoutPricingSelectable;
@@ -2108,7 +2106,7 @@ class SeatingChartConfigBuilder
             chart: chart,
             region: region,
             language: language,
-            pricing: _pricing?.build(),
+            pricing: pricing,
             priceFormatter: priceFormatter,
             numberOfPlacesToSelect: numberOfPlacesToSelect,
             objectWithoutPricingSelectable: objectWithoutPricingSelectable,
@@ -2240,9 +2238,6 @@ class SeatingChartConfigBuilder
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'pricing';
-        _pricing?.build();
-
         _$failedField = 'selectedObjects';
         _selectedObjects?.build();
         _$failedField = 'objectTooltip';
@@ -2780,10 +2775,9 @@ class BestAvailableBuilder
       _$this._category ??= new ListBuilder<String>();
   set category(ListBuilder<String>? category) => _$this._category = category;
 
-  TicketTypePricingBuilder? _ticketTypes;
-  TicketTypePricingBuilder get ticketTypes =>
-      _$this._ticketTypes ??= new TicketTypePricingBuilder();
-  set ticketTypes(TicketTypePricingBuilder? ticketTypes) =>
+  TicketTypePricing? _ticketTypes;
+  TicketTypePricing? get ticketTypes => _$this._ticketTypes;
+  set ticketTypes(TicketTypePricing? ticketTypes) =>
       _$this._ticketTypes = ticketTypes;
 
   bool? _clearSelection;
@@ -2798,7 +2792,7 @@ class BestAvailableBuilder
     if ($v != null) {
       _number = $v.number;
       _category = $v.category.toBuilder();
-      _ticketTypes = $v.ticketTypes.toBuilder();
+      _ticketTypes = $v.ticketTypes;
       _clearSelection = $v.clearSelection;
       _$v = null;
     }
@@ -2827,7 +2821,8 @@ class BestAvailableBuilder
             number: BuiltValueNullFieldError.checkNotNull(
                 number, r'BestAvailable', 'number'),
             category: category.build(),
-            ticketTypes: ticketTypes.build(),
+            ticketTypes: BuiltValueNullFieldError.checkNotNull(
+                ticketTypes, r'BestAvailable', 'ticketTypes'),
             clearSelection: BuiltValueNullFieldError.checkNotNull(
                 clearSelection, r'BestAvailable', 'clearSelection'),
           );
@@ -2836,8 +2831,6 @@ class BestAvailableBuilder
       try {
         _$failedField = 'category';
         category.build();
-        _$failedField = 'ticketTypes';
-        ticketTypes.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'BestAvailable', _$failedField, e.toString());

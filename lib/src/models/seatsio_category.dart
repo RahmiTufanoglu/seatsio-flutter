@@ -7,12 +7,10 @@ import 'pricing_for_category.dart';
 
 part 'seatsio_category.g.dart';
 
-abstract class SeatsioCategory
-    implements Built<SeatsioCategory, SeatsioCategoryBuilder> {
+abstract class SeatsioCategory implements Built<SeatsioCategory, SeatsioCategoryBuilder> {
   const SeatsioCategory._();
 
-  factory SeatsioCategory([updates(SeatsioCategoryBuilder b)]) =
-      _$SeatsioCategory;
+  factory SeatsioCategory([updates(SeatsioCategoryBuilder b)]) = _$SeatsioCategory;
 
   String get key;
 
@@ -43,7 +41,7 @@ abstract class SeatsioCategory
       ..key = data["key"].toString()
       ..label = data["label"]
       ..color = data["color"]
-      ..pricing = PricingForCategory.fromMap(data["pricing"])?.toBuilder()
+      ..pricing = PricingForCategory.fromMap(data["pricing"])
       ..accessible = data["accessible"]
       ..isFiltered = data["isFiltered"]);
   }
@@ -63,6 +61,5 @@ abstract class SeatsioCategory
     return null;
   }
 
-  static Serializer<SeatsioCategory> get serializer =>
-      _$seatsioCategorySerializer;
+  static Serializer<SeatsioCategory> get serializer => _$seatsioCategorySerializer;
 }
