@@ -17,7 +17,7 @@ abstract class PricingForCategory implements Built<PricingForCategory, PricingFo
   @JsonKey()
   String? get category;
 
-  String? get price;
+  num? get price;
 
   BuiltList<TicketTypePricing>? get ticketTypes;
 
@@ -43,7 +43,11 @@ abstract class PricingForCategory implements Built<PricingForCategory, PricingFo
 
   static Serializer<PricingForCategory> get serializer => _$pricingForCategorySerializer;
 
-  Map<String, dynamic> toJson() => <String, dynamic>{'category': categoryKey ?? category, 'price': price};
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'category': categoryKey ?? category,
+        if (price != null) 'price': price,
+        if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
+      };
 }
 
 abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypePricingBuilder> {
@@ -67,9 +71,8 @@ abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypeP
     return null;
   }
 
-  static BuiltList<TicketTypePricing>? arrayFromJson(String? jsonString) {
-    final data = jsonString != null ? json.decode(jsonString) : null;
-    if (data != null && data is List) {
+  static BuiltList<TicketTypePricing>? arrayFromJson(List<dynamic>? data) {
+    if (data != null) {
       final List<TicketTypePricing> objects = [];
       data.forEach((e) {
         final object = TicketTypePricing.fromMap(e);
@@ -81,6 +84,12 @@ abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypeP
     }
     return null;
   }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'ticketType': ticketType,
+        'price': price,
+        'label': label,
+      };
 
   static Serializer<TicketTypePricing> get serializer => _$ticketTypePricingSerializer;
 }

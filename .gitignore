@@ -16,4 +16,6 @@ ios/Runner/GeneratedPluginRegistrant.*
 
 .flutter-plugins
 .flutter-plugins-dependencies
-.fvm
+
+# FVM Version Cache
+.fvm/

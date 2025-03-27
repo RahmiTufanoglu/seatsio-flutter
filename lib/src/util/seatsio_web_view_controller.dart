@@ -65,6 +65,12 @@ class SeatsioWebViewController {
     final callbacks = SeatsioJsBridge.buildCallbacksConfiguration(chartConfig);
     final sb = StringBuffer(chartConfigJson.substring(0, chartConfigJson.length - 1));
     callbacks.forEach((e) => sb.write(', $e'));
+
+    // Add the price formatter if it exists in chartConfig
+    if (chartConfig.priceFormatter != null) {
+      sb.write(', "priceFormatter": ${chartConfig.priceFormatter}');
+    }
+
     sb.write('}');
     chartConfigJson = sb.toString();
 

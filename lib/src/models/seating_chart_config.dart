@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
@@ -23,6 +25,7 @@ typedef SeatsioObjectsBoolCallback = void Function(List<SeatsioObject>, bool);
 typedef SeatsioObjectTicketTypeCallback = Future<void> Function(SeatsioObject, SeatsioTicketType?);
 typedef SeatsioObjectsTicketTypesCallback = void Function(List<SeatsioObject>, List<SeatsioTicketType>?);
 typedef SeatsioHoldTokenCallback = void Function(HoldToken holdToken);
+
 enum SelectionValidatorType {
   consecutiveSeats,
   noOrphanSeats,
@@ -73,8 +76,14 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   /// Detail: https://docs.seats.io/docs/renderer/config-pricing/
   BuiltList<PricingForCategory>? get pricing;
 
+  /// The price formatter is a function that allows you to format prices in the chart.
+  /// It takes a price as a parameter and should return a string.
+  /// Detail: https://docs.seats.io/docs/renderer/config-priceformatter/
+  /// Example: priceFormatter: 'price => "$" + price'
+  ///
+  /// Unfortunately this takes a string as a parameter, so it's not possible to use a function.
   @BuiltValueField(wireName: 'priceFormatter', serialize: false)
-  Function(num price)? get priceFormatter;
+  String? get priceFormatter;
 
   /// Activates one-click selection mode.
   /// If you pass in numberOfPlacesToSelect: 3,
@@ -323,7 +332,6 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
-      "priceFormatter": priceFormatter,
     };
 
     if (pricing != null) {

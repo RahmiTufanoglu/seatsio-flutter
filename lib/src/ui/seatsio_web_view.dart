@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:seatsio/seatsio.dart';
 import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/util/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -196,21 +198,25 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
 
   Future<void> onObjectSelected(JavaScriptMessage message) async {
     if (widget._onObjectSelected == null) return;
-    if (widget._enableDebug) kDebugPrint("[Seatsio]-> onObjectSelected callback message: ${message.message}");
+    if (widget._enableDebug) log("[Seatsio]-> onObjectSelected callback message: ${message.message}");
+
     final object = SeatsioObject.fromJson(message.message);
+    final seatsioTicketType = SeatsioTicketType.fromJson(message.message);
+
     if (object != null) {
-      await widget._onObjectSelected?.call(object, null);
+      await widget._onObjectSelected?.call(object, seatsioTicketType);
     }
   }
 
   Future<void> onObjectDeselected(JavaScriptMessage message) async {
     if (widget._onObjectDeselected == null) return;
-    if (widget._enableDebug) kDebugPrint("[Seatsio]-> onObjectDeselected callback message: ${message.message}");
+    if (widget._enableDebug) log("[Seatsio]-> onObjectDeselected callback message: ${message.message}");
+
     final object = SeatsioObject.fromJson(message.message);
+    final seatsioTicketType = SeatsioTicketType.fromJson(message.message);
+
     if (object != null) {
-      // todo: Miss ticketType parameter
-      // Does not found ticketType from javascript message like iOS SDK.
-      await widget._onObjectDeselected?.call(object, null);
+      await widget._onObjectDeselected?.call(object, seatsioTicketType);
     }
   }
 

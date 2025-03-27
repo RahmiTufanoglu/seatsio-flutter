@@ -41,8 +41,7 @@ class _$PricingForCategorySerializer
     if (value != null) {
       result
         ..add('price')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(num)));
     }
     value = object.ticketTypes;
     if (value != null) {
@@ -77,7 +76,7 @@ class _$PricingForCategorySerializer
           break;
         case 'price':
           result.price = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(num)) as num?;
           break;
         case 'ticketTypes':
           result.ticketTypes.replace(serializers.deserialize(value,
@@ -164,7 +163,7 @@ class _$PricingForCategory extends PricingForCategory {
   @override
   final String? category;
   @override
-  final String? price;
+  final num? price;
   @override
   final BuiltList<TicketTypePricing>? ticketTypes;
 
@@ -229,9 +228,9 @@ class PricingForCategoryBuilder
   String? get category => _$this._category;
   set category(String? category) => _$this._category = category;
 
-  String? _price;
-  String? get price => _$this._price;
-  set price(String? price) => _$this._price = price;
+  num? _price;
+  num? get price => _$this._price;
+  set price(num? price) => _$this._price = price;
 
   ListBuilder<TicketTypePricing>? _ticketTypes;
   ListBuilder<TicketTypePricing> get ticketTypes =>
@@ -272,10 +271,11 @@ class PricingForCategoryBuilder
     try {
       _$result = _$v ??
           new _$PricingForCategory._(
-              categoryKey: categoryKey,
-              category: category,
-              price: price,
-              ticketTypes: _ticketTypes?.build());
+            categoryKey: categoryKey,
+            category: category,
+            price: price,
+            ticketTypes: _ticketTypes?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -389,7 +389,10 @@ class TicketTypePricingBuilder
   _$TicketTypePricing _build() {
     final _$result = _$v ??
         new _$TicketTypePricing._(
-            ticketType: ticketType, price: price, label: label);
+          ticketType: ticketType,
+          price: price,
+          label: label,
+        );
     replace(_$result);
     return _$result;
   }

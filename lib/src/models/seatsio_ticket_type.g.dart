@@ -20,11 +20,8 @@ class _$SeatsioTicketTypeSerializer
   Iterable<Object?> serialize(Serializers serializers, SeatsioTicketType object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'price',
-      serializers.serialize(object.price,
-          specifiedType: const FullType(double)),
-      'ticketType',
-      serializers.serialize(object.ticketType,
+      'selectedTicketType',
+      serializers.serialize(object.selectedTicketType,
           specifiedType: const FullType(String)),
     ];
 
@@ -43,12 +40,8 @@ class _$SeatsioTicketTypeSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'price':
-          result.price = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
-          break;
-        case 'ticketType':
-          result.ticketType = serializers.deserialize(value,
+        case 'selectedTicketType':
+          result.selectedTicketType = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -60,19 +53,15 @@ class _$SeatsioTicketTypeSerializer
 
 class _$SeatsioTicketType extends SeatsioTicketType {
   @override
-  final double price;
-  @override
-  final String ticketType;
+  final String selectedTicketType;
 
   factory _$SeatsioTicketType(
           [void Function(SeatsioTicketTypeBuilder)? updates]) =>
       (new SeatsioTicketTypeBuilder()..update(updates))._build();
 
-  _$SeatsioTicketType._({required this.price, required this.ticketType})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(price, r'SeatsioTicketType', 'price');
+  _$SeatsioTicketType._({required this.selectedTicketType}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        ticketType, r'SeatsioTicketType', 'ticketType');
+        selectedTicketType, r'SeatsioTicketType', 'selectedTicketType');
   }
 
   @override
@@ -87,15 +76,13 @@ class _$SeatsioTicketType extends SeatsioTicketType {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SeatsioTicketType &&
-        price == other.price &&
-        ticketType == other.ticketType;
+        selectedTicketType == other.selectedTicketType;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, price.hashCode);
-    _$hash = $jc(_$hash, ticketType.hashCode);
+    _$hash = $jc(_$hash, selectedTicketType.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -103,8 +90,7 @@ class _$SeatsioTicketType extends SeatsioTicketType {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'SeatsioTicketType')
-          ..add('price', price)
-          ..add('ticketType', ticketType))
+          ..add('selectedTicketType', selectedTicketType))
         .toString();
   }
 }
@@ -113,21 +99,17 @@ class SeatsioTicketTypeBuilder
     implements Builder<SeatsioTicketType, SeatsioTicketTypeBuilder> {
   _$SeatsioTicketType? _$v;
 
-  double? _price;
-  double? get price => _$this._price;
-  set price(double? price) => _$this._price = price;
-
-  String? _ticketType;
-  String? get ticketType => _$this._ticketType;
-  set ticketType(String? ticketType) => _$this._ticketType = ticketType;
+  String? _selectedTicketType;
+  String? get selectedTicketType => _$this._selectedTicketType;
+  set selectedTicketType(String? selectedTicketType) =>
+      _$this._selectedTicketType = selectedTicketType;
 
   SeatsioTicketTypeBuilder();
 
   SeatsioTicketTypeBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _price = $v.price;
-      _ticketType = $v.ticketType;
+      _selectedTicketType = $v.selectedTicketType;
       _$v = null;
     }
     return this;
@@ -150,10 +132,8 @@ class SeatsioTicketTypeBuilder
   _$SeatsioTicketType _build() {
     final _$result = _$v ??
         new _$SeatsioTicketType._(
-          price: BuiltValueNullFieldError.checkNotNull(
-              price, r'SeatsioTicketType', 'price'),
-          ticketType: BuiltValueNullFieldError.checkNotNull(
-              ticketType, r'SeatsioTicketType', 'ticketType'),
+          selectedTicketType: BuiltValueNullFieldError.checkNotNull(
+              selectedTicketType, r'SeatsioTicketType', 'selectedTicketType'),
         );
     replace(_$result);
     return _$result;

@@ -1132,7 +1132,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final BuiltList<PricingForCategory>? pricing;
   @override
-  final Function(num price)? priceFormatter;
+  final String? priceFormatter;
   @override
   final int? numberOfPlacesToSelect;
   @override
@@ -1384,7 +1384,6 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    final dynamic _$dynamicOther = other;
     return other is SeatingChartConfig &&
         workspaceKey == other.workspaceKey &&
         eventKey == other.eventKey &&
@@ -1392,7 +1391,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         region == other.region &&
         language == other.language &&
         pricing == other.pricing &&
-        priceFormatter == _$dynamicOther.priceFormatter &&
+        priceFormatter == other.priceFormatter &&
         numberOfPlacesToSelect == other.numberOfPlacesToSelect &&
         objectWithoutPricingSelectable ==
             other.objectWithoutPricingSelectable &&
@@ -1662,9 +1661,9 @@ class SeatingChartConfigBuilder
   set pricing(ListBuilder<PricingForCategory>? pricing) =>
       _$this._pricing = pricing;
 
-  Function(num price)? _priceFormatter;
-  Function(num price)? get priceFormatter => _$this._priceFormatter;
-  set priceFormatter(Function(num price)? priceFormatter) =>
+  String? _priceFormatter;
+  String? get priceFormatter => _$this._priceFormatter;
+  set priceFormatter(String? priceFormatter) =>
       _$this._priceFormatter = priceFormatter;
 
   int? _numberOfPlacesToSelect;

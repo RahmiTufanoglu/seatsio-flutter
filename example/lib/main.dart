@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             (tickets) => PricingForCategory(
               (builder) => builder
                 ..category = tickets.name
-                ..price = tickets.grossPrice.toString(),
+                ..price = tickets.grossPrice,
             )..toBuilder(),
           ),
         )
