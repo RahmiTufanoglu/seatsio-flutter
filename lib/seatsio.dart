@@ -1,5 +1,3 @@
-library seatsio;
-
 export 'src/ui/seatsio_web_view.dart';
 export 'src/util/seatsio_js_bridge.dart';
 export 'src/util/seatsio_web_view_controller.dart';
