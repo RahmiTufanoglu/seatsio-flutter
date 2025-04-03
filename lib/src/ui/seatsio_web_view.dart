@@ -38,28 +38,29 @@ class SeatsioWebView extends StatefulWidget {
     SeatsioObjectsTicketTypesCallback? onReleaseHoldFailed,
     SeatsioObjectCallback? onSelectedObjectBooked,
     Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = const <Factory<OneSequenceGestureRecognizer>>{},
-  })  : this._enableDebug = enableDebug,
-        this._initialUrl = initialUrl,
-        this._onWebViewCreated = onWebViewCreated,
-        this._onCategoryListCallback = onCategoryListCallback,
-        this._onChartRendered = onChartRendered,
-        this._onChartRenderingFailed = onChartRenderingFailed,
-        this._onChartRenderingStarted = onChartRenderingStarted,
-        this._onObjectClicked = onObjectClicked,
-        this._onObjectSelected = onObjectSelected,
-        this._onObjectDeselected = onObjectDeselected,
-        this._onSelectionValid = onSelectionValid,
-        this._onSelectionInvalid = onSelectionInvalid,
-        this._onBestAvailableSelected = onBestAvailableSelected,
-        this._onBestAvailableSelectionFailed = onBestAvailableSelectionFailed,
-        this._onHoldSucceeded = onHoldSucceeded,
-        this._onHoldFailed = onHoldFailed,
-        this._onHoldTokenExpired = onHoldTokenExpired,
-        this._onSessionInitialized = onSessionInitialized,
-        this._onReleaseHoldSucceeded = onReleaseHoldSucceeded,
-        this._onReleaseHoldFailed = onReleaseHoldFailed,
-        this._onSelectedObjectBooked = onSelectedObjectBooked,
-        this._gestureRecognizers = gestureRecognizers;
+  })
+      : _enableDebug = enableDebug,
+        _initialUrl = initialUrl,
+        _onWebViewCreated = onWebViewCreated,
+        _onCategoryListCallback = onCategoryListCallback,
+        _onChartRendered = onChartRendered,
+        _onChartRenderingFailed = onChartRenderingFailed,
+        _onChartRenderingStarted = onChartRenderingStarted,
+        _onObjectClicked = onObjectClicked,
+        _onObjectSelected = onObjectSelected,
+        _onObjectDeselected = onObjectDeselected,
+        _onSelectionValid = onSelectionValid,
+        _onSelectionInvalid = onSelectionInvalid,
+        _onBestAvailableSelected = onBestAvailableSelected,
+        _onBestAvailableSelectionFailed = onBestAvailableSelectionFailed,
+        _onHoldSucceeded = onHoldSucceeded,
+        _onHoldFailed = onHoldFailed,
+        _onHoldTokenExpired = onHoldTokenExpired,
+        _onSessionInitialized = onSessionInitialized,
+        _onReleaseHoldSucceeded = onReleaseHoldSucceeded,
+        _onReleaseHoldFailed = onReleaseHoldFailed,
+        _onSelectedObjectBooked = onSelectedObjectBooked,
+        _gestureRecognizers = gestureRecognizers;
 
   /// Output some log if setting the [enableDebug] to true.
   final bool _enableDebug;
@@ -126,22 +127,22 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
 
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..addJavaScriptChannel('FlutterJsBridge', onMessageReceived: flutterJsBridge)
-      ..addJavaScriptChannel('onObjectClicked', onMessageReceived: onObjectClicked)
-      ..addJavaScriptChannel('onObjectSelected', onMessageReceived: onObjectSelected)
-      ..addJavaScriptChannel('onObjectDeselected', onMessageReceived: onObjectDeselected)
-      ..addJavaScriptChannel('onChartRendered', onMessageReceived: onChartRendered)
-      ..addJavaScriptChannel('onChartRenderingFailed', onMessageReceived: onChartRenderingFailed)
-      ..addJavaScriptChannel('onChartRenderingStarted', onMessageReceived: onChartRenderingStarted)
-      ..addJavaScriptChannel('onSelectionValid', onMessageReceived: onSelectionValid)
-      ..addJavaScriptChannel('onSelectionInvalid', onMessageReceived: onSelectionInvalid)
-      ..addJavaScriptChannel('onBestAvailableSelectionFailed', onMessageReceived: onBestAvailableSelectionFailed)
-      ..addJavaScriptChannel('onHoldSucceeded', onMessageReceived: onHoldSucceeded)
-      ..addJavaScriptChannel('onHoldFailed', onMessageReceived: onHoldFailed)
-      ..addJavaScriptChannel('onHoldTokenExpired', onMessageReceived: onHoldTokenExpired)
-      ..addJavaScriptChannel('onSessionInitialized', onMessageReceived: onSessionInitialized)
-      ..addJavaScriptChannel('onReleaseHoldSucceeded', onMessageReceived: onReleaseHoldSucceeded)
-      ..addJavaScriptChannel('onReleaseHoldFailed', onMessageReceived: onReleaseHoldFailed)
+      ..addJavaScriptChannel('FlutterJsBridge', onMessageReceived: flutterJsBridge)..addJavaScriptChannel(
+          'onObjectClicked', onMessageReceived: onObjectClicked)..addJavaScriptChannel(
+          'onObjectSelected', onMessageReceived: onObjectSelected)..addJavaScriptChannel(
+          'onObjectDeselected', onMessageReceived: onObjectDeselected)..addJavaScriptChannel(
+          'onChartRendered', onMessageReceived: onChartRendered)..addJavaScriptChannel(
+          'onChartRenderingFailed', onMessageReceived: onChartRenderingFailed)..addJavaScriptChannel(
+          'onChartRenderingStarted', onMessageReceived: onChartRenderingStarted)..addJavaScriptChannel(
+          'onSelectionValid', onMessageReceived: onSelectionValid)..addJavaScriptChannel(
+          'onSelectionInvalid', onMessageReceived: onSelectionInvalid)..addJavaScriptChannel(
+          'onBestAvailableSelectionFailed', onMessageReceived: onBestAvailableSelectionFailed)..addJavaScriptChannel(
+          'onHoldSucceeded', onMessageReceived: onHoldSucceeded)..addJavaScriptChannel(
+          'onHoldFailed', onMessageReceived: onHoldFailed)..addJavaScriptChannel(
+          'onHoldTokenExpired', onMessageReceived: onHoldTokenExpired)..addJavaScriptChannel(
+          'onSessionInitialized', onMessageReceived: onSessionInitialized)..addJavaScriptChannel(
+          'onReleaseHoldSucceeded', onMessageReceived: onReleaseHoldSucceeded)..addJavaScriptChannel(
+          'onReleaseHoldFailed', onMessageReceived: onReleaseHoldFailed)
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (url) {
@@ -173,8 +174,9 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
 
   // Handle default callback from javascript
   void flutterJsBridge(JavaScriptMessage message) {
-    if (widget._enableDebug)
+    if (widget._enableDebug) {
       developer.log("[Seatsio]-> _onFlutterJsBridgeChannel callback message: ${message.message}");
+    }
     // Get categories of chart if call chart.requestCategories() on the onChartRendered callback.
     final categories = SeatsioCategory.arrayFromJson(message.message);
     if (categories != null && categories.isNotEmpty) {
@@ -259,8 +261,9 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
 
   void onBestAvailableSelectionFailed(JavaScriptMessage message) {
     if (widget._onBestAvailableSelectionFailed == null) return;
-    if (widget._enableDebug)
+    if (widget._enableDebug) {
       developer.log("[Seatsio]-> onBestAvailableSelectionFailed callback message: ${message.message}");
+    }
     widget._onBestAvailableSelectionFailed?.call();
   }
 
