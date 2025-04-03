@@ -325,6 +325,13 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.colorScheme;
+    if (value != null) {
+      result
+        ..add('colorScheme')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.loading;
     if (value != null) {
       result
@@ -422,6 +429,13 @@ class _$SeatingChartConfigSerializer
     if (value != null) {
       result
         ..add('showFullScreenButton')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.showZoomOutButtonOnMobile;
+    if (value != null) {
+      result
+        ..add('showZoomOutButtonOnMobile')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
@@ -673,6 +687,10 @@ class _$SeatingChartConfigSerializer
           result.showZoomOutButtonOnMobile = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'showZoomOutButtonOnMobile':
+          result.showZoomOutButtonOnMobile = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'channels':
           result.channels.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -685,6 +703,10 @@ class _$SeatingChartConfigSerializer
           break;
         case 'enableChartRenderingFailedCallback':
           result.enableChartRenderingFailedCallback = serializers
+              .deserialize(value, specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'enableChartRerenderingStartedCallback':
+          result.enableChartRerenderingStartedCallback = serializers
               .deserialize(value, specifiedType: const FullType(bool))! as bool;
           break;
         case 'enableChartRerenderingStartedCallback':
@@ -1217,6 +1239,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   final BuiltMap<String, String>? extraConfig;
   @override
   final bool? showFullScreenButton;
+  @override
+  final bool? showZoomOutButtonOnMobile;
   @override
   final bool? showZoomOutButtonOnMobile;
   @override
@@ -2124,7 +2148,7 @@ class SeatingChartConfigBuilder
             alwaysShowSectionContents: alwaysShowSectionContents,
             showSectionContents: showSectionContents,
             showSeatLabels: showSeatLabels,
-            showLegend: showLegend,
+            showSeatLabels: showSeatLabels,showLegend: showLegend,
             legend: _legend?.build(),
             showMinimap: showMinimap,
             inputDevice: inputDevice,
@@ -2135,7 +2159,7 @@ class SeatingChartConfigBuilder
             objectCategories: _objectCategories?.build(),
             mode: mode,
             colorScheme: colorScheme,
-            loading: loading,
+            colorScheme: colorScheme,loading: loading,
             showLoadingAnimation: BuiltValueNullFieldError.checkNotNull(
                 showLoadingAnimation,
                 r'SeatingChartConfig',
@@ -2154,7 +2178,7 @@ class SeatingChartConfigBuilder
             extraConfig: _extraConfig?.build(),
             showFullScreenButton: showFullScreenButton,
             showZoomOutButtonOnMobile: showZoomOutButtonOnMobile,
-            channels: _channels?.build(),
+            showZoomOutButtonOnMobile: showZoomOutButtonOnMobile,channels: _channels?.build(),
             enableChartRenderedCallback: BuiltValueNullFieldError.checkNotNull(
                 enableChartRenderedCallback,
                 r'SeatingChartConfig',
@@ -2163,7 +2187,11 @@ class SeatingChartConfigBuilder
                 BuiltValueNullFieldError.checkNotNull(
                     enableChartRenderingFailedCallback,
                     r'SeatingChartConfig',
-                    'enableChartRenderingFailedCallback'),
+                    'enableChartRenderingFailedCallback'),enableChartRerenderingStartedCallback:
+                BuiltValueNullFieldError.checkNotNull(
+                    enableChartRerenderingStartedCallback,
+                    r'SeatingChartConfig',
+                    'enableChartRerenderingStartedCallback'),
             enableChartRerenderingStartedCallback:
                 BuiltValueNullFieldError.checkNotNull(
                     enableChartRerenderingStartedCallback,

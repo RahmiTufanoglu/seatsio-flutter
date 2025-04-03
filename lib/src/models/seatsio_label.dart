@@ -5,11 +5,10 @@ import 'package:built_value/serializer.dart';
 
 part 'seatsio_label.g.dart';
 
-abstract class SeatsioLabel
-    implements Built<SeatsioLabel, SeatsioLabelBuilder> {
+abstract class SeatsioLabel implements Built<SeatsioLabel, SeatsioLabelBuilder> {
   const SeatsioLabel._();
 
-  factory SeatsioLabel([updates(SeatsioLabelBuilder b)]) = _$SeatsioLabel;
+  factory SeatsioLabel([void Function(SeatsioLabelBuilder b) updates]) = _$SeatsioLabel;
 
   String? get own;
 

@@ -239,16 +239,29 @@ class SeatsioCategoryBuilder
   SeatsioCategory build() => _build();
 
   _$SeatsioCategory _build() {
-    final _$result = _$v ??
-        new _$SeatsioCategory._(
-          key: BuiltValueNullFieldError.checkNotNull(
-              key, r'SeatsioCategory', 'key'),
-          label: label,
-          color: color,
-          pricing: pricing,
-          accessible: accessible,
-          isFiltered: isFiltered,
-        );
+    _$SeatsioCategory _$result;
+    try {
+      _$result = _$v ??
+          new _$SeatsioCategory._(
+            key: BuiltValueNullFieldError.checkNotNull(
+                key, r'SeatsioCategory', 'key'),
+            label: label,
+            color: color,
+            pricing: _pricing?.build(),
+            accessible: accessible,
+            isFiltered: isFiltered,
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'pricing';
+        _pricing?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'SeatsioCategory', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

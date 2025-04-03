@@ -10,7 +10,7 @@ part 'seatsio_category.g.dart';
 abstract class SeatsioCategory implements Built<SeatsioCategory, SeatsioCategoryBuilder> {
   const SeatsioCategory._();
 
-  factory SeatsioCategory([updates(SeatsioCategoryBuilder b)]) = _$SeatsioCategory;
+  factory SeatsioCategory([void Function(SeatsioCategoryBuilder b) updates]) = _$SeatsioCategory;
 
   String get key;
 

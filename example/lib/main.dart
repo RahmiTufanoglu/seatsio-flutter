@@ -2,12 +2,16 @@ import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
 
-const String yourWorkspaceKey = "";
-const String yourEventKey = "";
+import 'my_pricing.dart';
+
+const String yourWorkspaceKey = '';
+const String yourEventKey = '';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,15 +25,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     super.key,
     required this.title,
   });
-
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 const myPricingList = [
@@ -40,7 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
   late final SeatsioWebViewController? _seatsioController;
   late final SeatingChartConfig _chartConfig;
 
-  final selectedObjectLabels = [];
+  final _selectedObjectLabels = [];
+
+  static const _myPricingList = [
+    MyPricing('Standard', 12.0),
+  ];
 
   @override
   void initState() {
@@ -58,9 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
           colorSelected: '#E5FF00',
           colorTitle: '#E5FF00',
         )
-        ..pricing = myPricingList
-            .map((tickets) => PricingForCategory(category: tickets.name, price: tickets.grossPrice))
-            .toList()
+        ..pricing = ListBuilder<PricingForCategory>(
+          _myPricingList.map(
+            (tickets) => PricingForCategory(
+              (builder) => builder
+                ..category = tickets.name
+                ..price = tickets.grossPrice,
+            )..toBuilder(),
+          ),
+        )
         ..objectTooltip = () {
           return ObjectTooltipBuilder()
             ..showActionHint = true
@@ -81,8 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ..showFullScreenButton = false
         ..showLegend = false
         ..showMinimap = false
-        ..inputDevice = "touch"
-        ..session = "continue",
+        ..inputDevice = 'touch'
+        ..session = 'continue',
     );
   }
 
@@ -99,35 +112,35 @@ class _MyHomePageState extends State<MyHomePage> {
               aspectRatio: 1,
               child: SeatsioWebView(
                 onWebViewCreated: (controller) {
-                  print("[Seatsio]->[example]-> onWebViewCreated");
+                  debugPrint("[Seatsio]->[example]-> onWebViewCreated");
                   _seatsioController = controller;
                   _loadSeatsio();
                 },
                 onChartRendered: (_) {
-                  print("[Seatsio]->[example]-> onChartRendered");
+                  debugPrint("[Seatsio]->[example]-> onChartRendered");
                 },
                 onChartRenderingFailed: () {
-                  print("[Seatsio]->[example]-> onChartRenderingFailed");
+                  debugPrint("[Seatsio]->[example]-> onChartRenderingFailed");
                 },
-                onChartRerenderingStarted: () {
-                  print("[Seatsio]->[example]-> onChartRerenderingStarted");
+                onChartRenderingStarted: () {
+                  debugPrint("[Seatsio]->[example]-> onChartRerenderingStarted");
                 },
                 onObjectSelected: (object, type) async {
-                  print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
+                  debugPrint("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
                   _selectSeat(object);
                 },
                 onObjectDeselected: (object, type) async {
-                  print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
+                  debugPrint("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
                   _deselectSeat(object);
                 },
                 onHoldSucceeded: (objects, ticketTypes) {
-                  print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
+                  debugPrint("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
                 },
                 onHoldTokenExpired: () {
-                  print("[Seatsio]->[example]-> onHoldTokenExpired");
+                  debugPrint("[Seatsio]->[example]-> onHoldTokenExpired");
                 },
                 onSessionInitialized: (holdToken) {
-                  print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
+                  debugPrint("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
                 },
               ),
             ),
@@ -138,17 +151,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
-                  itemCount: selectedObjectLabels.length,
+                  itemCount: _selectedObjectLabels.length,
                   itemBuilder: (_, index) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(selectedObjectLabels[index]),
+                        Text(_selectedObjectLabels[index]),
                         if (_seatsioController != null)
                           IconButton(
                             onPressed: () {
-                              final chart = SeatingChart(_seatsioController!);
-                              chart.deselectObject([selectedObjectLabels[index]]);
+                              final chart = SeatingChart(_seatsioController);
+                              chart.deselectObject([_selectedObjectLabels[index]]);
                             },
                             icon: Icon(Icons.delete_forever),
                           ),
@@ -171,14 +184,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _selectSeat(SeatsioObject object) {
     setState(() {
-      selectedObjectLabels.add(object.label);
+      _selectedObjectLabels.add(object.label);
     });
   }
 
   void _deselectSeat(SeatsioObject object) {
-    if (selectedObjectLabels.contains(object.label)) {
+    if (_selectedObjectLabels.contains(object.label)) {
       setState(() {
-        selectedObjectLabels.remove(object.label);
+        _selectedObjectLabels.remove(object.label);
       });
     }
   }

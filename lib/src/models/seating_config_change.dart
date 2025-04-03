@@ -4,12 +4,10 @@ import 'package:built_value/serializer.dart';
 
 part 'seating_config_change.g.dart';
 
-abstract class SeatingConfigChange
-    implements Built<SeatingConfigChange, SeatingConfigChangeBuilder> {
+abstract class SeatingConfigChange implements Built<SeatingConfigChange, SeatingConfigChangeBuilder> {
   const SeatingConfigChange._();
 
-  factory SeatingConfigChange([updates(SeatingConfigChangeBuilder b)]) =
-      _$SeatingConfigChange;
+  factory SeatingConfigChange([void Function(SeatingConfigChangeBuilder b) updates]) = _$SeatingConfigChange;
 
   String? get objectColor;
 
@@ -72,6 +70,5 @@ abstract class SeatingConfigChange
     return configMap;
   }
 
-  static Serializer<SeatingConfigChange> get serializer =>
-      _$seatingConfigChangeSerializer;
+  static Serializer<SeatingConfigChange> get serializer => _$seatingConfigChangeSerializer;
 }

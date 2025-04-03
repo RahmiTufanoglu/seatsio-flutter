@@ -1,7 +1,6 @@
 import '../models/seating_chart_config.dart';
 
 class SeatsioJsBridge {
-  /// 将callback转成字符串
   static List<String> buildCallbacksConfiguration(SeatingChartConfig chartConfig) {
     final List<String> callbacks = [];
 

@@ -9,7 +9,7 @@ part 'seatsio_object.g.dart';
 abstract class SeatsioObject implements Built<SeatsioObject, SeatsioObjectBuilder> {
   const SeatsioObject._();
 
-  factory SeatsioObject([updates(SeatsioObjectBuilder b)]) = _$SeatsioObject;
+  factory SeatsioObject([void Function(SeatsioObjectBuilder b) updates]) = _$SeatsioObject;
 
   String get id;
 

@@ -1,18 +1,17 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer' as developer show log;
 
 import 'package:flutter/material.dart';
-import 'package:seatsio/src/assets/seatsio_html.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../models/seating_chart_config.dart';
 import '../util/seatsio_js_bridge.dart';
 
-typedef void SeatsioWebViewCreatedCallback(SeatsioWebViewController controller);
+typedef SeatsioWebViewCreatedCallback = void Function(SeatsioWebViewController controller);
 
 class SeatsioWebViewController {
   SeatsioWebViewController({
     required WebViewController webViewController,
-  }) : this._webViewController = webViewController;
+  }) : _webViewController = webViewController;
 
   final WebViewController _webViewController;
 
@@ -31,17 +30,20 @@ class SeatsioWebViewController {
         ..setBackgroundColor(Colors.transparent)
         ..loadRequest(Uri.parse(url));
     } else {
-      log("[Seatsio]-> Not found seatsio chart config info.");
+      developer.log("[Seatsio]-> Not found seatsio chart config info.");
     }
   }
 
-  void reloadChart({required String token, required String session}) {
+  void reloadChart({
+    required String token,
+    required String session,
+  }) {
     if (_chartConfig != null) {
-      final newChartInfo = _chartConfig!.rebuild(
-        (b) => b
+      final newChartInfo = _chartConfig!.rebuild((b) {
+        return b
           ..holdToken = token
-          ..session = session,
-      );
+          ..session = session;
+      });
       final url = _generateHtmlContent(newChartInfo);
       try {
         _webViewController.loadRequest(Uri.parse(url));
@@ -49,7 +51,7 @@ class SeatsioWebViewController {
         log("[Seatsio]-> Error while reloading chart: $e");
       }
     } else {
-      log("[Seatsio]-> Not found seatsio chart config info.");
+      developer.log("[Seatsio]-> Not found seatsio chart config info.");
     }
   }
 
@@ -78,6 +80,8 @@ class SeatsioWebViewController {
     final htmlString = seatsioHTML //
         .replaceFirst("%region%", chartConfig.region ?? "eu")
         .replaceFirst("%configAsJs%", chartConfigJson);
+
+    developer.log("[Seatsio]-> _generateHtmlContent: $htmlString");
 
     // Encode HTML string with utf8
     final url = Uri.dataFromString(

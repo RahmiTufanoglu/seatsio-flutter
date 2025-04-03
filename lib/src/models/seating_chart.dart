@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'dart:developer' as developer show log;
 import 'package:flutter/services.dart';
-import 'package:seatsio/src/util/constants.dart';
 import '../util/seatsio_web_view_controller.dart';
 import 'seating_config_change.dart';
 import 'seatsio_category.dart';
@@ -20,9 +20,9 @@ class SeatingChart {
     // inject javascript to SeatsioWebView
   }
 
-  Future<void> deselectObject(List<String> objects) async {
+  void deselectObject(List<String> objects) {
     if (objects.isEmpty) {
-      kDebugPrint("[Seatsio]-> deselectObject: No objects provided.");
+      developer.log("[Seatsio]-> deselectObject: No objects provided.");
       return;
     }
 
@@ -32,25 +32,20 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } on PlatformException catch (error) {
-      kDebugPrint("[Seatsio]-> deselectObject PlatformException: $error");
+      developer.log("[Seatsio]-> deselectObject PlatformException: $error");
     } catch (error) {
-      kDebugPrint("[Seatsio]-> Unknown error in deselectObject: $error");
+      developer.log("[Seatsio]-> Unknown error in deselectObject: $error");
     }
   }
 
   void changeConfig(SeatingConfigChange configChange) {
     final configMap = configChange.toMap();
     String configJson = jsonEncode(configMap);
-    configJson = configJson.replaceAll("'", "\\\'");
+    configJson = configJson.replaceAll("'", "\\'");
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
-    kDebugPrint("[Seatsio]-> changeConfig jsString: $jsString");
-
-    try {
-      seatsioController.evaluateJavascript(jsString);
-    } catch (error) {
-      kDebugPrint("[Seatsio]-> changeConfig error: $error");
-    }
+    developer.log("[Seatsio]-> changeConfig jsString: $jsString");
+    seatsioController.evaluateJavascript(jsString);
   }
 
   void listCategories(CategoryListCallback callback) {

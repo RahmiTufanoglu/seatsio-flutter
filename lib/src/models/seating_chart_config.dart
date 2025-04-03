@@ -20,7 +20,7 @@ typedef SeatingChartCallback = void Function(SeatingChart);
 typedef SeatsioCategoryListCallback = void Function(BuiltList<SeatsioCategory>?);
 typedef SelectionValidatorTypesCallback = void Function(List<SelectionValidatorType>);
 typedef SeatsioObjectsBoolCallback = void Function(List<SeatsioObject>, bool);
-typedef SeatsioObjectTicketTypeCallback = Future<void> Function(SeatsioObject, SeatsioTicketType?);
+typedef SeatsioObjectTicketTypeCallback = void Function(SeatsioObject, SeatsioTicketType?);
 typedef SeatsioObjectsTicketTypesCallback = void Function(List<SeatsioObject>, List<SeatsioTicketType>?);
 typedef SeatsioHoldTokenCallback = void Function(HoldToken holdToken);
 
@@ -32,7 +32,8 @@ enum SelectionValidatorType {
 abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingChartConfigBuilder> {
   const SeatingChartConfig._();
 
-  factory SeatingChartConfig([updates(SeatingChartConfigBuilder b)]) = _$SeatingChartConfig;
+  factory SeatingChartConfig([SeatingChartConfigBuilder Function(SeatingChartConfigBuilder b) updates]) =
+      _$SeatingChartConfig;
 
   /// The workspace key for the workspace in which the chart was created.
   /// You can find it on your workspace settings page.
@@ -276,8 +277,8 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   bool get enableSelectedObjectBookedCallback;
 
   factory SeatingChartConfig.init() {
-    return SeatingChartConfig(
-      (b) => b
+    return SeatingChartConfig((builder) {
+      return builder
         ..workspaceKey = ""
         ..eventKey = ""
         ..region = 'eu'
@@ -299,15 +300,15 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
         ..enableSessionInitializedCallback = true
         ..enableReleaseHoldSucceededCallback = false
         ..enableReleaseHoldFailedCallback = false
-        ..enableSelectedObjectBookedCallback = false,
-    );
+        ..enableSelectedObjectBookedCallback = false;
+    });
   }
 
   // todo: Miss some key-values
   /// Convert chart config info to a map
   Map<String, Object?> toMap() {
     final configMap = {
-      "workspaceKey": workspaceKey ?? '',
+      "workspaceKey": workspaceKey,
       "event": eventKey,
       "region": region ?? "eu",
       "language": language ?? "en",
@@ -330,6 +331,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showZoomOutButtonOnMobile": showZoomOutButtonOnMobile ?? true,
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
+      "priceFormatter": priceFormatter,
     };
 
     if (pricing != null) {
@@ -411,7 +413,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBuilder> {
   SelectedObject._();
 
-  factory SelectedObject([updates(SelectedObjectBuilder b)]) = _$SelectedObject;
+  factory SelectedObject([void Function(SelectedObjectBuilder) updates]) = _$SelectedObject;
 
   String get label;
 
@@ -420,12 +422,17 @@ abstract class SelectedObject implements Built<SelectedObject, SelectedObjectBui
   int? get amount;
 
   static Serializer<SelectedObject> get serializer => _$selectedObjectSerializer;
+
+  @override
+  String toString() {
+    return 'SelectedObject(label: $label, ticketType: $ticketType, amount: $amount)';
+  }
 }
 
 abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilder> {
   ObjectTooltip._();
 
-  factory ObjectTooltip([updates(ObjectTooltipBuilder b)]) = _$ObjectTooltip;
+  factory ObjectTooltip([void Function(ObjectTooltipBuilder b) updates]) = _$ObjectTooltip;
 
   bool get showActionHint;
 
@@ -449,7 +456,7 @@ abstract class ObjectTooltip implements Built<ObjectTooltip, ObjectTooltipBuilde
 abstract class LegendForCategory implements Built<LegendForCategory, LegendForCategoryBuilder> {
   LegendForCategory._();
 
-  factory LegendForCategory([updates(LegendForCategoryBuilder b)]) = _$LegendForCategory;
+  factory LegendForCategory([void Function(LegendForCategoryBuilder b) updates]) = _$LegendForCategory;
 
   bool get hideNonSelectableCategories;
 
@@ -461,7 +468,7 @@ abstract class LegendForCategory implements Built<LegendForCategory, LegendForCa
 abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilder> {
   BestAvailable._();
 
-  factory BestAvailable([updates(BestAvailableBuilder b)]) = _$BestAvailable;
+  factory BestAvailable([void Function(BestAvailableBuilder b) updates]) = _$BestAvailable;
 
   int get number;
 
@@ -477,7 +484,7 @@ abstract class BestAvailable implements Built<BestAvailable, BestAvailableBuilde
 abstract class SelectionValidator implements Built<SelectionValidator, SelectionValidatorBuilder> {
   SelectionValidator._();
 
-  factory SelectionValidator([updates(SelectionValidatorBuilder b)]) = _$SelectionValidator;
+  factory SelectionValidator([void Function(SelectionValidatorBuilder b) updates]) = _$SelectionValidator;
 
   /// https://docs.seats.io/docs/renderer/config-selectionvalidators
   /// Possible values: 'noOrphanSeats', 'consecutiveSeats'
@@ -489,7 +496,7 @@ abstract class SelectionValidator implements Built<SelectionValidator, Selection
 abstract class TicketListing implements Built<TicketListing, TicketListingBuilder> {
   TicketListing._();
 
-  factory TicketListing([updates(TicketListingBuilder b)]) = _$TicketListing;
+  factory TicketListing([void Function(TicketListingBuilder b) updates]) = _$TicketListing;
 
   String get section;
 

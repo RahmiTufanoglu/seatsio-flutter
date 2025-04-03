@@ -5,11 +5,10 @@ import 'package:built_value/serializer.dart';
 
 part 'seatsio_point.g.dart';
 
-abstract class SeatsioPoint
-    implements Built<SeatsioPoint, SeatsioPointBuilder> {
+abstract class SeatsioPoint implements Built<SeatsioPoint, SeatsioPointBuilder> {
   const SeatsioPoint._();
 
-  factory SeatsioPoint([updates(SeatsioPointBuilder b)]) = _$SeatsioPoint;
+  factory SeatsioPoint([void Function(SeatsioPointBuilder b) updates]) = _$SeatsioPoint;
 
   num get x;
 

@@ -132,8 +132,10 @@ class SeatsioTicketTypeBuilder
   _$SeatsioTicketType _build() {
     final _$result = _$v ??
         new _$SeatsioTicketType._(
-          selectedTicketType: BuiltValueNullFieldError.checkNotNull(
-              selectedTicketType, r'SeatsioTicketType', 'selectedTicketType'),
+          price: BuiltValueNullFieldError.checkNotNull(
+              price, r'SeatsioTicketType', 'price'),
+          ticketType: BuiltValueNullFieldError.checkNotNull(
+              ticketType, r'SeatsioTicketType', 'ticketType'),
         );
     replace(_$result);
     return _$result;
