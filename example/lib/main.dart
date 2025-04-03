@@ -2,12 +2,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
 
-const String YourWorkspaceKey = "";
-const String YourEventKey = "";
+import 'my_pricing.dart';
 
-void main() {
-  runApp(MyApp());
-}
+const String yourWorkspaceKey = '';
+const String yourEventKey = '';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -23,7 +23,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({
+    super.key,
+    required this.title,
+  });
+
   final String title;
 
   @override
@@ -31,31 +35,63 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SeatsioWebViewController? _seatsioController;
-  final List<String> selectedObjectLabels = ['Try to click a seat object'];
-
+  late final SeatsioWebViewController? _seatsioController;
   late final SeatingChartConfig _chartConfig;
+
+  final _selectedObjectLabels = [];
+
+  static const _myPricingList = [
+    MyPricing('Standard', 12.0),
+  ];
 
   @override
   void initState() {
     super.initState();
 
-    _chartConfig = SeatingChartConfig.init().rebuild((b) => b
-      ..workspaceKey = YourWorkspaceKey
-      ..eventKey = YourEventKey
-      ..pricing = ListBuilder<PricingForCategory>([
-        PricingForCategory(
-          (b) => b
-            ..category = "expensive"
-            ..price = 100,
-        ),
-      ])
-      ..enableHoldSucceededCallback = true
-      ..enableHoldFailedCallback = true
-      ..enableHoldTokenExpiredCallback = true
-      ..enableSessionInitializedCallback = true
-      ..enableObjectClickedCallback = false // Set this to false if you want to have the objectToolTip to be shown
-      ..session = "continue");
+    _chartConfig = SeatingChartConfig.init().rebuild(
+      (builder) => builder
+        ..workspaceKey = yourWorkspaceKey
+        ..eventKey = yourEventKey
+        ..language = 'de'
+        ..region = 'eu'
+        ..colorScheme = 'dark'
+        ..stylePreset = 'bubblegum'
+        ..colors = SeatsioConfigColors(
+          colorSelected: '#E5FF00',
+          colorTitle: '#E5FF00',
+        )
+        ..pricing = ListBuilder<PricingForCategory>(
+          _myPricingList.map(
+            (tickets) => PricingForCategory(
+              (builder) => builder
+                ..category = tickets.name
+                ..price = tickets.grossPrice,
+            )..toBuilder(),
+          ),
+        )
+        ..objectTooltip = () {
+          return ObjectTooltipBuilder()
+            ..showActionHint = true
+            ..showAvailability = false
+            ..showCategory = true
+            ..showLabel = true
+            ..showPricing = true
+            ..showUnavailableNotice = true
+            ..stylizedLabel = true
+            ..confirmSelectionOnMobile = true;
+        }()
+        ..enableHoldSucceededCallback = true
+        ..enableHoldFailedCallback = true
+        ..enableSessionInitializedCallback = true
+        ..enableObjectClickedCallback = false
+        ..enableObjectSelectedCallback = true
+        ..enableObjectDeselectedCallback = true
+        ..showFullScreenButton = false
+        ..showLegend = false
+        ..showMinimap = false
+        ..inputDevice = 'touch'
+        ..session = 'continue',
+    );
   }
 
   @override
@@ -64,45 +100,75 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 400,
-            child: SeatsioWebView(
-              onWebViewCreated: (controller) {
-                print("[Seatsio]->[example]-> onWebViewCreated");
-                _seatsioController = controller;
-                _loadSeatsio();
-              },
-              onChartRendered: (_) => print("[Seatsio]->[example]-> onChartRendered"),
-              onChartRenderingFailed: () => print("[Seatsio]->[example]-> onChartRenderingFailed"),
-              onObjectSelected: (object, type) {
-                print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
-                _selectSeat(object);
-              },
-              onObjectDeselected: (object, type) {
-                print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
-                _deselectSeat(object);
-              },
-              onHoldSucceeded: (objects, ticketTypes) {
-                print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
-              },
-              onHoldTokenExpired: () {
-                print("[Seatsio]->[example]-> onHoldTokenExpired");
-              },
-              onSessionInitialized: (holdToken) {
-                print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: SeatsioWebView(
+                onWebViewCreated: (controller) {
+                  print("[Seatsio]->[example]-> onWebViewCreated");
+                  _seatsioController = controller;
+                  _loadSeatsio();
+                },
+                onChartRendered: (_) {
+                  print("[Seatsio]->[example]-> onChartRendered");
+                },
+                onChartRenderingFailed: () {
+                  print("[Seatsio]->[example]-> onChartRenderingFailed");
+                },
+                onChartRenderingStarted: () {
+                  print("[Seatsio]->[example]-> onChartRerenderingStarted");
+                },
+                onObjectSelected: (object, type) async {
+                  print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
+                  _selectSeat(object);
+                },
+                onObjectDeselected: (object, type) async {
+                  print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
+                  _deselectSeat(object);
+                },
+                onHoldSucceeded: (objects, ticketTypes) {
+                  print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
+                },
+                onHoldTokenExpired: () {
+                  print("[Seatsio]->[example]-> onHoldTokenExpired");
+                },
+                onSessionInitialized: (holdToken) {
+                  print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              itemCount: selectedObjectLabels.length,
-              itemBuilder: (_, index) => Text(selectedObjectLabels[index]),
-            ),
-          )
-        ],
+            ColoredBox(
+              color: Colors.black12,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
+                  itemCount: _selectedObjectLabels.length,
+                  itemBuilder: (_, index) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(_selectedObjectLabels[index]),
+                        if (_seatsioController != null)
+                          IconButton(
+                            onPressed: () {
+                              final chart = SeatingChart(_seatsioController);
+                              chart.deselectObject([_selectedObjectLabels[index]]);
+                            },
+                            icon: Icon(Icons.delete_forever),
+                          ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (_, __) => Divider(),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _loadSeatsio,
@@ -113,14 +179,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _selectSeat(SeatsioObject object) {
     setState(() {
-      selectedObjectLabels.add(object.label);
+      _selectedObjectLabels.add(object.label);
     });
   }
 
   void _deselectSeat(SeatsioObject object) {
-    if (selectedObjectLabels.contains(object.label)) {
+    if (_selectedObjectLabels.contains(object.label)) {
       setState(() {
-        selectedObjectLabels.remove(object.label);
+        _selectedObjectLabels.remove(object.label);
       });
     }
   }
