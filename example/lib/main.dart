@@ -115,8 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChartRenderingFailed: () {
                   debugPrint("[Seatsio]->[example]-> onChartRenderingFailed");
                 },
-                onChartRerenderingStarted: () {
-                  debugPrint("[Seatsio]->[example]-> onChartRerenderingStarted");
+                onChartRenderingStarted: () {
+                  debugPrint("[Seatsio]->[example]-> onChartRenderingStarted");
                 },
                 onObjectSelected: (object, type) async {
                   debugPrint("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");

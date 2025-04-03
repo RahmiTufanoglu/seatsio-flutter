@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../models/seating_chart_config.dart';
 import '../util/seatsio_js_bridge.dart';
+import '../assets/seatsio_html.dart';
 
 typedef SeatsioWebViewCreatedCallback = void Function(SeatsioWebViewController controller);
 
@@ -48,7 +49,7 @@ class SeatsioWebViewController {
       try {
         _webViewController.loadRequest(Uri.parse(url));
       } catch (e) {
-        log("[Seatsio]-> Error while reloading chart: $e");
+        developer.log("[Seatsio]-> Error while reloading chart: $e");
       }
     } else {
       developer.log("[Seatsio]-> Not found seatsio chart config info.");
