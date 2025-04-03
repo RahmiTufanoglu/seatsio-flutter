@@ -3,11 +3,10 @@ import 'package:built_value/serializer.dart';
 
 part 'seatsio_ticket_type.g.dart';
 
-abstract class SeatsioTicketType
-    implements Built<SeatsioTicketType, SeatsioTicketTypeBuilder> {
+abstract class SeatsioTicketType implements Built<SeatsioTicketType, SeatsioTicketTypeBuilder> {
   const SeatsioTicketType._();
 
-  factory SeatsioTicketType([updates(SeatsioTicketTypeBuilder b)]) = _$SeatsioTicketType;
+  factory SeatsioTicketType([void Function(SeatsioTicketTypeBuilder b) updates]) = _$SeatsioTicketType;
 
   double get price;
 

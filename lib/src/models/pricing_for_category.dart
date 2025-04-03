@@ -10,7 +10,7 @@ part 'pricing_for_category.g.dart';
 abstract class PricingForCategory implements Built<PricingForCategory, PricingForCategoryBuilder> {
   const PricingForCategory._();
 
-  factory PricingForCategory([updates(PricingForCategoryBuilder b)]) = _$PricingForCategory;
+  factory PricingForCategory([void Function(PricingForCategoryBuilder b)? updates]) = _$PricingForCategory;
 
   int? get categoryKey;
 
@@ -49,7 +49,7 @@ abstract class PricingForCategory implements Built<PricingForCategory, PricingFo
 abstract class TicketTypePricing implements Built<TicketTypePricing, TicketTypePricingBuilder> {
   TicketTypePricing._();
 
-  factory TicketTypePricing([updates(TicketTypePricingBuilder b)]) = _$TicketTypePricing;
+  factory TicketTypePricing([void Function(TicketTypePricingBuilder b) updates]) = _$TicketTypePricing;
 
   String? get ticketType;
 
