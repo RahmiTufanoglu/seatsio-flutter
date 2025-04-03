@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer show log;
+import 'package:flutter/services.dart';
 import '../util/seatsio_web_view_controller.dart';
 import 'seating_config_change.dart';
 import 'seatsio_category.dart';
@@ -20,7 +21,21 @@ class SeatingChart {
   }
 
   void deselectObject(List<String> objects) {
-    // inject javascript to SeatsioWebView
+    if (objects.isEmpty) {
+      developer.log("[Seatsio]-> deselectObject: No objects provided.");
+      return;
+    }
+
+    final objectsJson = jsonEncode(objects);
+    final jsString = "deselectObjects('$objectsJson');";
+
+    try {
+      seatsioController.evaluateJavascript(jsString);
+    } on PlatformException catch (error) {
+      developer.log("[Seatsio]-> deselectObject PlatformException: $error");
+    } catch (error) {
+      developer.log("[Seatsio]-> Unknown error in deselectObject: $error");
+    }
   }
 
   void changeConfig(SeatingConfigChange configChange) {
@@ -29,7 +44,7 @@ class SeatingChart {
     configJson = configJson.replaceAll("'", "\\\'");
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
-    debugPrint("[Seatsio]-> changeConfig jsString: $jsString");
+    developer.log("[Seatsio]-> changeConfig jsString: $jsString");
     seatsioController.evaluateJavascript(jsString);
   }
 
