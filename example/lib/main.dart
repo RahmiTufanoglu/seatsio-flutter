@@ -10,6 +10,8 @@ const String yourEventKey = '';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     super.key,
     required this.title,
   });
@@ -31,7 +33,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -107,35 +109,35 @@ class _MyHomePageState extends State<MyHomePage> {
               aspectRatio: 1,
               child: SeatsioWebView(
                 onWebViewCreated: (controller) {
-                  print("[Seatsio]->[example]-> onWebViewCreated");
+                  debugPrint("[Seatsio]->[example]-> onWebViewCreated");
                   _seatsioController = controller;
                   _loadSeatsio();
                 },
                 onChartRendered: (_) {
-                  print("[Seatsio]->[example]-> onChartRendered");
+                  debugPrint("[Seatsio]->[example]-> onChartRendered");
                 },
                 onChartRenderingFailed: () {
-                  print("[Seatsio]->[example]-> onChartRenderingFailed");
+                  debugPrint("[Seatsio]->[example]-> onChartRenderingFailed");
                 },
                 onChartRenderingStarted: () {
-                  print("[Seatsio]->[example]-> onChartRerenderingStarted");
+                  debugPrint("[Seatsio]->[example]-> onChartRerenderingStarted");
                 },
                 onObjectSelected: (object, type) async {
-                  print("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
+                  debugPrint("[Seatsio]->[example]-> onObjectSelected, label: ${object.label}");
                   _selectSeat(object);
                 },
                 onObjectDeselected: (object, type) async {
-                  print("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
+                  debugPrint("[Seatsio]->[example]-> onObjectDeselected, label: ${object.label}");
                   _deselectSeat(object);
                 },
                 onHoldSucceeded: (objects, ticketTypes) {
-                  print("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
+                  debugPrint("[Seatsio]->[example]-> onObjectSelected, objects: $objects | ticket types: $ticketTypes");
                 },
                 onHoldTokenExpired: () {
-                  print("[Seatsio]->[example]-> onHoldTokenExpired");
+                  debugPrint("[Seatsio]->[example]-> onHoldTokenExpired");
                 },
                 onSessionInitialized: (holdToken) {
-                  print("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
+                  debugPrint("[Seatsio]->[example]-> onSessionInitialized, holdToken: $holdToken");
                 },
               ),
             ),
