@@ -17,7 +17,7 @@ class SeatsioWebView extends StatefulWidget {
     SeatsioCategoryListCallback? onCategoryListCallback,
     SeatingChartCallback? onChartRendered,
     VoidCallback? onChartRenderingFailed,
-    VoidCallback? onChartRerenderingStarted,
+    VoidCallback? onChartRenderingStarted,
     SeatsioObjectCallback? onObjectClicked,
     SeatsioObjectTicketTypeCallback? onObjectSelected,
     SeatsioObjectTicketTypeCallback? onObjectDeselected,
@@ -33,28 +33,28 @@ class SeatsioWebView extends StatefulWidget {
     SeatsioObjectsTicketTypesCallback? onReleaseHoldFailed,
     SeatsioObjectCallback? onSelectedObjectBooked,
     Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = const <Factory<OneSequenceGestureRecognizer>>{},
-  })  : this._enableDebug = enableDebug,
-        this._initialUrl = initialUrl,
-        this._onWebViewCreated = onWebViewCreated,
-        this._onCategoryListCallback = onCategoryListCallback,
-        this._onChartRendered = onChartRendered,
-        this._onChartRenderingFailed = onChartRenderingFailed,
-        this._onChartRerenderingStarted = onChartRerenderingStarted,
-        this._onObjectClicked = onObjectClicked,
-        this._onObjectSelected = onObjectSelected,
-        this._onObjectDeselected = onObjectDeselected,
-        this._onSelectionValid = onSelectionValid,
-        this._onSelectionInvalid = onSelectionInvalid,
-        this._onBestAvailableSelected = onBestAvailableSelected,
-        this._onBestAvailableSelectionFailed = onBestAvailableSelectionFailed,
-        this._onHoldSucceeded = onHoldSucceeded,
-        this._onHoldFailed = onHoldFailed,
-        this._onHoldTokenExpired = onHoldTokenExpired,
-        this._onSessionInitialized = onSessionInitialized,
-        this._onReleaseHoldSucceeded = onReleaseHoldSucceeded,
-        this._onReleaseHoldFailed = onReleaseHoldFailed,
-        this._onSelectedObjectBooked = onSelectedObjectBooked,
-        this._gestureRecognizers = gestureRecognizers;
+  })  : _enableDebug = enableDebug,
+        _initialUrl = initialUrl,
+        _onWebViewCreated = onWebViewCreated,
+        _onCategoryListCallback = onCategoryListCallback,
+        _onChartRendered = onChartRendered,
+        _onChartRenderingFailed = onChartRenderingFailed,
+        _onChartRenderingStarted = onChartRenderingStarted,
+        _onObjectClicked = onObjectClicked,
+        _onObjectSelected = onObjectSelected,
+        _onObjectDeselected = onObjectDeselected,
+        _onSelectionValid = onSelectionValid,
+        _onSelectionInvalid = onSelectionInvalid,
+        _onBestAvailableSelected = onBestAvailableSelected,
+        _onBestAvailableSelectionFailed = onBestAvailableSelectionFailed,
+        _onHoldSucceeded = onHoldSucceeded,
+        _onHoldFailed = onHoldFailed,
+        _onHoldTokenExpired = onHoldTokenExpired,
+        _onSessionInitialized = onSessionInitialized,
+        _onReleaseHoldSucceeded = onReleaseHoldSucceeded,
+        _onReleaseHoldFailed = onReleaseHoldFailed,
+        _onSelectedObjectBooked = onSelectedObjectBooked,
+        _gestureRecognizers = gestureRecognizers;
 
   /// Output some log if setting the [enableDebug] to true.
   final bool _enableDebug;
@@ -76,7 +76,7 @@ class SeatsioWebView extends StatefulWidget {
 
   final VoidCallback? _onChartRenderingFailed;
 
-  final VoidCallback? _onChartRerenderingStarted;
+  final VoidCallback? _onChartRenderingStarted;
 
   /// Fired when best available objects are successfully selected. This callback receives two parameters:
   /// [array_of_objects]: the best available objects
@@ -128,7 +128,7 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
         ..addJavaScriptChannel('onObjectDeselected', onMessageReceived: onObjectDeselected)
         ..addJavaScriptChannel('onChartRendered', onMessageReceived: onChartRendered)
         ..addJavaScriptChannel('onChartRenderingFailed', onMessageReceived: onChartRenderingFailed)
-        ..addJavaScriptChannel('onChartRerenderingStarted', onMessageReceived: onChartRerenderingStarted)
+        ..addJavaScriptChannel('onChartRenderingStarted', onMessageReceived: onChartRenderingStarted)
         ..addJavaScriptChannel('onSelectionValid', onMessageReceived: onSelectionValid)
         ..addJavaScriptChannel('onSelectionInvalid', onMessageReceived: onSelectionInvalid)
         ..addJavaScriptChannel('onBestAvailableSelectionFailed', onMessageReceived: onBestAvailableSelectionFailed)
@@ -191,25 +191,25 @@ class _SeatsioWebViewState extends State<SeatsioWebView> {
     }
   }
 
-  Future<void> onObjectSelected(JavaScriptMessage message) async {
+  void onObjectSelected(JavaScriptMessage message) {
     if (widget._onObjectSelected == null) return;
     if (widget._enableDebug) developer.log("[Seatsio]-> onObjectClicked callback message: ${message.message}");
     final object = SeatsioObject.fromJson(message.message);
     final seatsioTicketType = SeatsioTicketType.fromJson(message.message);
 
     if (object != null) {
-      await widget._onObjectSelected?.call(object, seatsioTicketType);
+      widget._onObjectSelected?.call(object, seatsioTicketType);
     }
   }
 
-  Future<void> onObjectDeselected(JavaScriptMessage message) async {
+  void onObjectDeselected(JavaScriptMessage message) {
     if (widget._onObjectDeselected == null) return;
     if (widget._enableDebug) developer.log("[Seatsio]-> onObjectDeselected callback message: ${message.message}");
     final object = SeatsioObject.fromJson(message.message);
     final seatsioTicketType = SeatsioTicketType.fromJson(message.message);
 
     if (object != null) {
-      await widget._onObjectDeselected?.call(object, seatsioTicketType);
+      widget._onObjectDeselected?.call(object, seatsioTicketType);
     }
   }
 

@@ -11,5 +11,4 @@ export 'src/models/pricing_for_category.dart';
 export 'src/models/seatsio_object.dart';
 export 'src/models/seatsio_point.dart';
 export 'src/models/seatsio_ticket_type.dart';
-export 'src/models/seatsio_config_colors.dart';
 export 'src/models/hold_token.dart';

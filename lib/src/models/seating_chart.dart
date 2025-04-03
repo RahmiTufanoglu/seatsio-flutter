@@ -57,7 +57,7 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      kDebugPrint("[Seatsio]-> listCategories error: $error");
+      developer.log("[Seatsio]-> listCategories error: $error");
     }
 
     callback([]);
@@ -72,7 +72,7 @@ class SeatingChart {
     try {
       seatsioController.evaluateJavascript(jsString);
     } catch (error) {
-      kDebugPrint("[Seatsio]-> listCategories error: $error");
+      developer.log("[Seatsio]-> listCategories error: $error");
     }
   }
 
