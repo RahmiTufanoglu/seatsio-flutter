@@ -7,12 +7,12 @@ import '../models/seating_chart_config.dart';
 import '../util/seatsio_js_bridge.dart';
 import '../assets/seatsio_html.dart';
 
-typedef void SeatsioWebViewCreatedCallback(SeatsioWebViewController controller);
+typedef SeatsioWebViewCreatedCallback = void Function(SeatsioWebViewController controller);
 
 class SeatsioWebViewController {
   SeatsioWebViewController({
     required WebViewController webViewController,
-  }) : this._webViewController = webViewController;
+  }) : _webViewController = webViewController;
 
   final WebViewController _webViewController;
 
@@ -57,7 +57,6 @@ class SeatsioWebViewController {
 
     // Convert map to json string
     String chartConfigJson = jsonEncode(chartConfigMap);
-    chartConfigJson = '$chartConfigJson';
 
     // Append callback string to json string.
     final callbacks = SeatsioJsBridge.buildCallbacksConfiguration(chartConfig);
