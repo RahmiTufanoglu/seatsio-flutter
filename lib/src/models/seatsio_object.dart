@@ -8,8 +8,7 @@ import 'seatsio_point.dart';
 
 part 'seatsio_object.g.dart';
 
-abstract class SeatsioObject
-    implements Built<SeatsioObject, SeatsioObjectBuilder> {
+abstract class SeatsioObject implements Built<SeatsioObject, SeatsioObjectBuilder> {
   const SeatsioObject._();
 
   factory SeatsioObject([updates(SeatsioObjectBuilder b)]) = _$SeatsioObject;
@@ -72,8 +71,7 @@ abstract class SeatsioObject
         ..forSale = data["forSale"]
         ..selectable = data["selectable"]
         ..seats = data['seats'] != null
-            ? List<SeatsioObject>.from(
-                data['seats']?.map((x) => SeatsioObject.fromMap(x)))
+            ? List<SeatsioObject>.from(data['seats']?.map((x) => SeatsioObject.fromMap(x)))
             : null,
     );
   }
