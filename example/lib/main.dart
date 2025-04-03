@@ -2,8 +2,6 @@ import 'package:example/my_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:seatsio/seatsio.dart';
 
-import 'my_pricing.dart';
-
 const String yourWorkspaceKey = '';
 const String yourEventKey = '';
 
@@ -29,6 +27,7 @@ class MyHomePage extends StatefulWidget {
     super.key,
     required this.title,
   });
+
   final String title;
 
   @override
@@ -65,15 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
           colorSelected: '#E5FF00',
           colorTitle: '#E5FF00',
         )
-        ..pricing = ListBuilder<PricingForCategory>(
-          _myPricingList.map(
-            (tickets) => PricingForCategory(
-              (builder) => builder
-                ..category = tickets.name
-                ..price = tickets.grossPrice,
-            )..toBuilder(),
-          ),
-        )
+        ..pricing = myPricingList
+            .map((tickets) => PricingForCategory(category: tickets.name, price: tickets.grossPrice))
+            .toList()
         ..objectTooltip = () {
           return ObjectTooltipBuilder()
             ..showActionHint = true
@@ -122,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChartRenderingFailed: () {
                   debugPrint("[Seatsio]->[example]-> onChartRenderingFailed");
                 },
-                onChartRenderingStarted: () {
+                onChartRerenderingStarted: () {
                   debugPrint("[Seatsio]->[example]-> onChartRerenderingStarted");
                 },
                 onObjectSelected: (object, type) async {
