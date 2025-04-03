@@ -20,6 +20,10 @@ final String seatsioHTML = """
             callback(data)
         }
 
+        function deselectObjects(data) {
+            chart.deselectObjects(JSON.parse(data))
+        }
+        
         // [end]
 
         // Register channel to post message to Flutter.
@@ -37,7 +41,7 @@ final String seatsioHTML4Android = """
   <head>
     <script src="https://cdn-%region%.seatsio.net/chart.js" type="text/javascript"></script>
   </head>
-    <body style="margin: 0; padding: 0">
+    <body style="margin: 0; padding: 0;">
       <div id="chart" style="width: 100%; height: 100%;"></div>
       <script>
         function asyncCallSuccess(requestId) { return result => Native.asyncCallSuccess(JSON.stringify(result), requestId) }
