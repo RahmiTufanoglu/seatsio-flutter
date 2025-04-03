@@ -41,7 +41,7 @@ class SeatingChart {
   void changeConfig(SeatingConfigChange configChange) {
     final configMap = configChange.toMap();
     String configJson = jsonEncode(configMap);
-    configJson = configJson.replaceAll("'", "\\\'");
+    configJson = configJson.replaceAll("'", "\\'");
 
     final jsString = "changeConfig('$configJson', postMessageToFlutter)";
     developer.log("[Seatsio]-> changeConfig jsString: $jsString");
