@@ -332,6 +332,7 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
       "showViewFromYourSeatOnMobile": showViewFromYourSeat ?? true,
       "showSectionContents": showSectionContents ?? "auto",
       "priceFormatter": priceFormatter,
+      "objectWithoutPricingSelectable": objectWithoutPricingSelectable ?? true,
     };
 
     if (pricing != null) {
