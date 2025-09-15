@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'category_filter.dart';
 import 'pricing_for_category.dart';
 import 'seating_chart_config.dart';
 import 'seatsio_category.dart';
@@ -12,6 +13,7 @@ part 'seatsio_serializers.g.dart';
 @SerializersFor([
   SeatingChartConfig,
   SelectedObject,
+  CategoryFilter,
   PricingForCategory,
   SeatsioCategory,
   TicketTypePricing,

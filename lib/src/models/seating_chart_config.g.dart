@@ -259,6 +259,13 @@ class _$SeatingChartConfigSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(LegendForCategory)));
     }
+    value = object.categoryFilter;
+    if (value != null) {
+      result
+        ..add('categoryFilter')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CategoryFilter)));
+    }
     value = object.showMinimap;
     if (value != null) {
       result
@@ -563,6 +570,11 @@ class _$SeatingChartConfigSerializer
           result.legend.replace(serializers.deserialize(value,
                   specifiedType: const FullType(LegendForCategory))!
               as LegendForCategory);
+          break;
+        case 'categoryFilter':
+          result.categoryFilter.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CategoryFilter))!
+              as CategoryFilter);
           break;
         case 'showMinimap':
           result.showMinimap = serializers.deserialize(value,
@@ -1170,6 +1182,8 @@ class _$SeatingChartConfig extends SeatingChartConfig {
   @override
   final LegendForCategory? legend;
   @override
+  final CategoryFilter? categoryFilter;
+  @override
   final bool? showMinimap;
   @override
   final String? inputDevice;
@@ -1286,6 +1300,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
       this.showSeatLabels,
       this.showLegend,
       this.legend,
+      this.categoryFilter,
       this.showMinimap,
       this.inputDevice,
       this.showActiveSectionTooltip,
@@ -1412,6 +1427,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
         showSeatLabels == other.showSeatLabels &&
         showLegend == other.showLegend &&
         legend == other.legend &&
+        categoryFilter == other.categoryFilter &&
         showMinimap == other.showMinimap &&
         inputDevice == other.inputDevice &&
         showActiveSectionTooltip == other.showActiveSectionTooltip &&
@@ -1496,6 +1512,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
     _$hash = $jc(_$hash, showSeatLabels.hashCode);
     _$hash = $jc(_$hash, showLegend.hashCode);
     _$hash = $jc(_$hash, legend.hashCode);
+    _$hash = $jc(_$hash, categoryFilter.hashCode);
     _$hash = $jc(_$hash, showMinimap.hashCode);
     _$hash = $jc(_$hash, inputDevice.hashCode);
     _$hash = $jc(_$hash, showActiveSectionTooltip.hashCode);
@@ -1573,6 +1590,7 @@ class _$SeatingChartConfig extends SeatingChartConfig {
           ..add('showSeatLabels', showSeatLabels)
           ..add('showLegend', showLegend)
           ..add('legend', legend)
+          ..add('categoryFilter', categoryFilter)
           ..add('showMinimap', showMinimap)
           ..add('inputDevice', inputDevice)
           ..add('showActiveSectionTooltip', showActiveSectionTooltip)
@@ -1761,6 +1779,12 @@ class SeatingChartConfigBuilder
   LegendForCategoryBuilder get legend =>
       _$this._legend ??= new LegendForCategoryBuilder();
   set legend(LegendForCategoryBuilder? legend) => _$this._legend = legend;
+
+  CategoryFilterBuilder? _categoryFilter;
+  CategoryFilterBuilder get categoryFilter =>
+      _$this._categoryFilter ??= new CategoryFilterBuilder();
+  set categoryFilter(CategoryFilterBuilder? categoryFilter) =>
+      _$this._categoryFilter = categoryFilter;
 
   bool? _showMinimap;
   bool? get showMinimap => _$this._showMinimap;
@@ -2027,6 +2051,7 @@ class SeatingChartConfigBuilder
       _showSeatLabels = $v.showSeatLabels;
       _showLegend = $v.showLegend;
       _legend = $v.legend?.toBuilder();
+      _categoryFilter = $v.categoryFilter?.toBuilder();
       _showMinimap = $v.showMinimap;
       _inputDevice = $v.inputDevice;
       _showActiveSectionTooltip = $v.showActiveSectionTooltip;
@@ -2126,6 +2151,7 @@ class SeatingChartConfigBuilder
             showSeatLabels: showSeatLabels,
             showLegend: showLegend,
             legend: _legend?.build(),
+            categoryFilter: _categoryFilter?.build(),
             showMinimap: showMinimap,
             inputDevice: inputDevice,
             showActiveSectionTooltip: showActiveSectionTooltip,
@@ -2255,6 +2281,8 @@ class SeatingChartConfigBuilder
 
         _$failedField = 'legend';
         _legend?.build();
+        _$failedField = 'categoryFilter';
+        _categoryFilter?.build();
 
         _$failedField = 'selectionValidators';
         _selectionValidators?.build();

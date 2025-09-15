@@ -4,6 +4,7 @@ export 'src/util/seatsio_web_view_controller.dart';
 export 'src/models/seating_chart_config.dart';
 export 'src/models/seating_chart.dart';
 export 'src/models/seating_config_change.dart';
+export 'src/models/category_filter.dart';
 export 'src/models/seatsio_category.dart';
 export 'src/models/seatsio_config_colors.dart';
 export 'src/models/seatsio_label.dart';

@@ -88,7 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ..showLegend = false
         ..showMinimap = false
         ..inputDevice = 'touch'
-        ..session = 'continue',
+        ..session = 'continue'
+        ..categoryFilter = (CategoryFilterBuilder()
+          ..enabled = true
+          ..multiSelect = true
+          ..zoomOnSelect = false
+          ..sortBy = 'price'),
     );
   }
 

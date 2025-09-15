@@ -6,6 +6,7 @@ import 'package:built_value/serializer.dart';
 import 'package:seatsio/src/models/hold_token.dart';
 import 'package:seatsio/src/models/seatsio_config_colors.dart';
 
+import 'category_filter.dart';
 import 'pricing_for_category.dart';
 import 'seating_chart.dart';
 import 'seatsio_category.dart';
@@ -144,6 +145,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
   bool? get showLegend;
 
   LegendForCategory? get legend;
+
+  /// The category filter allows users to refine ticket selection by category.
+  /// https://docs.seats.io/docs/renderer/categoryfilter/
+  CategoryFilter? get categoryFilter;
 
   /// When zoomed in on a chart with sections,
   /// a minimap is shown so ticket buyers have a better sense which seats they're looking at.
@@ -403,6 +408,10 @@ abstract class SeatingChartConfig implements Built<SeatingChartConfig, SeatingCh
 
     if (channels?.isNotEmpty ?? false) {
       configMap["channels"] = channels?.toList();
+    }
+
+    if (categoryFilter != null) {
+      configMap["categoryFilter"] = categoryFilter!.toMap();
     }
 
     return configMap;

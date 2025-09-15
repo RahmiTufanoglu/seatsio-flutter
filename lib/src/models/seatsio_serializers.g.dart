@@ -8,6 +8,7 @@ part of 'seatsio_serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(BestAvailable.serializer)
+      ..add(CategoryFilter.serializer)
       ..add(LegendForCategory.serializer)
       ..add(ObjectTooltip.serializer)
       ..add(SeatingChartConfig.serializer)
