@@ -44,10 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final _selectedObjectLabels = [];
 
-  static const _myPricingList = [
-    MyPricing('Standard', 12.0),
-  ];
-
   @override
   void initState() {
     super.initState();
