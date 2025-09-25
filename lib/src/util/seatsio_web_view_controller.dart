@@ -97,4 +97,17 @@ class SeatsioWebViewController {
   Future<void> evaluateJavascript(String javascriptString) {
     return _webViewController.runJavaScript(javascriptString);
   }
+
+  /// Clears the current selection on the seating chart.
+  /// This method deselects currently selected objects and releases temporarily held seats.
+  /// Returns a Future that completes when the selection is cleared.
+  Future<void> clearSelection() async {
+    try {
+      await _webViewController.runJavaScript('chart.clearSelection()');
+      developer.log("[Seatsio]-> Chart selection cleared successfully");
+    } catch (e) {
+      developer.log("[Seatsio]-> Error clearing chart selection: $e");
+      rethrow;
+    }
+  }
 }
