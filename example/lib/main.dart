@@ -142,27 +142,41 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.black12,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
-                  itemCount: _selectedObjectLabels.length,
-                  itemBuilder: (_, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(_selectedObjectLabels[index]),
-                        if (_seatsioController != null)
-                          IconButton(
-                            onPressed: () {
-                              final chart = SeatingChart(_seatsioController);
-                              chart.deselectObject([_selectedObjectLabels[index]]);
-                            },
-                            icon: Icon(Icons.delete_forever),
-                          ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (_, __) => Divider(),
+                child: Column(
+                  children: [
+                    if (_selectedObjectLabels.isNotEmpty && _seatsioController != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: _clearSelection,
+                          child: Text('Clear All Selections'),
+                        ),
+                      ),
+                    Expanded(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
+                        itemCount: _selectedObjectLabels.length,
+                        itemBuilder: (_, index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(_selectedObjectLabels[index]),
+                              if (_seatsioController != null)
+                                IconButton(
+                                  onPressed: () {
+                                    final chart = SeatingChart(_seatsioController);
+                                    chart.deselectObject([_selectedObjectLabels[index]]);
+                                  },
+                                  icon: Icon(Icons.delete_forever),
+                                ),
+                            ],
+                          );
+                        },
+                        separatorBuilder: (_, __) => Divider(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -193,5 +207,19 @@ class _MyHomePageState extends State<MyHomePage> {
   void _loadSeatsio() {
     final newChartConfig = _chartConfig.rebuild((b) => b..showLegend = false);
     _seatsioController?.reload(newChartConfig);
+  }
+
+  Future<void> _clearSelection() async {
+    if (_seatsioController != null) {
+      try {
+        await _seatsioController.clearSelection();
+        setState(() {
+          _selectedObjectLabels.clear();
+        });
+        debugPrint("[Seatsio]->[example]-> All selections cleared successfully");
+      } catch (e) {
+        debugPrint("[Seatsio]->[example]-> Error clearing selections: $e");
+      }
+    }
   }
 }
