@@ -204,9 +204,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _loadSeatsio() {
+  Future<void> _loadSeatsio() async {
     final newChartConfig = _chartConfig.rebuild((b) => b..showLegend = false);
-    _seatsioController?.reload(newChartConfig);
+    await _seatsioController?.reload(newChartConfig);
   }
 
   Future<void> _clearSelection() async {

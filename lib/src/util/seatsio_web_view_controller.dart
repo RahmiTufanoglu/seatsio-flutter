@@ -18,7 +18,7 @@ class SeatsioWebViewController {
 
   SeatingChartConfig? _chartConfig;
 
-  void reload(SeatingChartConfig? newChartConfig) {
+  Future<void> reload(SeatingChartConfig? newChartConfig) async {
     if (newChartConfig != null) {
       _chartConfig = newChartConfig;
     } else {
@@ -27,9 +27,8 @@ class SeatsioWebViewController {
 
     if (_chartConfig != null) {
       final url = _generateHtmlContent(_chartConfig!);
-      _webViewController
-        ..setBackgroundColor(Colors.transparent)
-        ..loadRequest(Uri.parse(url));
+      _webViewController.setBackgroundColor(Colors.transparent);
+      await _webViewController.loadRequest(Uri.parse(url));
     } else {
       developer.log("[Seatsio]-> Not found seatsio chart config info.");
     }
