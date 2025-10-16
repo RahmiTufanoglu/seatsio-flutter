@@ -34,10 +34,10 @@ class SeatsioWebViewController {
     }
   }
 
-  void reloadChart({
+  Future<void> reloadChart({
     required String token,
     required String session,
-  }) {
+  }) async {
     if (_chartConfig != null) {
       final newChartInfo = _chartConfig!.rebuild((b) {
         return b
@@ -46,12 +46,14 @@ class SeatsioWebViewController {
       });
       final url = _generateHtmlContent(newChartInfo);
       try {
-        _webViewController.loadRequest(Uri.parse(url));
-      } catch (e) {
-        developer.log("[Seatsio]-> Error while reloading chart: $e");
+        await _webViewController.loadRequest(Uri.parse(url));
+      } on Exception catch (e, st) {
+        developer.log("[Seatsio]-> Error while reloading chart", error: e, stackTrace: st);
+        rethrow;
       }
     } else {
       developer.log("[Seatsio]-> Not found seatsio chart config info.");
+      throw StateError("Chart config not found");
     }
   }
 
@@ -93,8 +95,13 @@ class SeatsioWebViewController {
     return url.toString();
   }
 
-  Future<void> evaluateJavascript(String javascriptString) {
-    return _webViewController.runJavaScript(javascriptString);
+  Future<void> evaluateJavascript(String javascriptString) async {
+    try {
+      await _webViewController.runJavaScript(javascriptString);
+    } on Exception catch (e, st) {
+      developer.log("[Seatsio]-> Error evaluating JavaScript", error: e, stackTrace: st);
+      rethrow;
+    }
   }
 
   /// Clears the current selection on the seating chart.
