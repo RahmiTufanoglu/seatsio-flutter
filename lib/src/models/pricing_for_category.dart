@@ -47,11 +47,15 @@ class TicketTypePricing {
     required this.ticketType,
     required this.price,
     required this.label,
+    this.description,
+    this.primary,
   });
 
   final String? ticketType;
   final num? price;
   final String? label;
+  final String? description;
+  final bool? primary;
 
 
   static TicketTypePricing? fromMap(Map<String, dynamic>? data) {
@@ -61,6 +65,8 @@ class TicketTypePricing {
       ticketType: data['ticketType'],
       price: data['price'],
       label: data['label'],
+      description: data['description'],
+      primary: data['primary'],
     );
   }
 
@@ -69,6 +75,8 @@ class TicketTypePricing {
         'ticketType': ticketType,
         'price': price,
         'label': label,
+        if (description != null) 'description': description,
+        if (primary != null) 'primary': primary,
       };
 
   @override
@@ -76,7 +84,9 @@ class TicketTypePricing {
     return 'TicketTypePricing('
         'ticketType: $ticketType, '
         'price: $price, '
-        'label: $label'
+        'label: $label, '
+        'description: $description, '
+        'primary: $primary'
         ')';
   }
 

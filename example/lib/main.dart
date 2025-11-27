@@ -60,9 +60,53 @@ class _MyHomePageState extends State<MyHomePage> {
           colorSelected: '#E5FF00',
           colorTitle: '#E5FF00',
         )
-        ..pricing = myPricingList
-            .map((tickets) => PricingForCategory(category: tickets.name, price: tickets.grossPrice))
-            .toList()
+        ..pricing = [
+          PricingForCategory(
+            category: 'Orchestra',
+            ticketTypes: [
+              TicketTypePricing(
+                ticketType: 'adult',
+                price: 50,
+                label: 'Adult',
+                description: 'Regular adult ticket',
+                primary: true,
+              ),
+              TicketTypePricing(
+                ticketType: 'senior',
+                price: 35,
+                label: 'Senior',
+                description: '65+ - ID required',
+                primary: false,
+              ),
+              TicketTypePricing(
+                ticketType: 'student',
+                price: 25,
+                label: 'Student',
+                description: 'Valid student ID required',
+                primary: false,
+              ),
+            ],
+          ),
+          PricingForCategory(
+            category: 'Balcony',
+            ticketTypes: [
+              TicketTypePricing(
+                ticketType: 'adult',
+                price: 30,
+                label: 'Adult',
+                description: 'Regular adult ticket',
+                primary: true,
+              ),
+              TicketTypePricing(
+                ticketType: 'child',
+                price: 15,
+                label: 'Child',
+                description: 'Ages 3-12',
+                primary: false,
+              ),
+            ],
+          ),
+        ]
         ..objectTooltip = () {
           return ObjectTooltipBuilder()
             ..showActionHint = true
@@ -155,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: ListView.separated(
                         shrinkWrap: true,
-                        padding: EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
+                        padding:
+                            EdgeInsets.only(bottom: (kToolbarHeight * 2) + MediaQuery.viewPaddingOf(context).bottom),
                         itemCount: _selectedObjectLabels.length,
                         itemBuilder: (_, index) {
                           return Row(
