@@ -46,7 +46,7 @@ class TicketTypePricing {
   const TicketTypePricing({
     required this.ticketType,
     required this.price,
-    required this.label,
+    this.label,
     this.description,
     this.primary,
   });
@@ -74,7 +74,7 @@ class TicketTypePricing {
       <String, dynamic>{
         'ticketType': ticketType,
         'price': price,
-        'label': label,
+        if (label != null) 'label': label,
         if (description != null) 'description': description,
         if (primary != null) 'primary': primary,
       };
