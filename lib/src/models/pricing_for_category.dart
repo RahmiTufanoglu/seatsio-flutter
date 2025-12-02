@@ -24,8 +24,9 @@ class PricingForCategory {
   }
 
   Map<String, dynamic> toJson() {
+    final categoryValue = categoryKey ?? category;
     return <String, dynamic>{
-      'category': categoryKey ?? category,
+      if (categoryValue != null && categoryValue.toString().isNotEmpty) 'category': categoryValue,
       if (price != null) 'price': price,
       if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
     };
@@ -57,7 +58,6 @@ class TicketTypePricing {
   final String? description;
   final bool? primary;
 
-
   static TicketTypePricing? fromMap(Map<String, dynamic>? data) {
     if (data == null) return null;
 
@@ -70,12 +70,11 @@ class TicketTypePricing {
     );
   }
 
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'ticketType': ticketType,
         'price': price,
-        if (label != null) 'label': label,
-        if (description != null) 'description': description,
+        if (label != null && label!.isNotEmpty) 'label': label,
+        if (description != null && description!.isNotEmpty) 'description': description,
         if (primary != null) 'primary': primary,
       };
 
@@ -89,6 +88,4 @@ class TicketTypePricing {
         'primary: $primary'
         ')';
   }
-
-
 }
