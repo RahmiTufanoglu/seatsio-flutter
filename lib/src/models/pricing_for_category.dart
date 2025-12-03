@@ -4,11 +4,13 @@ class PricingForCategory {
     required this.category,
     this.price,
     this.ticketTypes,
+    this.description,
   });
 
   final int? categoryKey;
   final String? category;
   final num? price;
+  final String? description;
 
   final List<TicketTypePricing>? ticketTypes;
 
@@ -19,6 +21,7 @@ class PricingForCategory {
       categoryKey: data['categoryKey'],
       category: data['category'],
       price: data['price'],
+      description: data['description'],
       ticketTypes: (data['ticketTypes'] as List<dynamic>? ?? []).map((e) => TicketTypePricing.fromMap(e)!).toList(),
     );
   }
@@ -28,6 +31,7 @@ class PricingForCategory {
     return <String, dynamic>{
       if (categoryValue != null && categoryValue.toString().isNotEmpty) 'category': categoryValue,
       if (price != null) 'price': price,
+      'description': description ?? '',
       if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
     };
   }
@@ -38,6 +42,7 @@ class PricingForCategory {
         'categoryKey: $categoryKey, '
         'category: $category, '
         'price: $price, '
+        'description: $description, '
         'ticketTypes: $ticketTypes'
         ')';
   }
