@@ -11,7 +11,6 @@ class PricingForCategory {
   final String? category;
   final num? price;
   final String? description;
-
   final List<TicketTypePricing>? ticketTypes;
 
   static PricingForCategory? fromMap(Map? data) {
@@ -85,7 +84,7 @@ class TicketTypePricing {
         'ticketType': ticketType,
         'price': price,
         if (label != null && label!.isNotEmpty) 'label': label,
-        'description': description ?? '',
+        if (description != null && description!.isNotEmpty) 'description': description,
         if (primary != null) 'primary': primary,
         if (originalPrice != null) 'originalPrice': originalPrice,
         if (fee != null) 'fee': fee,
