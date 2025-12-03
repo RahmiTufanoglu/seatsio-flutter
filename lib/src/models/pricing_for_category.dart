@@ -30,7 +30,7 @@ class PricingForCategory {
     return <String, dynamic>{
       if (categoryValue != null && categoryValue.toString().isNotEmpty) 'category': categoryValue,
       if (price != null) 'price': price,
-      'description': description ?? '',
+      if (description != null && description!.isNotEmpty) 'description': description,
       if (ticketTypes != null) 'ticketTypes': ticketTypes?.map((e) => e.toJson()).toList(),
     };
   }
